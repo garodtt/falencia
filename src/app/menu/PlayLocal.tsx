@@ -1,0 +1,32 @@
+import { startLocal } from '../../ui/menu.ts';
+import { Icon } from '../components/Icon.tsx';
+import { resetTips, useUi } from '../store.ts';
+
+// "Jogar contra bots" e a opção de mostrar as dicas
+export function PlayLocal() {
+  const tipsOn = useUi((s) => s.tipsOn);
+  const setTipsOn = useUi((s) => s.setTipsOn);
+  return (
+    <div className="row">
+      <button
+        id="btnPlay"
+        onClick={() => {
+          resetTips();
+          startLocal();
+        }}
+      >
+        <Icon name="bot" />
+        Jogar contra bots
+      </button>
+      <label className="muted">
+        <input
+          type="checkbox"
+          id="cfgTips"
+          checked={tipsOn}
+          onChange={(e) => setTipsOn(e.target.checked)}
+        />{' '}
+        Mostrar dicas de como jogar
+      </label>
+    </div>
+  );
+}

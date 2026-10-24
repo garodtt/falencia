@@ -1,0 +1,85 @@
+/* Balão de informação. Visual provisório (protótipo): neutro, no tema da mesa. */
+
+/* o balão não captura o mouse: passar por cima dele não atrapalha a carta de baixo */
+.float {
+  z-index: 60;
+  pointer-events: none;
+}
+
+.box {
+  width: max-content;
+  max-width: 264px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--surface2);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+  color: var(--text);
+  font: 500 13px/1.45 var(--ui);
+  text-align: left;
+}
+
+/* a lombada colorida diz do que o balão fala (território, lua/sol, rei...) */
+.body {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px 11px 15px;
+}
+.body::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--tip-accent, var(--line));
+}
+
+.title {
+  font: 600 15px/1.2 var(--display);
+}
+.sub {
+  margin-top: -4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.note {
+  margin: 0;
+  color: var(--muted);
+}
+.warn {
+  margin: 0;
+  color: var(--bad);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(18px, auto) minmax(0, 1fr);
+  gap: 6px;
+  align-items: start;
+}
+.row > :first-child {
+  display: inline-flex;
+  justify-content: center;
+  gap: 2px;
+  padding-top: 1px;
+}
+.row b {
+  font-weight: 700;
+}
+.tag {
+  margin-left: 6px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+}
+.desc {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .box {
+    transition: none !important;
+  }
+}
