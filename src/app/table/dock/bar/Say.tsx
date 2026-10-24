@@ -1,0 +1,6 @@
+import type { ReactNode } from 'react';
+
+// o texto da barra de ação
+export function Say({ children }: { children: ReactNode }) {
+  return <span className="say">{children}</span>;
+}
