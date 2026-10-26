@@ -34,13 +34,14 @@ export function traitsOf(p: Player, g: Gob) {
 }
 export function val(p: Player, g: Gob) {
   if (chaosIs('MALDICAO') && G.curse && traitsOf(p, g) & G.curse) return 0;
-  return gv(g);
+  return chaosIs('MINMAX') ? 21 - gv(g) : gv(g);
 }
 export const monOf = (m: Monster) =>
   (chaosIs('GIGANTE') ? m.v + 10 : chaosIs('ANAO') ? Math.max(1, m.v - 6) : m.v) +
   (chaosIs('MUTANTE') ? G.mutant || 0 : 0) +
   G.monMod;
 export const monVal = () => monOf(G.monster!);
+export const monFx = () => G.monster?.fx || G.monster2?.fx || null;
 export const noTarget = () => chaosIs('INVERSO') || chaosIs('MENOR') || chaosIs('MAIOR');
 export function terrOf(p: Player, m: Monster) {
   const s = m.ts.slice();
@@ -241,6 +242,10 @@ export function canUse(p: Player | null | undefined, k: ItemKey, phase: string) 
         return rd.band < 0;
       case 'DISFARCE':
         return !rd.disg;
+      case 'MAPA':
+        return G.ideck.length + G.idisc.length > 0;
+      case 'PROFECIA':
+        return G.cdeck.length + G.cdisc.length > 0;
     }
     return true;
   }

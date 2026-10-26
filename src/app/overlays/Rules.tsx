@@ -125,6 +125,9 @@ export function Rules() {
           a faixa do topo mostra a regra da rodada (ou a da próxima). Também é o verso do monte de
           Caos.
         </L>
+        <L i={<Icon name="skull" />} t="Necromante">
+          carta de Caos em que cada um joga com as cartas do próprio cemitério.
+        </L>
         <L i={<Icon name="moon" />} t="Monstro Dormindo">
           item que se usa antes de revelar o monstro.
         </L>
@@ -175,6 +178,23 @@ export function Rules() {
         <br />
         <b style={strong}>Última carta:</b> se só restam 2 jogadores com 1 carta cada, quem perde
         por aproximação não descarta.
+      </p>
+      <p>
+        <b style={strong}>Itens:</b> no máximo 3 na mão. Se comprar o 4º, escolha 1 para mandar para
+        o fundo do monte de itens.
+      </p>
+      <p>
+        <b style={strong}>Viradas:</b> <b style={strong}>Vingança do Cemitério</b> — no início da
+        rodada, quem tem o maior cemitério compra 1 item. <b style={strong}>Cravada do Azarão</b> —
+        quem crava tendo a menor mão da mesa rouba 3 cartas em vez de 2.{' '}
+        <b style={strong}>Pressa não Compensa</b> — quem perde tendo jogado 3 goblins ou mais compra
+        1 item.
+      </p>
+      <p>
+        <b style={strong}>Monstros com efeito:</b> alguns monstros têm um efeito, revelado quando
+        acordam. <b style={strong}>Amigo dos Fracos</b> (10, 15, 20, 25, 30, 35 e 40): quando alguém
+        vence a rodada, quem compra o item é o jogador com menos itens na mão (empate: todos os
+        empatados).
       </p>
       <p>
         <b style={strong}>Território:</b> se algum goblin jogado for de um território do monstro,

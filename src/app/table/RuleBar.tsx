@@ -1,4 +1,4 @@
-import { chaosDesc, chaosTitle } from '../../game/data.ts';
+import { chaosDesc, chaosIc, chaosTitle } from '../../game/data.ts';
 import { G } from '../../game/state.ts';
 import { Icon } from '../components/Icon.tsx';
 
@@ -19,7 +19,7 @@ export function RuleBar() {
   return (
     <div className="rule" id="chaosSlot">
       <span style={{ color: 'var(--chaos)' }}>
-        <Icon name="bolt" />
+        <Icon name={chaosIc(k)} />
       </span>
       <span className="tg">{shown === 'now' ? 'Regra da rodada' : 'Próxima rodada'}</span>
       <b>{chaosTitle(k, curse)}</b>

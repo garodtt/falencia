@@ -73,6 +73,7 @@ export interface ItemArgs {
   t?: number;
   g?: Gob;
   target?: number;
+  k?: ItemKey | ChaosKey; // Mapa do Tesouro / Profecia do Caos
 }
 export interface Reply {
   play?: Gob[];
@@ -181,6 +182,9 @@ export interface GameState {
   win?: boolean;
   lastWinSum?: number | null;
   banq?: number;
+  pressa?: number[]; // perderam jogando 3+ goblins (Pressa não Compensa)
+  underdog?: number[]; // menor mão no início da rodada (Cravada do Azarão)
+  necro?: Record<number, Gob[]> | null; // Necromante: a mão guardada de quem joga com o cemitério
   // mesa online
   code?: string;
   hostUid?: string;

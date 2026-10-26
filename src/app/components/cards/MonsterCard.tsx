@@ -1,3 +1,4 @@
+import { MFX } from '../../../game/data.ts';
 import type { Monster } from '../../../game/data.ts';
 import { CCSS } from '../../../ui/html.ts';
 
@@ -20,7 +21,7 @@ export function MonsterCard({
       </span>
       {mod ? <span className="mod">{`${mod > 0 ? '+' : ''}${mod} → ${m.v + mod}`}</span> : null}
       <span className="mnum">{m.v}</span>
-      <span className="mlbl">Monstro</span>
+      <span className="mlbl">{m.fx && MFX[m.fx] ? MFX[m.fx][0] : 'Monstro'}</span>
     </div>
   );
 }

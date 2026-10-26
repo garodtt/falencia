@@ -5,6 +5,7 @@ import {
   TR,
   TRAITS,
   chaosDesc,
+  chaosIc,
   chaosTitle,
   gc,
   gv,
@@ -42,4 +43,4 @@ export const monBack = (inner = '') => `<div class="card mback">${ic('moon')}${i
 export const itemCard = (k: ItemKey) =>
   `<div class="card txtcard icard ${ITEMS[k][2]}"><i>${ic(ITEMS[k][2] === 'D' ? 'moon' : 'sun')}${ITEMS[k][2] === 'D' ? 'Monstro dormindo' : 'Monstro acordado'}</i><b>${ITEMS[k][0]}</b><span>${ITEMS[k][1]}</span></div>`;
 export const chaosCard = (k: string, curse?: number) =>
-  `<div class="card txtcard ccard"><i>${ic('bolt')}Caos · para todos</i><b>${chaosTitle(k, curse)}</b><span>${chaosDesc(k, curse)}</span></div>`;
+  `<div class="card txtcard ccard"><i>${ic(chaosIc(k))}Caos · para todos</i><b>${chaosTitle(k, curse)}</b><span>${chaosDesc(k, curse)}</span></div>`;

@@ -1,5 +1,5 @@
 // IA dos bots.
-import { CN, NUMERIC, gc, gv, pick, shuffle } from './data.ts';
+import { CN, NUMERIC, PRIO, gc, gv, pick, shuffle } from './data.ts';
 import { execUse } from './engine.ts';
 import {
   armed,
@@ -242,6 +242,32 @@ export async function botDormindo(p: Player) {
     await execUse(p, 'BANDEIRA', { c: cnt.indexOf(Math.max(...cnt)) });
   }
   if (p.items.includes('SACO')) await execUse(p, 'SACO', {});
+  if (p.items.includes('MAPA') && canUse(p, 'MAPA', 'select')) {
+    if (!G.ideck.length) {
+      G.ideck = shuffle(G.idisc);
+      G.idisc = [];
+    }
+    const best = G.ideck
+      .filter((x) => x !== 'SACO')
+      .reduce((a, x) => (PRIO[x] > PRIO[a] ? x : a), G.ideck[0]);
+    if (best) await execUse(p, 'MAPA', { k: best });
+  }
+  if (p.items.includes('PROFECIA') && canUse(p, 'PROFECIA', 'select') && Math.random() < 0.5) {
+    if (!G.cdeck.length) {
+      G.cdeck = shuffle(G.cdisc);
+      G.cdisc = [];
+    }
+    const A2 = alivePl(),
+      few = A2.every((o) => o === p || p.items.length <= o.items.length),
+      lead = A2.every((o) => o === p || p.hand.length >= o.hand.length);
+    const want =
+      few && G.cdeck.includes('FEIRA')
+        ? 'FEIRA'
+        : !lead && G.cdeck.includes('CACA')
+          ? 'CACA'
+          : pick(G.cdeck);
+    await execUse(p, 'PROFECIA', { k: want });
+  }
 }
 export const IS_SIM = () => typeof SIMQ !== 'undefined' && SIMQ;
 export const BOT_PAUSE = () => (IS_SIM() ? 0 : 1500 * SPEED);

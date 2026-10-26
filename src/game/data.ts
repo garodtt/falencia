@@ -5,6 +5,7 @@ export type Gob = number;
 export interface Monster {
   v: number;
   ts: number[];
+  fx: MonsterFx | null;
 }
 
 export const rnd = (n: number) => Math.floor(Math.random() * n),
@@ -151,15 +152,15 @@ export const ITEMS = {
   AJUSTE: ['Ajuste Fino', 'De −3 a +3 na sua soma, à sua escolha.', 'A', 1],
   ESCUDO: ['Escudo de Panela', 'Nesta rodada ninguém rouba nem elimina cartas suas.', 'A', 2],
   AMULETO: ['Amuleto', 'Se você perder nesta rodada, não descarta nada.', 'A', 2],
-  OCULOS: ['Óculos de Grau', 'Cada goblin de Óculos jogado vale até +2.', 'A', 2],
+  OCULOS: ['Óculos de Grau', 'Cada goblin de Óculos jogado vale até +2.', 'A', 1],
   CHAPEU: ['Chapéu Pontudo', 'Cada goblin de Chapéu jogado vale até ±2.', 'A', 2],
-  POCAO: ['Poção Maluca', 'Um goblin Maluco jogado vale o dobro ou a metade.', 'A', 2],
+  POCAO: ['Poção Maluca', 'Um goblin Maluco jogado vale o dobro ou a metade.', 'A', 1],
   POMADA: ['Pomada de Verruga', 'Se jogou goblin de Verruga: de −3 a +3 na sua soma.', 'A', 2],
   CHINELO: [
     'Chinelo Veloz',
     'Se você perder nesta rodada, um goblin de Chinelo jogado, à sua escolha, volta para a mão.',
     'A',
-    2,
+    1,
   ],
   NAO: [
     'NÃO!',
@@ -173,7 +174,19 @@ export const ITEMS = {
     'A',
     2,
   ],
-  GRITO: ['Grito de Guerra', 'O monstro vale +2 ou −2 para todos, à sua escolha.', 'A', 2],
+  GRITO: ['Grito de Guerra', 'O monstro vale +2 ou −2 para todos, à sua escolha.', 'A', 1],
+  MAPA: [
+    'Mapa do Tesouro',
+    'Olhe o monte de itens, escolha 1 carta e fique com ela. Depois embaralhe o monte.',
+    'D',
+    2,
+  ],
+  PROFECIA: [
+    'Profecia do Caos',
+    'Olhe o monte de Caos e escolha a carta da próxima rodada. Embaralhe o resto e coloque a escolhida no topo.',
+    'D',
+    2,
+  ],
 } satisfies Record<string, ItemDef>;
 export type ItemKey = keyof typeof ITEMS;
 export const NUMERIC: ItemKey[] = [
@@ -195,6 +208,8 @@ export const TRAIT_ITEM: Partial<Record<number, ItemKey>> = {
   [VE]: 'POMADA',
 };
 export const PRIO: Record<ItemKey, number> = {
+  MAPA: 7,
+  PROFECIA: 4,
   NAO: 9,
   SACRIFICIO: 8,
   LUNETA: 8,
@@ -223,7 +238,7 @@ export const PRIO: Record<ItemKey, number> = {
 // [nome, texto, cópias no monte]
 type ChaosDef = [name: string, text: string, copies: number];
 export const CHAOS = {
-  ZONA: ['Zona Proibida', 'Somas de 20 a 30 perdem automaticamente.', 3],
+  ZONA: ['Zona Proibida', 'Somas de 20 a 30 perdem automaticamente.', 2],
   OPOSTOS: [
     'Monstros Opostos',
     'Dois monstros: um baixo (até 24) e um alto (26 ou mais). Vale o mais perto da sua soma. Acertar um deles conta como aproximação: elimina 1 carta, não rouba.',
@@ -241,12 +256,12 @@ export const CHAOS = {
   CEGAS: [
     'Às Cegas',
     'Depois que todos jogam, o jogador à sua direita escolhe, às cegas, 1 dos seus goblins jogados e troca por 1 carta da sua mão.',
-    4,
+    3,
   ],
   ROLETA: [
     'Roleta',
     'Depois que todos jogam, cada um puxa às cegas 1 carta da mão do jogador à sua direita e soma ao seu palpite. No fim da rodada a carta volta para o dono.',
-    3,
+    2,
   ],
   MUTANTE: [
     'Monstro Mutante',
@@ -266,13 +281,13 @@ export const CHAOS = {
   ABERTO: [
     'Palpite Aberto',
     'Cada um joga na ordem, a partir do Chefe da Toca, vendo os palpites de quem jogou antes.',
-    3,
+    2,
   ],
-  IGUAIS: ['Somas Iguais se Anulam', 'Jogadores com a mesma soma perdem todos.', 4],
+  IGUAIS: ['Somas Iguais se Anulam', 'Jogadores com a mesma soma perdem todos.', 3],
   CACA: [
     'Caça ao Líder',
     'Quem tem mais cartas no início da rodada não pode vencer por aproximação; só se cravar.',
-    3,
+    2,
   ],
   DUELO: [
     'Duelo',
@@ -295,6 +310,17 @@ export const CHAOS = {
     'Sua soma ganha metade da soma do jogador à sua esquerda (arredondando para baixo).',
     2,
   ],
+  MINMAX: [
+    'Mínimo Máximo',
+    'Os valores dos goblins se invertem: 1 vale 20, 2 vale 19, 3 vale 18 … 20 vale 1.',
+    2,
+  ],
+  FEIRA: ['Feira dos Goblins', 'No fim desta rodada, todos os jogadores compram 1 item.', 2],
+  NECRO: [
+    'Necromante',
+    'Coloque seu cemitério na sua mão: nesta rodada você joga só com essas cartas. Quem vencer fica com as cartas que jogou; o resto volta para o cemitério. Quem não tem cemitério joga com a própria mão.',
+    2,
+  ],
 } satisfies Record<string, ChaosDef>;
 export type ChaosKey = keyof typeof CHAOS;
 // estados salvos por versões antigas podem trazer cartas de Caos que não existem mais
@@ -311,13 +337,23 @@ export const chaosDesc = (k: string, curse?: number) =>
     : k === 'MALDICAO' && curse
       ? `Goblins com ${TNAME[curse]} valem 0. Reis e rainhas com ${TNAME[curse]} ficam desligados.`
       : chaosOf(k)![1];
+// monstros com efeito: [nome, texto]
+export const MFX = {
+  FRACOS: [
+    'Amigo dos Fracos',
+    'Quando derrotado, quem compra o item é o jogador com menos itens na mão (empate: todos os empatados compram).',
+  ],
+} satisfies Record<string, [name: string, text: string]>;
+export type MonsterFx = keyof typeof MFX;
+// o Necromante tem ícone próprio; o resto do Caos usa o raio
+export const chaosIc = (k: string) => (k === 'NECRO' ? 'skull' : 'bolt');
 export function makeMonsters() {
   const out: Monster[] = [];
   for (let v = 10; v <= 40; v++) {
     const t1 = (v - 10) % 4,
       ts = [t1];
     if (v % 3 === 1) ts.push((t1 + 1 + (v % 2)) % 4);
-    out.push({ v, ts });
+    out.push({ v, ts, fx: v % 5 === 0 ? 'FRACOS' : null });
   }
   return out;
 }

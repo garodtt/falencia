@@ -1,5 +1,5 @@
 // O que os cliques na mesa fazem. Cada ação confere se é mesmo a vez de quem está nesta tela.
-import { CLAN, ITEMS, KINGS, NUMERIC, TNAME, TRAITS, gc, gv } from '../../game/data.ts';
+import { CLAN, ITEMS, KINGS, NUMERIC, TNAME, TRAITS, chaosTitle, gc, gv } from '../../game/data.ts';
 import type { Gob, ItemKey } from '../../game/data.ts';
 import { botTakeover } from '../../game/engine.ts';
 import { canUse, itemOptions, playLimit } from '../../game/rules.ts';
@@ -207,6 +207,29 @@ export async function gatherArgs(k: ItemKey): Promise<ItemArgs | null> {
         TRAITS.map((t) => ({ label: TNAME[t], value: t })),
       );
       return t === null ? null : { t };
+    }
+    case 'MAPA': {
+      const pool = G.ideck.length ? G.ideck : G.idisc;
+      if (!pool.length) return null;
+      const k2 = await choose(
+        'Mapa do Tesouro',
+        'Escolha 1 item do monte para ficar com ele:',
+        [...new Set(pool)].map((x) => ({
+          label: `${ITEMS[x][0]} (${pool.filter((y) => y === x).length})`,
+          value: x,
+        })),
+      );
+      return k2 === null ? null : { k: k2 };
+    }
+    case 'PROFECIA': {
+      const pool = G.cdeck.length ? G.cdeck : G.cdisc;
+      if (!pool.length) return null;
+      const k2 = await choose(
+        'Profecia do Caos',
+        'Escolha o Caos da próxima rodada:',
+        [...new Set(pool)].map((x) => ({ label: chaosTitle(x), value: x })),
+      );
+      return k2 === null ? null : { k: k2 };
     }
     case 'GRITO': {
       const d = await choose('Grito de Guerra', 'O monstro vale, para todos:', [

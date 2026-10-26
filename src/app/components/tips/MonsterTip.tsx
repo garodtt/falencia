@@ -1,4 +1,4 @@
-import { CLAN } from '../../../game/data.ts';
+import { CLAN, MFX } from '../../../game/data.ts';
 import type { Monster } from '../../../game/data.ts';
 import { monOf } from '../../../game/rules.ts';
 import { G, chaosIs } from '../../../game/state.ts';
@@ -15,6 +15,7 @@ export function MonsterTip({ m }: { m: Monster }) {
       title={`Monstro ${worth}`}
       sub={worth !== m.v ? `Impresso: ${m.v}` : undefined}
     >
+      {m.fx && MFX[m.fx] ? <TipNote>{`${MFX[m.fx][0]}: ${MFX[m.fx][1]}`}</TipNote> : null}
       {changes().map((c) => (
         <TipNote key={c}>{c}</TipNote>
       ))}

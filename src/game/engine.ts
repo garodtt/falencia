@@ -16,6 +16,7 @@ import {
   CLAN,
   CN,
   ITEMS,
+  MFX,
   PRIO,
   TNAME,
   TRAITS,
@@ -39,6 +40,7 @@ import {
   inDuel,
   itemOptions,
   lastUse,
+  monFx,
   monVal,
   playLimit,
   playable,
@@ -459,6 +461,50 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
       log(`${nm(p)} usou Disfarce (${TNAME[t]}).`, 'it');
       break;
     }
+    case 'MAPA': {
+      if (!G.ideck.length) {
+        G.ideck = shuffle(G.idisc);
+        G.idisc = [];
+      }
+      const i = G.ideck.indexOf(a.k as ItemKey);
+      if (i < 0) return;
+      spendItem(p, k);
+      G.ideck.splice(i, 1);
+      shuffle(G.ideck);
+      log(`${nm(p)} usou Mapa do Tesouro e escolheu um item do monte.`, 'it');
+      void fx(
+        {
+          type: 'toast',
+          to: p.id,
+          text: `Mapa do Tesouro: você pegou ${ITEMS[a.k as ItemKey][0]}.`,
+        },
+        false,
+      );
+      addItem(p, a.k as ItemKey);
+      break;
+    }
+    case 'PROFECIA': {
+      if (!G.cdeck.length) {
+        G.cdeck = shuffle(G.cdisc);
+        G.cdisc = [];
+      }
+      const i = G.cdeck.indexOf(a.k as ChaosKey);
+      if (i < 0) return;
+      spendItem(p, k);
+      G.cdeck.splice(i, 1);
+      shuffle(G.cdeck);
+      G.cdeck.push(a.k as ChaosKey);
+      log(`${nm(p)} usou Profecia do Caos e escolheu o Caos da próxima rodada.`, 'it');
+      void fx(
+        {
+          type: 'toast',
+          to: p.id,
+          text: `Profecia do Caos: a próxima rodada terá ${CHAOS[a.k as ChaosKey][0]}.`,
+        },
+        false,
+      );
+      break;
+    }
     case 'TAMBOR':
       spendItem(p, k);
       rd.tambor = true;
@@ -506,9 +552,50 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
       void fx({ type: 'pop', pid: p.id, text: ITEMS[k][0], good: true }, false);
       break;
   }
+  await enforceCap(p);
   sync();
 }
 // ---------- compras e roubos ----------
+export const ITEM_CAP = 3;
+export async function enforceCap(p: Player) {
+  while (p.items.length > ITEM_CAP) {
+    let k: ItemKey;
+    if (isHuman(p)) {
+      const opts = [...new Set(p.items)].map((x) => ({ label: ITEMS[x][0], value: x }));
+      const r = await prompt(p.id, 'ask', {
+        title: 'Limite de 3 itens',
+        text: `Você ficou com ${p.items.length} itens. Escolha 1 para mandar para o fundo do monte de itens:`,
+        options: opts,
+        cards: opts.map((o) => o.value),
+        botValue: opts[0].value,
+      });
+      k = p.items.includes(r.value as ItemKey) ? (r.value as ItemKey) : p.items[p.items.length - 1];
+    } else k = p.items.reduce((a, x) => (PRIO[x] < PRIO[a] ? x : a));
+    p.items.splice(p.items.indexOf(k), 1);
+    G.ideck.unshift(k);
+    log(
+      `${nm(p)} mandou ${isHuman(p) ? ITEMS[k][0] : 'um item'} para o fundo do monte (limite de 3).`,
+      'it',
+    );
+    sync();
+  }
+}
+// quem compra o item quando alguém vence a rodada (o monstro pode mudar isso)
+export async function rewardItems(W: Player[]) {
+  if (!W.length) return;
+  if (monFx() === 'FRACOS') {
+    const A = alivePl().filter((q) => q.hand.length);
+    if (!A.length) return;
+    const mn = Math.min(...A.map((q) => q.items.length)),
+      B = A.filter((q) => q.items.length === mn),
+      txt = `${B.map(nm).join(', ')} ${B.length > 1 ? 'compram' : 'compra'} o item`;
+    log(`Amigo dos Fracos: ${txt} (menos itens na mão).`, 'ch');
+    void fx({ type: 'toast', text: `Amigo dos Fracos: ${txt}.` }, false);
+    for (const q of B) await drawItems(q, 1);
+    return;
+  }
+  for (const p of W) await drawItems(p, 1);
+}
 export async function drawItems(p: Player, n: number) {
   for (let i = 0; i < n; i++) {
     if (isHuman(p) && p.alive) await prompt(p.id, 'draw', { left: n - i });
@@ -541,6 +628,7 @@ export async function drawItems(p: Player, n: number) {
       card: { item: k, vis: [p.id] },
       dur: 520,
     });
+    await enforceCap(p);
   }
 }
 export async function takeCard(p: Player, o: Player, kind: string) {
@@ -646,7 +734,7 @@ export async function chaosStart() {
 }
 export function checkOuts() {
   for (const p of alivePl())
-    if (!p.hand.length) {
+    if (!p.hand.length && !G.necro?.[p.id]) {
       p.alive = false;
       p.out = G.round;
       log(`${nm(p)} faliu!`, 'rh');
@@ -772,6 +860,7 @@ export async function chooseDuel() {
 }
 export async function playRound() {
   G.round++;
+  G.pressa = [];
   G.last = null;
   G.act = null;
   G.ready = {};
@@ -812,12 +901,58 @@ export async function playRound() {
   if (G.over) return;
   const A0 = alivePl(),
     mx = Math.max(...A0.map((p) => p.hand.length));
+  {
+    const mn = Math.min(...A0.map((p) => p.hand.length));
+    G.underdog = mn < mx ? A0.filter((p) => p.hand.length === mn).map((p) => p.id) : [];
+  }
+  {
+    // Vingança do Cemitério: quem tem o maior cemitério compra 1 item
+    const gm = Math.max(...A0.map((p) => G.grave[p.id].length));
+    if (gm > 0) {
+      const V = A0.filter((p) => G.grave[p.id].length === gm && p.hand.length);
+      if (V.length) {
+        const txt = `${V.map(nm).join(', ')} ${V.length > 1 ? 'compram' : 'compra'} 1 item`;
+        log(`Vingança do Cemitério: ${txt} (maior cemitério: ${gm}).`, 'it');
+        void fx({ type: 'toast', text: `Vingança do Cemitério: ${txt}.` }, false);
+        for (const p of V) await drawItems(p, 1);
+      }
+    }
+  }
   G.leaders = A0.every((p) => p.hand.length === mx)
     ? []
     : A0.filter((p) => p.hand.length === mx).map((p) => p.id);
   G.lastStand = A0.length === 2 && A0.every((p) => p.hand.length === 1);
   if (G.lastStand)
     log('Última carta: quem perder por aproximação não descarta nesta rodada.', 'rh');
+  G.necro = null;
+  if (chaosIs('NECRO')) {
+    G.necro = {};
+    for (const p of alivePl())
+      if (G.grave[p.id].length) {
+        G.necro[p.id] = p.hand;
+        p.hand = G.grave[p.id];
+        G.grave[p.id] = [];
+      }
+    log('Necromante: quem tem cemitério joga só com as cartas dele nesta rodada.', 'ch');
+    void fx(
+      {
+        type: 'banner',
+        text: 'Necromante',
+        sub: 'Nesta rodada, cada um joga com as cartas do próprio cemitério',
+        kind: 'pink',
+      },
+      false,
+    );
+    for (const id of Object.keys(G.necro))
+      void fx(
+        {
+          type: 'toast',
+          to: +id,
+          text: 'Necromante: sua mão agora são as cartas do seu cemitério. Se vencer, fica com as que jogar.',
+        },
+        false,
+      );
+  }
   if (!G.monsters.length) {
     G.monsters = shuffle(G.mused);
     G.mused = [];
@@ -947,6 +1082,11 @@ export async function playRound() {
   }
   G.revealed = true;
   sync();
+  const mfx = monFx();
+  if (mfx) {
+    log(`Efeito do monstro: ${MFX[mfx][0]} — ${MFX[mfx][1]}`, 'ch');
+    void fx({ type: 'toast', text: `Monstro ${MFX[mfx][0]}: ${MFX[mfx][1]}` }, false);
+  }
   await wait(1700 + 350 * G.n);
   log(
     `Monstro acordou: ${G.monster.v}${monVal() !== G.monster.v ? ` (vale ${monVal()})` : ''} — território ${G.monster.ts.map((c) => CLAN[c]).join(' e ')}${G.monster2 ? ` · segundo monstro: ${G.monster2.v}` : ''}${G.mutantCard ? ` · mutante: ${G.mutantCard} (${G.mutant > 0 ? '+5' : '−5'})` : ''}`,
@@ -998,6 +1138,7 @@ export async function playRound() {
   for (const p of ord()) {
     const rd = G.rd[p.id];
     if (!rd.gs.length || winners.has(p)) continue;
+    if (rd.gs.filter((g) => g !== rd.borrow).length >= 3) (G.pressa ||= []).push(p.id);
     if (G.lastStand) {
       log(`${nm(p)} perdeu, mas é a última carta: não descarta.`);
       void fx(
@@ -1087,18 +1228,49 @@ export async function playRound() {
     }
     sync();
   }
+  if (G.necro) {
+    for (const id of Object.keys(G.necro)) {
+      const p = P(+id),
+        rd = G.rd[p.id],
+        won = winners.has(p) && rd.gs.length;
+      const keep = won ? rd.gs.filter((g) => g !== rd.borrow && p.hand.includes(g)) : [];
+      const rest = p.hand.filter((g) => !keep.includes(g));
+      G.grave[p.id] = G.grave[p.id].concat(rest);
+      p.hand = G.necro[p.id].concat(keep);
+      if (won && keep.length) {
+        log(
+          `Necromante: ${nm(p)} venceu e ficou com ${keep.map(gobTxt).join(', ')} do cemitério.`,
+          'it',
+        );
+        void fx(
+          {
+            type: 'toast',
+            to: p.id,
+            text: `Necromante: ${keep.map(gobTxt).join(', ')} voltou do cemitério para a sua mão!`,
+          },
+          false,
+        );
+      }
+    }
+    G.necro = null;
+    sync();
+  }
   // vencedores
   if (G.duel && winners.size === 1) {
     const p = [...winners][0],
       o = P(G.duel.find((id) => id !== p.id)!); // pode vir undefined: o `o &&` abaixo cuida
     if (o && o.hand.length && !armed(o, 'ESCUDO')) await takeCard(p, o, 'steal');
-    await drawItems(p, 1);
+    await rewardItems([p]);
   } else if (!G.duel || winners.size > 1) {
     for (const p of ord()) {
       if (!winners.has(p) || !p.alive) continue;
-      const exact = R.kind === 'exact',
-        nItems = 1;
-      const n = exact ? 2 : G.lastStand ? 0 : hasKing(p, 0) ? 2 : 1;
+      const exact = R.kind === 'exact';
+      const azarao = exact && (G.underdog || []).includes(p.id);
+      if (azarao) {
+        log(`Cravada do Azarão: ${nm(p)} tinha a menor mão da mesa e rouba 3 cartas.`, 'it');
+        void fx({ type: 'toast', text: `Cravada do Azarão: ${nm(p)} rouba 3 cartas!` }, false);
+      }
+      const n = exact ? (azarao ? 3 : 2) : G.lastStand ? 0 : hasKing(p, 0) ? 2 : 1;
       const mode = exact ? 'steal' : 'elim';
       if (!exact && n === 0) log(`${nm(p)} venceu na última carta: só compra o item.`);
       for (let i = 0; i < n; i++) {
@@ -1118,8 +1290,30 @@ export async function playRound() {
           await takeCard(p, T.find((x) => x.id === +r.target!) || botTarget(p, T, 'elim'), 'elim');
         }
       }
-      await drawItems(p, nItems);
     }
+    await rewardItems(ord().filter((p) => winners.has(p) && p.alive));
+  }
+  {
+    const Q = (G.pressa || []).map(P).filter((q) => q.alive && q.hand.length);
+    if (Q.length) {
+      log(
+        `Pressa não Compensa: ${Q.map(nm).join(', ')} ${Q.length > 1 ? 'perderam' : 'perdeu'} com 3 goblins ou mais e ${Q.length > 1 ? 'compram' : 'compra'} 1 item.`,
+        'it',
+      );
+      void fx(
+        {
+          type: 'toast',
+          text: `Pressa não Compensa: ${Q.map(nm).join(', ')} ${Q.length > 1 ? 'compram' : 'compra'} 1 item.`,
+        },
+        false,
+      );
+      for (const q of Q) await drawItems(q, 1);
+    }
+  }
+  if (chaosIs('FEIRA')) {
+    log('Feira dos Goblins: todos compram 1 item.', 'ch');
+    void fx({ type: 'toast', text: 'Feira dos Goblins: todos compram 1 item.' }, false);
+    for (const p of ord()) if (p.alive && p.hand.length) await drawItems(p, 1);
   }
   checkOuts();
   G.chief = (G.chief + 1) % G.n;
