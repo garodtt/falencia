@@ -89,6 +89,13 @@ function bustNotice() {
   }, 1800);
 }
 
+// fechou um modal que não era pergunta do motor (Regras, confirmação de saída): a pergunta que
+// chegou enquanto ele estava aberto foi pulada, então tenta de novo. Na resposta de uma pergunta,
+// LOCAL.modalNonce ainda está preenchido aqui, e ela não reabre.
+useUi.subscribe((s, prev) => {
+  if (prev.modal && !s.modal && !LOCAL.modalNonce && G && G.players) askIfPending();
+});
+
 // o motor fez uma pergunta a este jogador (Pedágio, Mercadora, NÃO!...): abre o modal
 function askIfPending() {
   const pe = myPending();

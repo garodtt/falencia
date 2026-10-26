@@ -133,4 +133,18 @@ describe('modal de escolha', () => {
     act(() => closeStaleModal());
     await expect(answer).resolves.toBeNull();
   });
+
+  it('abre a pergunta que chegou enquanto as Regras estavam abertas, ao fechá-las', async () => {
+    await import('../../ui/render.ts'); // registra o "tentar de novo" ao fechar modal
+    game();
+    render(<Modal />);
+    void askLocal('Regras', '', [{ label: 'Fechar', value: 1 }]);
+    G.pend[0] = {
+      kind: 'ask',
+      data: { title: 'Pedágio', text: 'Escolha 1 carta.', options: [{ label: '3', value: 3 }] },
+      nonce: 1,
+    };
+    fireEvent.click(await screen.findByRole('button', { name: 'Fechar' }));
+    expect(await screen.findByRole('button', { name: '3' })).toBeTruthy();
+  });
 });

@@ -38,12 +38,15 @@ export let actSeq = 0,
 export function sendAct(a: ActBody) {
   actSeq++;
   const body = Object.assign({ seq: Date.now() * 1000 + actSeq }, a);
+  // mesa e uid de agora: o leaveTable() limpa NET.code antes da escrita acontecer
+  const code = NET.code!,
+    uid = NET.uid!;
   actChain = actChain
-    .then(() => actsCol(NET.code!).doc(NET.uid!).set(body))
+    .then(() => actsCol(code).doc(uid).set(body))
     .catch(() => {
       toast('Não consegui enviar sua jogada. Tentando de novo…');
       return new Promise((r) => setTimeout(r, 1200))
-        .then(() => actsCol(NET.code!).doc(NET.uid!).set(body))
+        .then(() => actsCol(code).doc(uid).set(body))
         .catch(() => toast('Sem conexão com a mesa.'));
     });
   return actChain;

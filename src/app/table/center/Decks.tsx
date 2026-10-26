@@ -84,11 +84,22 @@ function Pile({
       <TipNote>{hint}</TipNote>
     </TipBody>
   ));
+  const act = need !== undefined && onClick;
   return (
     <div
       className={`pile ${need !== undefined ? 'drawable' : ''}`}
       id={id}
-      {...tip.anchor({ onClick })}
+      {...(act ? { role: 'button', tabIndex: 0 } : {})}
+      {...tip.anchor({
+        onClick,
+        onKeyDown: act
+          ? (e) => {
+              if (e.key !== 'Enter' && e.key !== ' ') return;
+              e.preventDefault();
+              onClick();
+            }
+          : undefined,
+      })}
     >
       <div className="stack">
         {children}
