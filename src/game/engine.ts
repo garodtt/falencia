@@ -588,10 +588,12 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
     case 'PORRETE':
     case 'PE_CABRA':
     case 'AJUSTE':
-    case 'OCULOS':
     case 'CHAPEU':
+    case 'OCULOS':
+    case 'NARIZ':
+    case 'POMADA':
     case 'POCAO':
-    case 'POMADA': {
+    case 'MACHUCADO': {
       const d = +a.d!;
       if (k === 'GRITO' ? ![2, -2].includes(d) : !itemOptions(p, k).some((o) => o.d === d)) return;
       spendItem(p, k);
@@ -601,10 +603,10 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
         log(`${nm(p)} usou Grito de Guerra: monstro ${d > 0 ? '+' : ''}${d}.`, 'it');
       } else {
         rd.delta += d;
-        log(`${nm(p)} usou ${ITEMS[k][0]} (${d > 0 ? '+' : ''}${d}).`, 'it');
+        log(`${nm(p)} usou ${ITEMS[k][0]}: ${d > 0 ? '+' : ''}${d}.`, 'it');
       }
       void fx(
-        { type: 'pop', pid: p.id, text: `${ITEMS[k][0]} ${d > 0 ? '+' : ''}${d}`, good: true },
+        { type: 'pop', pid: p.id, text: `${ITEMS[k][0]}: ${d > 0 ? '+' : ''}${d}`, good: true },
         false,
       );
       break;

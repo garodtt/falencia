@@ -48,9 +48,13 @@ export function GoblinTip({ g, p }: { g: Gob; p?: Player }) {
   );
 }
 
-// o item que você tem e que dá efeito a esta característica (nada, se não tiver). Só nas suas
-// cartas: os itens dos rivais são segredo.
+// os itens que você tem e que dão efeito a esta característica (nada, se não tiver). Só nas
+// suas cartas: os itens dos rivais são segredo.
 function itemFor(p: Player, t: number) {
-  const k = TRAIT_ITEM[t];
-  return k && p.items.includes(k) ? `Você tem ${ITEMS[k][0]}: ${ITEMS[k][1]}` : null;
+  const ks = (TRAIT_ITEM[t] || []).filter((k) => p.items.includes(k));
+  return ks.length
+    ? ks.map((k) => (
+        <span key={k} className="block">{`Você tem ${ITEMS[k][0]}: ${ITEMS[k][1]}`}</span>
+      ))
+    : null;
 }

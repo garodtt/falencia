@@ -129,11 +129,7 @@ void test('não dispara a Armadilha de quem perdeu o goblin do cemitério', asyn
   assert.deepEqual(G.grave[0], [mk(0, 3)]);
 });
 
-void test('o monte de itens continua com 50 cartas', () => {
-  const total = Object.values(ITEMS).reduce((a, v) => a + v[3], 0);
-  assert.equal(total, 50);
+void test('Cicatrizes Compartilhadas tem 2 cópias no monte', () => {
   assert.equal(ITEMS.CICATRIZ[3], 2);
-  assert.equal(ITEMS.PORRETE[3], 2);
-  assert.equal(ITEMS.PE_CABRA[3], 2);
-  assert.equal(table([[], [], []]).ideck.length, 50);
+  assert.equal(table([[], [], []]).ideck.filter((k) => k === 'CICATRIZ').length, 2);
 });

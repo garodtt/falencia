@@ -39,14 +39,14 @@ export function Rules() {
           característica usada por itens (Chapéu Pontudo, Disfarce) e pela Maldição.
         </L>
         <L i={<Icon name="scar" />} t="Cicatriz">
-          característica usada pelo item Cicatrizes Compartilhadas; o Rei Quebra-Crânio empresta
-          Cicatriz aos goblins pares.
+          característica usada pelos itens Machucado e Cicatrizes Compartilhadas; o Rei
+          Quebra-Crânio empresta Cicatriz aos goblins pares.
         </L>
         <L i={<Icon name="monocle" />} t="Monóculo">
           característica usada pelo item Monóculo Polido.
         </L>
         <L i={<Icon name="stink" />} t="Fedorento">
-          característica usada pelo item Fuga Fedorenta.
+          característica usada pelos itens Fuga Fedorenta e Nariz de Ferro.
         </L>
         <L i={<Icon name="spiral" />} t="Maluco">
           característica usada pela Poção Maluca.
@@ -144,6 +144,11 @@ export function Rules() {
       <p>
         <b className="text-text">Itens:</b> no máximo 3 na mão. Se comprar o 4º, escolha 1 para
         mandar para o fundo do monte de itens.
+        <br />
+        <b className="text-text">Itens de característica</b> (☀, só se você jogou goblin com a
+        característica): Chapéu Pontudo +2, Monóculo Polido +1 por goblin de Monóculo, Nariz de
+        Ferro +3 (Fedorento); Pomada de Pereba −2, Poção Maluca −1 por goblin Maluco, Machucado −3
+        (Cicatriz).
       </p>
       <p>
         <b className="text-text">Viradas:</b> <b className="text-text">Vingança do Cemitério</b> —

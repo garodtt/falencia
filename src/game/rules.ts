@@ -3,6 +3,7 @@ import {
   ARMS,
   BA,
   CH,
+  CN,
   ITEMS,
   KINGS,
   LEND,
@@ -199,6 +200,15 @@ export function standing(): Standing {
   const m = Math.min(...pool.map((x) => x.d));
   return { w: pool.filter((x) => x.d === m).map((x) => x.p), kind: 'closest', F, M };
 }
+// itens de característica: ajuste fixo, só com goblin jogado que tenha a característica
+const TRAIT_D: Partial<Record<ItemKey, [trait: number, d: number, each: boolean]>> = {
+  CHAPEU: [CH, 2, false],
+  OCULOS: [OC, 1, true],
+  NARIZ: [CN, 3, false],
+  POMADA: [VE, -2, false],
+  POCAO: [MA, -1, true],
+  MACHUCADO: [BA, -3, false],
+};
 export function itemOptions(p: Player, k: ItemKey) {
   const rd = G.rd[p.id],
     gs = rd.gs,
@@ -214,27 +224,14 @@ export function itemOptions(p: Player, k: ItemKey) {
       return [{ d: -2, label: '−2' }];
     case 'AJUSTE':
       return rng(3);
-    case 'OCULOS': {
-      const n = gs.filter((g) => traitsOf(p, g) & OC).length;
-      return Array.from({ length: 2 * n }, (_, i) => ({ d: i + 1, label: '+' + (i + 1) }));
-    }
-    case 'CHAPEU': {
-      const n = gs.filter((g) => traitsOf(p, g) & CH).length;
-      return n ? rng(2 * n) : [];
-    }
-    case 'POCAO': {
-      const o: { d: number; label: string }[] = [];
-      gs.forEach((g) => {
-        const v = val(p, g);
-        if (traitsOf(p, g) & MA && v > 0) {
-          o.push({ d: v, label: `${gv(g)} vale o dobro (+${v})` });
-          o.push({ d: -Math.ceil(v / 2), label: `${gv(g)} vale a metade (−${Math.ceil(v / 2)})` });
-        }
-      });
-      return o;
-    }
-    case 'POMADA':
-      return gs.some((g) => traitsOf(p, g) & VE) ? rng(3) : [];
+  }
+  const td = TRAIT_D[k];
+  if (td) {
+    const [t, d, each] = td,
+      n = gs.filter((g) => traitsOf(p, g) & t).length;
+    if (!n) return [];
+    const x = each ? d * n : d;
+    return [{ d: x, label: x > 0 ? '+' + x : '−' + -x }];
   }
   return [];
 }
