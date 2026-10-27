@@ -1,7 +1,8 @@
 // Tela de regras (aberta pelo botão "Regras" da barra do topo).
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import type { ReactNode } from 'react';
-import { CHAOS, CLAN, KINGS, lendTxt, traitNames } from '../../game/data.ts';
+import { CHAOS, CLAN, ITEMS, KINGS, REACT, lendTxt, traitNames } from '../../game/data.ts';
+import type { ItemKey } from '../../game/data.ts';
 import { Icon } from '../components/Icon.tsx';
 
 // uma linha da legenda: ícone, nome e o que significa. O " — " fica no mesmo nó de texto da
@@ -27,7 +28,116 @@ function Section({ first, children }: { first?: boolean; children: ReactNode }) 
   );
 }
 
+const TABS = [
+  ['rules', 'Regras'],
+  ['items', 'Itens'],
+  ['chaos', 'Caos'],
+] as const;
+type Tab = (typeof TABS)[number][0];
+
+const total = (defs: readonly (readonly unknown[])[], i: number) =>
+  defs.reduce((a, d) => a + (d[i] as number), 0);
+
+// tela de regras com abas: regras, tabela de itens e tabela de Caos
 export function Rules() {
+  const [tab, setTab] = useState<Tab>('rules');
+  return (
+    <div className="grid w-full gap-2 text-left">
+      <div role="tablist" className="flex gap-1 border-b border-line">
+        {TABS.map(([k, t]) => (
+          <button
+            key={k}
+            role="tab"
+            aria-selected={tab === k}
+            onClick={() => setTab(k)}
+            className={`-mb-px cursor-pointer border-b-2 bg-transparent px-3 py-1.5 font-ui text-[13px] font-bold ${tab === k ? 'border-accent text-text' : 'border-transparent text-muted'}`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+      {tab === 'rules' ? <RulesText /> : tab === 'items' ? <ItemTable /> : <ChaosTable />}
+    </div>
+  );
+}
+
+// uma carta da tabela: nome, cópias, quando usa (itens) e o texto
+function CardRow({
+  name,
+  copies,
+  when,
+  text,
+}: {
+  name: string;
+  copies: number;
+  when?: ReactNode;
+  text: string;
+}) {
+  return (
+    <div className="grid gap-0.5 border-b border-line py-1.5 last:border-b-0">
+      <div className="flex items-center gap-2">
+        <b className="text-text">{name}</b>
+        {when ? <span className="inline-flex items-center gap-1 text-[11px]">{when}</span> : null}
+        <span className="ml-auto flex-none text-[11px] font-bold text-accent">{`×${copies}`}</span>
+      </div>
+      <span>{text}</span>
+    </div>
+  );
+}
+
+const WHEN_ORDER = (k: ItemKey) =>
+  k === 'SACO' ? 1 : REACT.includes(k) ? 3 : ITEMS[k][2] === 'D' ? 0 : 2;
+function whenOf(k: ItemKey) {
+  if (k === 'SACO') return 'Na hora';
+  if (REACT.includes(k)) return 'Reação';
+  return ITEMS[k][2] === 'D' ? (
+    <>
+      <Icon name="moon" />
+      Dormindo
+    </>
+  ) : (
+    <>
+      <Icon name="sun" />
+      Acordado
+    </>
+  );
+}
+
+function ItemTable() {
+  const keys = (Object.keys(ITEMS) as ItemKey[]).sort(
+    (a, b) => WHEN_ORDER(a) - WHEN_ORDER(b) || ITEMS[a][0].localeCompare(ITEMS[b][0], 'pt'),
+  );
+  return (
+    <div className="max-h-[60vh] overflow-auto text-[13px] text-muted">
+      <p className="m-0 mb-1">{`${total(Object.values(ITEMS), 3)} cartas no monte de itens. No máximo 3 na mão.`}</p>
+      {keys.map((k) => (
+        <CardRow
+          key={k}
+          name={ITEMS[k][0]}
+          copies={ITEMS[k][3]}
+          when={whenOf(k)}
+          text={ITEMS[k][1]}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ChaosTable() {
+  const keys = Object.keys(CHAOS) as (keyof typeof CHAOS)[];
+  return (
+    <div className="max-h-[60vh] overflow-auto text-[13px] text-muted">
+      <p className="m-0 mb-1">{`${total(Object.values(CHAOS), 2)} cartas no monte de Caos. A carta revelada vale na rodada seguinte, para todos.`}</p>
+      {keys
+        .sort((a, b) => CHAOS[a][0].localeCompare(CHAOS[b][0], 'pt'))
+        .map((k) => (
+          <CardRow key={k} name={CHAOS[k][0]} copies={CHAOS[k][2]} text={CHAOS[k][1]} />
+        ))}
+    </div>
+  );
+}
+
+function RulesText() {
   return (
     <div className="grid w-full gap-2 text-left text-[13px] text-muted max-h-[60vh] overflow-auto">
       <p className="m-0">
@@ -178,16 +288,9 @@ export function Rules() {
         <br />A Maldição desliga o rei que tiver a característica sorteada.
       </p>
       <p>
-        <b className="text-text">Caos (50 cartas):</b>
+        <b className="text-text">Cartas:</b> veja as abas <b className="text-text">Itens</b> e{' '}
+        <b className="text-text">Caos</b> para a lista completa, com cópias e textos.
       </p>
-      <ul className="m-0 grid gap-1 pl-[18px]">
-        {Object.entries(CHAOS).map(([k, c]) => (
-          <li key={k}>
-            <b>{c[0]}</b>
-            {` (${c[2]}) — ${c[1]}`}
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
