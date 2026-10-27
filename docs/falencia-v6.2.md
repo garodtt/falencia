@@ -1,15 +1,15 @@
 # 🔄 v6.2 — Viradas: limite de itens, Feira e monstros com efeito
 
-| Campo | Valor |
-| --- | --- |
-| Status | Atual |
-| Data | 2026-10-25 |
-| Partidas simuladas | 22.000 |
-| Jogadores testados | 2, 3, 4 |
-| Duração mediana (rodadas) | 2p: 17 · 3p: 20 · 4p: 21 |
-| Empates | 0% |
-| Mudanças vs anterior | Máximo de 3 itens na mão (o 4º vai para o fundo do monte). Regras de virada: Vingança do Cemitério, Cravada do Azarão (rouba 3), Pressa não Compensa. Itens novos: Mapa do Tesouro e Profecia do Caos (saíram 1 cópia de Óculos, Poção, Chinelo e Grito). Caos novos: Mínimo Máximo, Feira dos Goblins e Necromante (saíram 1 cópia de Às Cegas, Palpite Aberto, Somas Iguais, Caça ao Líder, Zona Proibida e Roleta). Monstros com efeito: Amigo dos Fracos (10, 15, 20, 25, 30, 35, 40). |
-| Principais achados | Mais viradas: quem lidera na rodada 10 vence 34% das partidas com 4 jogadores (v6.1: 51%); em 65% o vencedor esteve sozinho em último (v6.1: 45%); 5,9 trocas de liderança. Clãs equilibrados (4p: 24/25/25/26%). Partidas 2 a 3 rodadas mais longas; 43 itens usados por partida. |
+| Campo                     | Valor                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                    | Atual                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Data                      | 2026-10-25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| Partidas simuladas        | 22.000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| Jogadores testados        | 2, 3, 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| Duração mediana (rodadas) | 2p: 17 · 3p: 20 · 4p: 21                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| Empates                   | 0%                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| Mudanças vs anterior      | Máximo de 3 itens na mão (o 4º vai para o fundo do monte). Regras de virada: Vingança do Cemitério, Cravada do Azarão (rouba 3), Pressa não Compensa. Itens novos: Mapa do Tesouro e Profecia do Caos (saíram 1 cópia de Monóculo, Poção, Chinelo e Grito). Caos novos: Mínimo Máximo, Feira dos Goblins e Necromante (saíram 1 cópia de Às Cegas, Palpite Aberto, Somas Iguais, Caça ao Líder, Zona Proibida e Roleta). Monstros com efeito: Amigo dos Fracos (10, 15, 20, 25, 30, 35, 40). |
+| Principais achados        | Mais viradas: quem lidera na rodada 10 vence 34% das partidas com 4 jogadores (v6.1: 51%); em 65% o vencedor esteve sozinho em último (v6.1: 45%); 5,9 trocas de liderança. Clãs equilibrados (4p: 24/25/25/26%). Partidas 2 a 3 rodadas mais longas; 43 itens usados por partida.                                                                                                                                                                                                           |
 
 Página no Notion: https://app.notion.com/p/404d6cd7562b81f68bc4e04df2d4465e
 
@@ -36,29 +36,29 @@ Página no Notion: https://app.notion.com/p/404d6cd7562b81f68bc4e04df2d4465e
 
 ### 2. Regras de virada
 
-| Regra | Quando | Efeito |
-| --- | --- | --- |
-| **Vingança do Cemitério** | Início da rodada | Quem tem o maior cemitério compra 1 item (empate: todos os empatados compram). |
-| **Cravada do Azarão** | Ao cravar | Quem crava tendo a menor mão da mesa (contada no início da rodada) rouba 3 cartas em vez de 2. Não vale quando todos têm o mesmo número de cartas. |
-| **Pressa não Compensa** | Fim da rodada | Quem perde tendo jogado 3 goblins ou mais compra 1 item. |
+| Regra                     | Quando           | Efeito                                                                                                                                             |
+| ------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Vingança do Cemitério** | Início da rodada | Quem tem o maior cemitério compra 1 item (empate: todos os empatados compram).                                                                     |
+| **Cravada do Azarão**     | Ao cravar        | Quem crava tendo a menor mão da mesa (contada no início da rodada) rouba 3 cartas em vez de 2. Não vale quando todos têm o mesmo número de cartas. |
+| **Pressa não Compensa**   | Fim da rodada    | Quem perde tendo jogado 3 goblins ou mais compra 1 item.                                                                                           |
 
 ### 3. Itens novos
 
-| Cópias | Item | Quando | Texto da carta |
-| --- | --- | --- | --- |
-| 2 | **Mapa do Tesouro** | Monstro Dormindo | Olhe o monte de itens, escolha 1 carta e fique com ela. Depois embaralhe o monte. |
-| 2 | **Profecia do Caos** | Monstro Dormindo | Olhe o monte de Caos e escolha a carta da próxima rodada. Embaralhe o resto e coloque a escolhida no topo. |
+| Cópias | Item                 | Quando           | Texto da carta                                                                                             |
+| ------ | -------------------- | ---------------- | ---------------------------------------------------------------------------------------------------------- |
+| 2      | **Mapa do Tesouro**  | Monstro Dormindo | Olhe o monte de itens, escolha 1 carta e fique com ela. Depois embaralhe o monte.                          |
+| 2      | **Profecia do Caos** | Monstro Dormindo | Olhe o monte de Caos e escolha a carta da próxima rodada. Embaralhe o resto e coloque a escolhida no topo. |
 
 - A Profecia escolhe o Caos da **próxima** rodada, porque o da rodada atual já foi revelado e alguns Caos (Troca-Troca, Pedágio, Duelo, Necromante) acontecem logo no começo da rodada.
-- Para manter o monte em 50 itens, saiu 1 cópia de cada: Óculos de Grau, Poção Maluca, Chinelo Veloz e Grito de Guerra (2→1).
+- Para manter o monte em 50 itens, saiu 1 cópia de cada: Monóculo de Grau, Poção Maluca, Chinelo Fedorento e Grito de Guerra (2→1).
 
 ### 4. Cartas de Caos novas
 
-| Cópias | Caos | Grupo | Efeito na próxima rodada, para todos |
-| --- | --- | --- | --- |
-| 2 | **Mínimo Máximo** | Aleatoriedade | Os valores dos goblins se invertem: 1 vale 20, 2 vale 19, 3 vale 18 … 20 vale 1. |
-| 2 | **Feira dos Goblins** | Interação | No fim desta rodada, todos os jogadores compram 1 item. |
-| 2 | **Necromante** (arte: goblin necromante) | Aleatoriedade | Coloque seu cemitério na sua mão: nesta rodada você joga só com essas cartas. Quem vencer fica com as cartas que jogou; o resto volta para o cemitério. Quem não tem cemitério joga com a própria mão. |
+| Cópias | Caos                                     | Grupo         | Efeito na próxima rodada, para todos                                                                                                                                                                   |
+| ------ | ---------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 2      | **Mínimo Máximo**                        | Aleatoriedade | Os valores dos goblins se invertem: 1 vale 20, 2 vale 19, 3 vale 18 … 20 vale 1.                                                                                                                       |
+| 2      | **Feira dos Goblins**                    | Interação     | No fim desta rodada, todos os jogadores compram 1 item.                                                                                                                                                |
+| 2      | **Necromante** (arte: goblin necromante) | Aleatoriedade | Coloque seu cemitério na sua mão: nesta rodada você joga só com essas cartas. Quem vencer fica com as cartas que jogou; o resto volta para o cemitério. Quem não tem cemitério joga com a própria mão. |
 
 Para manter o baralho em 50 cartas, saiu 1 cópia de: Às Cegas (4→3), Palpite Aberto (3→2), Somas Iguais se Anulam (4→3), Caça ao Líder (3→2), Zona Proibida (3→2) e Roleta (3→2).
 
@@ -69,8 +69,8 @@ Para manter o baralho em 50 cartas, saiu 1 cópia de: Às Cegas (4→3), Palpite
 
 Alguns monstros têm um efeito impresso, que só aparece quando o monstro acorda.
 
-| Monstros | Efeito | Texto da carta |
-| --- | --- | --- |
+| Monstros                    | Efeito               | Texto da carta                                                                                                |
+| --------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------- |
 | 10, 15, 20, 25, 30, 35 e 40 | **Amigo dos Fracos** | Quando derrotado, quem compra o item é o jogador com menos itens na mão (empate: todos os empatados compram). |
 
 - Quem venceu a rodada continua roubando ou eliminando cartas normalmente; só a compra do item muda de mão.
@@ -91,19 +91,19 @@ Alguns monstros têm um efeito impresso, que só aparece quando o monstro acorda
 Cerca de 22 mil partidas simuladas com bots, com todas as regras da v6.2.
 
 | Jogadores | Duração mediana | 80% das partidas | Vitórias: Vermelho / Verde / Azul / Amarelo |
-| --- | --- | --- | --- |
-| 2 | 17 rodadas | 11 a 27 | 49% / 51% / 49% / 52% |
-| 3 | 20 rodadas | 16 a 25 | 33% / 33% / 34% / 34% |
-| 4 | 21 rodadas | 18 a 25 | 24% / 25% / 25% / 26% |
+| --------- | --------------- | ---------------- | ------------------------------------------- |
+| 2         | 17 rodadas      | 11 a 27          | 49% / 51% / 49% / 52%                       |
+| 3         | 20 rodadas      | 16 a 25          | 33% / 33% / 34% / 34%                       |
+| 4         | 21 rodadas      | 18 a 25          | 24% / 25% / 25% / 26%                       |
 
 **Viradas (4 jogadores, bots lógicos):**
 
-| Medida | v6.1 | v6.2 (limite + Feira + Amigo dos Fracos) | + regras de virada | + Mapa, Profecia e Necromante |
-| --- | --- | --- | --- | --- |
-| Quem lidera na rodada 10 vence | 51% | 41% | 35% | 34% |
-| Vencedor esteve sozinho em último em algum momento | 45% | 53% | 61% | 65% |
-| Trocas de liderança por partida | 3,8 | 4,5 | 5,5 | 5,9 |
-| Itens usados por partida | 16 | 22 | 37 | 43 |
+| Medida                                             | v6.1 | v6.2 (limite + Feira + Amigo dos Fracos) | + regras de virada | + Mapa, Profecia e Necromante |
+| -------------------------------------------------- | ---- | ---------------------------------------- | ------------------ | ----------------------------- |
+| Quem lidera na rodada 10 vence                     | 51%  | 41%                                      | 35%                | 34%                           |
+| Vencedor esteve sozinho em último em algum momento | 45%  | 53%                                      | 61%                | 65%                           |
+| Trocas de liderança por partida                    | 3,8  | 4,5                                      | 5,5                | 5,9                           |
+| Itens usados por partida                           | 16   | 22                                       | 37                 | 43                            |
 
 - Clãs equilibrados: todos a no máximo 1 ponto da parcela justa com 4 jogadores.
 - As partidas ficaram cerca de 2 a 3 rodadas mais longas que na v6.1.
