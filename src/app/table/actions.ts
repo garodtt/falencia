@@ -2,7 +2,7 @@
 import { CLAN, ITEMS, KINGS, NUMERIC, TNAME, TRAITS, chaosTitle, gc, gv } from '../../game/data.ts';
 import type { Gob, ItemKey } from '../../game/data.ts';
 import { botTakeover } from '../../game/engine.ts';
-import { canUse, itemOptions, playLimit } from '../../game/rules.ts';
+import { canUse, itemOptions, playLimit, scarGraves, scarred } from '../../game/rules.ts';
 import { G, LOCAL, ME, MODE, NET, alivePl, gobTxt, nameOf } from '../../game/state.ts';
 import type { AskValue, ItemArgs, PromptKind } from '../../game/types.ts';
 import { leaveGame, leaveTable, respond } from '../../net/online.ts';
@@ -167,6 +167,30 @@ export async function gatherArgs(k: ItemKey): Promise<ItemArgs | null> {
           .map((g) => ({ label: gobTxt(g), value: g })),
       );
       return g === null ? null : { g };
+    }
+    case 'CICATRIZ': {
+      const g = await choose(
+        'Cicatrizes Compartilhadas',
+        'Qual goblin com Cicatriz da sua mão vai para o seu cemitério?',
+        me.hand
+          .filter(scarred)
+          .sort((a, b) => gv(a) - gv(b) || gc(a) - gc(b))
+          .map((g) => ({ label: gobTxt(g), value: g })),
+      );
+      if (g === null) return null;
+      const pool = scarGraves()
+        .filter(([, x]) => x !== g)
+        .sort(([, a], [, b]) => gv(b) - gv(a) || gc(a) - gc(b));
+      const g2 = await choose(
+        'Cicatrizes Compartilhadas',
+        'Qual goblin com Cicatriz você pega?',
+        pool.map(([id, x]) => ({
+          label: `${gobTxt(x)} (${id === ME ? 'seu cemitério' : `cemitério de ${nameOf(id)}`})`,
+          value: x,
+        })),
+      );
+      if (g2 === null) return null;
+      return { g, g2, target: pool.find(([, x]) => x === g2)![0] };
     }
     case 'LADRAO': {
       const T = G.players.filter((o) => o !== me && G.grave[o.id].length);

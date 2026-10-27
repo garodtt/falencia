@@ -12,6 +12,8 @@ import {
   noTarget,
   playLimit,
   rawSum,
+  scarGraves,
+  scarred,
   standing,
   traitsOf,
   val,
@@ -225,6 +227,13 @@ export async function botDormindo(p: Player) {
         g: p.hand.reduce((a, x) => (gv(x) < gv(a) ? x : a)),
         target: botTarget(p, T, 'steal').id,
       });
+  }
+  // Cicatrizes Compartilhadas: troca o goblin com Cicatriz mais baixo da mão pelo mais alto
+  // dos cemitérios, se ganhar pelo menos 5 (o monstro ainda está virado: território não conta)
+  if (p.items.includes('CICATRIZ') && p.hand.length >= 3 && canUse(p, 'CICATRIZ', 'select')) {
+    const g = p.hand.filter(scarred).reduce((a, x) => (gv(x) < gv(a) ? x : a));
+    const [target, g2] = scarGraves().reduce((a, x) => (gv(x[1]) > gv(a[1]) ? x : a));
+    if (gv(g2) - gv(g) >= 5) await execUse(p, 'CICATRIZ', { g, g2, target });
   }
   if (p.items.includes('MAO_LEVE')) {
     const os = A.filter((o) => o !== p && o.items.length);

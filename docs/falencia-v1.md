@@ -1,15 +1,15 @@
 # 🃏 v1 — Regras originais
 
-| Campo | Valor |
-| --- | --- |
-| Status | Substituída |
-| Data | 2026-10-15 |
-| Partidas simuladas | 900.000 |
-| Jogadores testados | 2, 3, 4 |
-| Duração mediana (rodadas) | 2p: 49 · 3p: 57 · 4p: 76 |
-| Empates | 0,6–1,3% |
-| Mudanças vs anterior | Primeira versão escrita (sem versão anterior). |
-| Principais achados | Sem penalidade ao errar para menos, a melhor jogada é jogar o Ás (64% das jogadas). Recuperar carta domina em 3-4 jogadores (59-61% de vitória vs 25%). Assento 1 vence 42% com 3 jogadores. Permitir passar a vez trava o jogo. |
+| Campo                     | Valor                                                                                                                                                                                                                            |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                    | Substituída                                                                                                                                                                                                                      |
+| Data                      | 2026-10-15                                                                                                                                                                                                                       |
+| Partidas simuladas        | 900.000                                                                                                                                                                                                                          |
+| Jogadores testados        | 2, 3, 4                                                                                                                                                                                                                          |
+| Duração mediana (rodadas) | 2p: 49 · 3p: 57 · 4p: 76                                                                                                                                                                                                         |
+| Empates                   | 0,6–1,3%                                                                                                                                                                                                                         |
+| Mudanças vs anterior      | Primeira versão escrita (sem versão anterior).                                                                                                                                                                                   |
+| Principais achados        | Sem penalidade ao errar para menos, a melhor jogada é jogar o Ás (64% das jogadas). Recuperar carta domina em 3-4 jogadores (59-61% de vitória vs 25%). Assento 1 vence 42% com 3 jogadores. Permitir passar a vez trava o jogo. |
 
 Página no Notion: https://app.notion.com/p/3fcd6cd7562b81f68c03c588d18f1aee
 

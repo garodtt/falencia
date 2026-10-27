@@ -72,6 +72,7 @@ export interface ItemArgs {
   c?: number;
   t?: number;
   g?: Gob;
+  g2?: Gob; // Cicatrizes Compartilhadas: o goblin pego do cemitério de `target`
   target?: number;
   k?: ItemKey | ChaosKey; // Mapa do Tesouro / Profecia do Caos
 }

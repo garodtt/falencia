@@ -1,15 +1,15 @@
 # 👺 v5 — Falência: Goblins (definitiva)
 
-| Campo | Valor |
-| --- | --- |
-| Status | Substituída |
-| Data | 2026-10-17 |
-| Partidas simuladas | 128.000 |
-| Jogadores testados | 2, 3, 4 |
-| Duração mediana (rodadas) | 2p: 10 · 3p: 14 · 4p: 17 |
-| Empates | 0% |
-| Mudanças vs anterior | Novo jogo com tema goblins (4 clãs, goblins 1–20 com características, monstros 1–20, cartas de ação dupla face Item/Caos). Regra de rodada no estilo 21: cravou = 1 ação + 1 item por goblin; venceu sem estourar = 1 ação + 1 item; venceu estourando (todos estouraram) = 1 ação; perdeu sem estourar = descarta todos os goblins jogados; perdeu estourando = descarta todos + 1 Caos. Até 3 goblins por palpite, clãs Fúria/Mortos-vivos/Azul par-ímpar/Amarelo ignora, Dobradinha +5, mão inicial por sorteio. |
-| Principais achados | Versão mais equilibrada de todas: nenhuma estratégia simples passa de 1,13 contra a mesa mista (antes até 1,55). Partidas de 10/14/17 rodadas. Caos ~0,8 por rodada com 4 jogadores. Atenção: quase todos passam a jogar 1 goblin por palpite; Vermelho forte com 2–3 jogadores e Amarelo fraco. |
+| Campo                     | Valor                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                    | Substituída                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Data                      | 2026-10-17                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Partidas simuladas        | 128.000                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Jogadores testados        | 2, 3, 4                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Duração mediana (rodadas) | 2p: 10 · 3p: 14 · 4p: 17                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| Empates                   | 0%                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Mudanças vs anterior      | Novo jogo com tema goblins (4 clãs, goblins 1–20 com características, monstros 1–20, cartas de ação dupla face Item/Caos). Regra de rodada no estilo 21: cravou = 1 ação + 1 item por goblin; venceu sem estourar = 1 ação + 1 item; venceu estourando (todos estouraram) = 1 ação; perdeu sem estourar = descarta todos os goblins jogados; perdeu estourando = descarta todos + 1 Caos. Até 3 goblins por palpite, clãs Fúria/Mortos-vivos/Azul par-ímpar/Amarelo ignora, Dobradinha +5, mão inicial por sorteio. |
+| Principais achados        | Versão mais equilibrada de todas: nenhuma estratégia simples passa de 1,13 contra a mesa mista (antes até 1,55). Partidas de 10/14/17 rodadas. Caos ~0,8 por rodada com 4 jogadores. Atenção: quase todos passam a jogar 1 goblin por palpite; Vermelho forte com 2–3 jogadores e Amarelo fraco.                                                                                                                                                                                                                    |
 
 Página no Notion: https://app.notion.com/p/3fcd6cd7562b8168b4a8d010c8b24c01
 
@@ -38,14 +38,14 @@ Jogo de 2 a 4 jogadores. Cada jogador comanda um bando de goblins de um territó
 
 ## 2. Componentes
 
-| Componente | Quantidade | Descrição |
-| --- | --- | --- |
-| Cartas de goblin | 4 × 20 = 80 | Uma cor por território, valores 1 a 20, cada um com 3 características. |
-| Cartas de monstro | 4 × 20 = 80 | 20 monstros de cada território, valores 1 a 20. |
-| Cartas de ação (dupla face) | 50 | Item na metade de cima, Caos na metade de baixo. |
-| Tabuleiros de território | 4 | Um por cor, com a habilidade do clã. |
-| Marcador Chefe da Toca | 1 | Quem age primeiro. Passa para a esquerda a cada rodada. |
-| Marcadores de efeito | ~10 | Para lembrar efeitos de Caos que valem na próxima rodada. |
+| Componente                  | Quantidade  | Descrição                                                              |
+| --------------------------- | ----------- | ---------------------------------------------------------------------- |
+| Cartas de goblin            | 4 × 20 = 80 | Uma cor por território, valores 1 a 20, cada um com 3 características. |
+| Cartas de monstro           | 4 × 20 = 80 | 20 monstros de cada território, valores 1 a 20.                        |
+| Cartas de ação (dupla face) | 50          | Item na metade de cima, Caos na metade de baixo.                       |
+| Tabuleiros de território    | 4           | Um por cor, com a habilidade do clã.                                   |
+| Marcador Chefe da Toca      | 1           | Quem age primeiro. Passa para a esquerda a cada rodada.                |
+| Marcadores de efeito        | ~10         | Para lembrar efeitos de Caos que valem na próxima rodada.              |
 
 ## 3. Preparação
 
@@ -79,13 +79,13 @@ Jogo de 2 a 4 jogadores. Cada jogador comanda um bando de goblins de um territó
 
 ### O que cada resultado rende
 
-| Resultado | O que acontece |
-| --- | --- |
-| **Cravou o número** | 1 ação + compra 1 item por goblin jogado (até 3) |
-| **Venceu sem estourar** | 1 ação + compra 1 item |
-| **Venceu estourando** (todos estouraram) | 1 ação |
-| **Perdeu sem estourar** | Descarta todos os goblins que jogou |
-| **Perdeu estourando** | Descarta todos os goblins que jogou + compra 1 carta e sofre o lado Caos |
+| Resultado                                | O que acontece                                                           |
+| ---------------------------------------- | ------------------------------------------------------------------------ |
+| **Cravou o número**                      | 1 ação + compra 1 item por goblin jogado (até 3)                         |
+| **Venceu sem estourar**                  | 1 ação + compra 1 item                                                   |
+| **Venceu estourando** (todos estouraram) | 1 ação                                                                   |
+| **Perdeu sem estourar**                  | Descarta todos os goblins que jogou                                      |
+| **Perdeu estourando**                    | Descarta todos os goblins que jogou + compra 1 carta e sofre o lado Caos |
 
 - A **ação** é: recuperar 1 goblin aleatório do próprio cemitério, ou eliminar 1 goblin aleatório da mão de um oponente.
 - **Empate entre vencedores:** cada um recupera 1 goblin e compra itens conforme a tabela.
@@ -104,18 +104,18 @@ Jogo de 2 a 4 jogadores. Cada jogador comanda um bando de goblins de um territó
 
 Cada característica aparece 10 vezes, com média de valor 10,5. Os goblins n e 21−n têm as mesmas características.
 
-| Goblin | Características | Goblin | Características |
-| --- | --- | --- | --- |
-| 1 | Chapéu · Chinelo · Verruga | 11 | Chapéu · Maluco · Verruga |
-| 2 | Óculos · Chinelo · Maluco | 12 | Barba · Chinelo · Maluco |
-| 3 | Chapéu · Barba · Óculos | 13 | Barba · Óculos · Verruga |
-| 4 | Óculos · Chinelo · Verruga | 14 | Chapéu · Óculos · Maluco |
-| 5 | Chapéu · Barba · Chinelo | 15 | Barba · Maluco · Verruga |
-| 6 | Barba · Maluco · Verruga | 16 | Chapéu · Barba · Chinelo |
-| 7 | Chapéu · Óculos · Maluco | 17 | Óculos · Chinelo · Verruga |
-| 8 | Barba · Óculos · Verruga | 18 | Chapéu · Barba · Óculos |
-| 9 | Barba · Chinelo · Maluco | 19 | Óculos · Chinelo · Maluco |
-| 10 | Chapéu · Maluco · Verruga | 20 | Chapéu · Chinelo · Verruga |
+| Goblin | Características            | Goblin | Características            |
+| ------ | -------------------------- | ------ | -------------------------- |
+| 1      | Chapéu · Chinelo · Verruga | 11     | Chapéu · Maluco · Verruga  |
+| 2      | Óculos · Chinelo · Maluco  | 12     | Barba · Chinelo · Maluco   |
+| 3      | Chapéu · Barba · Óculos    | 13     | Barba · Óculos · Verruga   |
+| 4      | Óculos · Chinelo · Verruga | 14     | Chapéu · Óculos · Maluco   |
+| 5      | Chapéu · Barba · Chinelo   | 15     | Barba · Maluco · Verruga   |
+| 6      | Barba · Maluco · Verruga   | 16     | Chapéu · Barba · Chinelo   |
+| 7      | Chapéu · Óculos · Maluco   | 17     | Óculos · Chinelo · Verruga |
+| 8      | Barba · Óculos · Verruga   | 18     | Chapéu · Barba · Óculos    |
+| 9      | Barba · Chinelo · Maluco   | 19     | Óculos · Chinelo · Maluco  |
+| 10     | Chapéu · Maluco · Verruga  | 20     | Chapéu · Chinelo · Verruga |
 
 ### Cor do goblin e cemitério
 
@@ -126,38 +126,38 @@ Cada característica aparece 10 vezes, com média de valor 10,5. Os goblins n e 
 
 ## 8. Clãs
 
-| Cor | Clã | Habilidade |
-| --- | --- | --- |
-| 🔴 Vermelho | Quebra-Crânio | **Fúria:** ao vencer, a eliminação tira 2 goblins. |
-| 🟢 Verde | Musgo-Podre | **Mortos-vivos:** uma vez por partida, ao ficar sem goblins, recupera 2 do cemitério e continua. |
-| 🔵 Azul | Olho-de-Vidro | **Faro:** antes do palpite, sabe se o valor do monstro é par ou ímpar. |
-| 🟡 Amarelo | Dente-de-Ouro | **Sortudo:** ignora o primeiro Caos individual que sofrer em cada rodada. |
+| Cor         | Clã           | Habilidade                                                                                       |
+| ----------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| 🔴 Vermelho | Quebra-Crânio | **Fúria:** ao vencer, a eliminação tira 2 goblins.                                               |
+| 🟢 Verde    | Musgo-Podre   | **Mortos-vivos:** uma vez por partida, ao ficar sem goblins, recupera 2 do cemitério e continua. |
+| 🔵 Azul     | Olho-de-Vidro | **Faro:** antes do palpite, sabe se o valor do monstro é par ou ímpar.                           |
+| 🟡 Amarelo  | Dente-de-Ouro | **Sortudo:** ignora o primeiro Caos individual que sofrer em cada rodada.                        |
 
 ## 9. Cartas de ação (50)
 
-| Cópias | ITEM (vencedor guarda) | Quando | CAOS (quem perdeu estourando sofre) |
-| --- | --- | --- | --- |
-| 4 | **NÃO!** — cancela um item, um Caos ou uma ação de vencedor. Pode ser respondido com outro NÃO!. | Reação | **Mãos Atadas** — não pode usar itens na próxima rodada. |
-| 4 | **Porrete** — +2 na sua soma. | Depois da revelação | **Galo na Cabeça** — sua soma vale −2 na próxima rodada. |
-| 4 | **Pé de Cabra** — −2 na sua soma. | Depois da revelação | **Tropeção** — sua soma vale +2 na próxima rodada. |
-| 3 | **Pá de Coveiro** — recupere 2 goblins do seu cemitério. | Antes do palpite | **Desenterrado** — o oponente com menos goblins recupera 1. |
-| 3 | **Ladrão de Túmulos** — pegue 1 goblin do cemitério de outro jogador. | Antes do palpite | **Saqueadores** — o jogador à esquerda pega 1 goblin do seu cemitério. |
-| 2 | **Óculos de Grau** — cada goblin de Óculos jogado vale até +2. | Depois da revelação | **Óculos Embaçados** — seus goblins de Óculos valem 0 na próxima rodada. |
-| 2 | **Chapéu Pontudo** — cada goblin de Chapéu jogado vale até ±2. | Depois da revelação | **Chapéu Furado** — seus goblins de Chapéu valem −2 na próxima rodada. |
-| 2 | **Disfarce** — um goblin jogado ganha qualquer característica nesta rodada. | Depois da revelação | 🌪️ **Barba Molhada** — goblins com Barba valem 0 para todos na próxima rodada. |
-| 2 | **Chinelo Veloz** — ao perder, salve do descarte um goblin de Chinelo que você jogou. | Reação | 🌪️ **Chinelada Geral** — todos descartam 1 goblin de Chinelo. |
-| 2 | **Poção Maluca** — um goblin Maluco jogado vale o dobro ou a metade. | Depois da revelação | **Surto Maluco** — seus Malucos valem o dobro na próxima rodada. |
-| 2 | **Pomada de Verruga** — um goblin de Verruga jogado vale até ±3. | Depois da revelação | **Maldição da Verruga** — seus goblins de Verruga valem −3 na próxima rodada. |
-| 2 | **Luneta** — espie o valor do monstro. | Antes do palpite | **Grito do Chefe** — jogue com a mão aberta até o fim da próxima rodada. |
-| 2 | **Isca de Monstro** — troque o monstro revelado pelo próximo do monte. | Depois da revelação | 🌪️ **Monstro Bombado** — o monstro da próxima rodada vale o dobro. |
-| 3 | **Amuleto** — ao perder, você não descarta nenhum goblin. | Reação | **Espelho Rachado** — na próxima rodada, só pode jogar 1 goblin. |
-| 2 | **Armadilha** — quando tentarem eliminar seu goblin, quem atacou perde um. | Reação | **Troca-Troca** — troque sua mão com quem tem menos goblins. |
-| 2 | **Mão Leve** — roube 1 item aleatório de um oponente. | Antes do palpite | **Oferenda** — dê 1 item a quem tem menos goblins (sem item: descarte 1 goblin). |
-| 2 | **Dobradinha** — +5 na sua soma. | Depois da revelação | **Dobradinha Atrasada** — daqui a 2 rodadas seus goblins valem o dobro. |
-| 1 | **Bússola Torta** — nesta rodada você também pode vencer como mais próximo por cima. | Depois da revelação | 🌪️ **Mundo Invertido** — na próxima rodada vence o mais próximo por cima. |
-| 2 | **Escudo de Panela** — anula uma eliminação contra você. | Reação | 🌪️ **Terremoto** — todos passam 1 goblin para a esquerda. |
-| 2 | **Saco de Moedas** — compre 2 cartas de ação na hora. | Automático | 🌪️ **Explosão de Lama** — todos descartam todos os itens. |
-| 2 | **Festa no Cemitério** — você e o oponente com menos goblins recuperam 1. | Antes do palpite | 🌪️ **Festa dos Outros** — todos, menos você, recuperam 1 goblin. |
+| Cópias | ITEM (vencedor guarda)                                                                           | Quando              | CAOS (quem perdeu estourando sofre)                                              |
+| ------ | ------------------------------------------------------------------------------------------------ | ------------------- | -------------------------------------------------------------------------------- |
+| 4      | **NÃO!** — cancela um item, um Caos ou uma ação de vencedor. Pode ser respondido com outro NÃO!. | Reação              | **Mãos Atadas** — não pode usar itens na próxima rodada.                         |
+| 4      | **Porrete** — +2 na sua soma.                                                                    | Depois da revelação | **Galo na Cabeça** — sua soma vale −2 na próxima rodada.                         |
+| 4      | **Pé de Cabra** — −2 na sua soma.                                                                | Depois da revelação | **Tropeção** — sua soma vale +2 na próxima rodada.                               |
+| 3      | **Pá de Coveiro** — recupere 2 goblins do seu cemitério.                                         | Antes do palpite    | **Desenterrado** — o oponente com menos goblins recupera 1.                      |
+| 3      | **Ladrão de Túmulos** — pegue 1 goblin do cemitério de outro jogador.                            | Antes do palpite    | **Saqueadores** — o jogador à esquerda pega 1 goblin do seu cemitério.           |
+| 2      | **Óculos de Grau** — cada goblin de Óculos jogado vale até +2.                                   | Depois da revelação | **Óculos Embaçados** — seus goblins de Óculos valem 0 na próxima rodada.         |
+| 2      | **Chapéu Pontudo** — cada goblin de Chapéu jogado vale até ±2.                                   | Depois da revelação | **Chapéu Furado** — seus goblins de Chapéu valem −2 na próxima rodada.           |
+| 2      | **Disfarce** — um goblin jogado ganha qualquer característica nesta rodada.                      | Depois da revelação | 🌪️ **Barba Molhada** — goblins com Barba valem 0 para todos na próxima rodada.   |
+| 2      | **Chinelo Veloz** — ao perder, salve do descarte um goblin de Chinelo que você jogou.            | Reação              | 🌪️ **Chinelada Geral** — todos descartam 1 goblin de Chinelo.                    |
+| 2      | **Poção Maluca** — um goblin Maluco jogado vale o dobro ou a metade.                             | Depois da revelação | **Surto Maluco** — seus Malucos valem o dobro na próxima rodada.                 |
+| 2      | **Pomada de Verruga** — um goblin de Verruga jogado vale até ±3.                                 | Depois da revelação | **Maldição da Verruga** — seus goblins de Verruga valem −3 na próxima rodada.    |
+| 2      | **Luneta** — espie o valor do monstro.                                                           | Antes do palpite    | **Grito do Chefe** — jogue com a mão aberta até o fim da próxima rodada.         |
+| 2      | **Isca de Monstro** — troque o monstro revelado pelo próximo do monte.                           | Depois da revelação | 🌪️ **Monstro Bombado** — o monstro da próxima rodada vale o dobro.               |
+| 3      | **Amuleto** — ao perder, você não descarta nenhum goblin.                                        | Reação              | **Espelho Rachado** — na próxima rodada, só pode jogar 1 goblin.                 |
+| 2      | **Armadilha** — quando tentarem eliminar seu goblin, quem atacou perde um.                       | Reação              | **Troca-Troca** — troque sua mão com quem tem menos goblins.                     |
+| 2      | **Mão Leve** — roube 1 item aleatório de um oponente.                                            | Antes do palpite    | **Oferenda** — dê 1 item a quem tem menos goblins (sem item: descarte 1 goblin). |
+| 2      | **Dobradinha** — +5 na sua soma.                                                                 | Depois da revelação | **Dobradinha Atrasada** — daqui a 2 rodadas seus goblins valem o dobro.          |
+| 1      | **Bússola Torta** — nesta rodada você também pode vencer como mais próximo por cima.             | Depois da revelação | 🌪️ **Mundo Invertido** — na próxima rodada vence o mais próximo por cima.        |
+| 2      | **Escudo de Panela** — anula uma eliminação contra você.                                         | Reação              | 🌪️ **Terremoto** — todos passam 1 goblin para a esquerda.                        |
+| 2      | **Saco de Moedas** — compre 2 cartas de ação na hora.                                            | Automático          | 🌪️ **Explosão de Lama** — todos descartam todos os itens.                        |
+| 2      | **Festa no Cemitério** — você e o oponente com menos goblins recuperam 1.                        | Antes do palpite    | 🌪️ **Festa dos Outros** — todos, menos você, recuperam 1 goblin.                 |
 
 ## 10. Fim de jogo
 
@@ -173,16 +173,16 @@ Cerca de 128 mil partidas simuladas com 2, 3 e 4 jogadores, ao longo de três ro
 
 ## Evolução da v5
 
-| Medida | Rascunho | v5 pura | **v5 definitiva (21)** |
-| --- | --- | --- | --- |
-| Duração (2 / 3 / 4 jogadores) | 5 / 7 / 10 | 10 / 14 / 16 | **10 / 14 / 17** |
-| Caos por partida (4 jogadores) | 57 | 23 | **14** |
-| Jogar mais goblins (edge contra a IA) | 1,22–1,45 | 1,32–1,57 | **0,98–1,07** |
-| Mirar na média (edge contra a IA) | 1,14–1,32 | 1,39–1,50 | **1,07–1,10** |
-| Jogar 1 goblin só (edge contra a IA) | 0,27–0,39 | 0,74–0,86 | **0,85–1,05** |
-| Melhor estratégia simples contra a mesa mista | até 1,55 | até 1,41 | **até 1,13** |
-| Jogar aleatório (edge) | 0,14–0,23 | 0,13–0,19 | **0,00–0,05** |
-| Empates | 0–0,2% | 0–0,8% | **0%** |
+| Medida                                        | Rascunho   | v5 pura      | **v5 definitiva (21)** |
+| --------------------------------------------- | ---------- | ------------ | ---------------------- |
+| Duração (2 / 3 / 4 jogadores)                 | 5 / 7 / 10 | 10 / 14 / 16 | **10 / 14 / 17**       |
+| Caos por partida (4 jogadores)                | 57         | 23           | **14**                 |
+| Jogar mais goblins (edge contra a IA)         | 1,22–1,45  | 1,32–1,57    | **0,98–1,07**          |
+| Mirar na média (edge contra a IA)             | 1,14–1,32  | 1,39–1,50    | **1,07–1,10**          |
+| Jogar 1 goblin só (edge contra a IA)          | 0,27–0,39  | 0,74–0,86    | **0,85–1,05**          |
+| Melhor estratégia simples contra a mesa mista | até 1,55   | até 1,41     | **até 1,13**           |
+| Jogar aleatório (edge)                        | 0,14–0,23  | 0,13–0,19    | **0,00–0,05**          |
+| Empates                                       | 0–0,2%     | 0–0,8%       | **0%**                 |
 
 ## Por que o estilo 21 funcionou
 

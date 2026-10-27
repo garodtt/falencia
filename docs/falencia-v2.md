@@ -1,15 +1,15 @@
 # 🃏 v2 — Errar para menos descarta + fim do baralho
 
-| Campo | Valor |
-| --- | --- |
-| Status | Substituída |
-| Data | 2026-10-15 |
-| Partidas simuladas | 510.000 |
-| Jogadores testados | 1, 2, 3, 4 |
-| Duração mediana (rodadas) | 2p: 9 · 3p: 10 · 4p: 11 |
-| Empates | 19–25% |
-| Mudanças vs anterior | J/Q/K = 11/12/13 e Ás = 1. Palpites revelados ao mesmo tempo. Errar para menos descarta a menor carta. Se o baralho central acabar, vence quem tem mais cartas (desempate: palpite mais próximo). |
-| Principais achados | Acabou o 'jogue o Ás'. Viés de assento sumiu. Mas 19-25% das partidas terminam empatadas, a estratégia quase não importa (vira sorte), o fim do baralho nunca acontece e jogar com 1 jogador é impossível de vencer. |
+| Campo                     | Valor                                                                                                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                    | Substituída                                                                                                                                                                                                          |
+| Data                      | 2026-10-15                                                                                                                                                                                                           |
+| Partidas simuladas        | 510.000                                                                                                                                                                                                              |
+| Jogadores testados        | 1, 2, 3, 4                                                                                                                                                                                                           |
+| Duração mediana (rodadas) | 2p: 9 · 3p: 10 · 4p: 11                                                                                                                                                                                              |
+| Empates                   | 19–25%                                                                                                                                                                                                               |
+| Mudanças vs anterior      | J/Q/K = 11/12/13 e Ás = 1. Palpites revelados ao mesmo tempo. Errar para menos descarta a menor carta. Se o baralho central acabar, vence quem tem mais cartas (desempate: palpite mais próximo).                    |
+| Principais achados        | Acabou o 'jogue o Ás'. Viés de assento sumiu. Mas 19-25% das partidas terminam empatadas, a estratégia quase não importa (vira sorte), o fim do baralho nunca acontece e jogar com 1 jogador é impossível de vencer. |
 
 Página no Notion: https://app.notion.com/p/3fcd6cd7562b81a8a8a5da0d641ff507
 

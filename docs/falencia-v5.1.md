@@ -1,15 +1,15 @@
 # 🃏 v5.1 — Goblins: versão visual + tutorial
 
-| Campo | Valor |
-| --- | --- |
-| Status | Substituída |
-| Data | 2026-10-17 |
-| Partidas simuladas | 9 |
-| Jogadores testados | 2, 3, 4 |
-| Duração mediana (rodadas) | Igual à v5: 2p: 10 · 3p: 14 · 4p: 17 |
-| Empates | 0% |
-| Mudanças vs anterior | Regras iguais à v5 definitiva. Nova interface do jogo em HTML: cartas no estilo de jogo de cartas online, animações (distribuição, cartas voando, monstro virando em 3D, banners de CRAVOU/ESTOUROU, confete), clique no monte para comprar itens e Caos, clique no rival ou no cemitério para a ação, e tutorial guiado de 3 rodadas. |
-| Principais achados | Teste de interface: tutorial completo de ponta a ponta e 9 partidas automáticas (3 conjuntos de regras × 2, 3 e 4 jogadores) sem erros. Layout conferido em tela de computador (1440×900) e de celular (390 px). |
+| Campo                     | Valor                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                    | Substituída                                                                                                                                                                                                                                                                                                                            |
+| Data                      | 2026-10-17                                                                                                                                                                                                                                                                                                                             |
+| Partidas simuladas        | 9                                                                                                                                                                                                                                                                                                                                      |
+| Jogadores testados        | 2, 3, 4                                                                                                                                                                                                                                                                                                                                |
+| Duração mediana (rodadas) | Igual à v5: 2p: 10 · 3p: 14 · 4p: 17                                                                                                                                                                                                                                                                                                   |
+| Empates                   | 0%                                                                                                                                                                                                                                                                                                                                     |
+| Mudanças vs anterior      | Regras iguais à v5 definitiva. Nova interface do jogo em HTML: cartas no estilo de jogo de cartas online, animações (distribuição, cartas voando, monstro virando em 3D, banners de CRAVOU/ESTOUROU, confete), clique no monte para comprar itens e Caos, clique no rival ou no cemitério para a ação, e tutorial guiado de 3 rodadas. |
+| Principais achados        | Teste de interface: tutorial completo de ponta a ponta e 9 partidas automáticas (3 conjuntos de regras × 2, 3 e 4 jogadores) sem erros. Layout conferido em tela de computador (1440×900) e de celular (390 px).                                                                                                                       |
 
 Página no Notion: https://app.notion.com/p/3fcd6cd7562b81bdaefde25f79936e9a
 

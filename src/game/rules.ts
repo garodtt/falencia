@@ -1,5 +1,20 @@
 // Regras: valores, margens, quem está ganhando, o que pode ser usado agora.
-import { ARMS, CH, ITEMS, KINGS, LEND, MA, OC, REACT, TR, VE, gc, gv, shuffle } from './data.ts';
+import {
+  ARMS,
+  BA,
+  CH,
+  ITEMS,
+  KINGS,
+  LEND,
+  MA,
+  OC,
+  REACT,
+  TR,
+  VE,
+  gc,
+  gv,
+  shuffle,
+} from './data.ts';
 import { G, alivePl, chaosIs, log, nm, ord } from './state.ts';
 import type { ChaosKey, Gob, ItemKey, Monster } from './data.ts';
 import type { Player, UsedItem } from './types.ts';
@@ -32,6 +47,11 @@ export function traitsOf(p: Player, g: Gob) {
   if (d) t |= d;
   return t;
 }
+// Cicatriz impressa na carta (sem rei nem Disfarce, que só valem para goblins jogados)
+export const scarred = (g: Gob) => !!(TR[gv(g)] & BA);
+// goblins com Cicatriz que dá para pegar com Cicatrizes Compartilhadas: [dono do cemitério, goblin]
+export const scarGraves = () =>
+  G.players.flatMap((o) => G.grave[o.id].filter(scarred).map((g) => [o.id, g] as const));
 export function val(p: Player, g: Gob) {
   if (chaosIs('MALDICAO') && G.curse && traitsOf(p, g) & G.curse) return 0;
   return chaosIs('MINMAX') ? 21 - gv(g) : gv(g);
@@ -230,6 +250,11 @@ export function canUse(p: Player | null | undefined, k: ItemKey, phase: string) 
         return p.hand.length >= 2 && A.some((o) => o !== p && o.hand.length);
       case 'PA':
         return G.grave[p.id].length > 0;
+      case 'CICATRIZ':
+        // no Necromante mão e cemitério estão trocados: fica bloqueado
+        return (
+          !chaosIs('NECRO') && p.hand.length >= 2 && p.hand.some(scarred) && scarGraves().length > 0
+        );
       case 'LADRAO':
         return G.players.some((o) => o !== p && G.grave[o.id].length);
       case 'MAO_LEVE':

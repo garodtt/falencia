@@ -39,7 +39,8 @@ export function Rules() {
           característica usada por itens (Chapéu Pontudo, Disfarce) e pela Maldição.
         </L>
         <L i={<Icon name="scar" />} t="Cicatriz">
-          característica; o Rei Quebra-Crânio empresta Cicatriz aos goblins pares.
+          característica usada pelo item Cicatrizes Compartilhadas; o Rei Quebra-Crânio empresta
+          Cicatriz aos goblins pares.
         </L>
         <L i={<Icon name="monocle" />} t="Monóculo">
           característica usada pelo item Monóculo Polido.

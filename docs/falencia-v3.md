@@ -1,15 +1,15 @@
 # 🃏 v3 — Mais próximo por baixo vence + acerto duplo
 
-| Campo | Valor |
-| --- | --- |
-| Status | Substituída |
-| Data | 2026-10-16 |
-| Partidas simuladas | 670.000 |
-| Jogadores testados | 2, 3, 4 |
-| Duração mediana (rodadas) | 2p: 13 · 3p: 15 · 4p: 15 |
-| Empates | 1,3–2,0% (0,3% com desempate) |
-| Mudanças vs anterior | 2 a 4 jogadores (sem solo). Se dois acertam, ambos recuperam uma carta. Quando todos erram para menos, o mais próximo vence e usa a regra da vitória. |
-| Principais achados | Empates caíram para ~2%, partidas de 13-15 rodadas, habilidade importa. Problema: com 2 jogadores, mirar perto de 7 vence todas as estratégias (65-81%). Correção testada: mais próximo só vence se errou por até 3. |
+| Campo                     | Valor                                                                                                                                                                                                                |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                    | Substituída                                                                                                                                                                                                          |
+| Data                      | 2026-10-16                                                                                                                                                                                                           |
+| Partidas simuladas        | 670.000                                                                                                                                                                                                              |
+| Jogadores testados        | 2, 3, 4                                                                                                                                                                                                              |
+| Duração mediana (rodadas) | 2p: 13 · 3p: 15 · 4p: 15                                                                                                                                                                                             |
+| Empates                   | 1,3–2,0% (0,3% com desempate)                                                                                                                                                                                        |
+| Mudanças vs anterior      | 2 a 4 jogadores (sem solo). Se dois acertam, ambos recuperam uma carta. Quando todos erram para menos, o mais próximo vence e usa a regra da vitória.                                                                |
+| Principais achados        | Empates caíram para ~2%, partidas de 13-15 rodadas, habilidade importa. Problema: com 2 jogadores, mirar perto de 7 vence todas as estratégias (65-81%). Correção testada: mais próximo só vence se errou por até 3. |
 
 Página no Notion: https://app.notion.com/p/3fcd6cd7562b8167a813ee41f649710c
 

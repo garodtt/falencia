@@ -1,15 +1,15 @@
 # 🃏 v4 — Uma ação por carta jogada
 
-| Campo | Valor |
-| --- | --- |
-| Status | Substituída |
-| Data | 2026-10-16 |
-| Partidas simuladas | 360.000 |
-| Jogadores testados | 2, 3, 4 |
-| Duração mediana (rodadas) | 2p: 8 · 3p: 11 · 4p: 13 |
-| Empates | 0,6–2,6% |
-| Mudanças vs anterior | O vencedor da rodada faz uma ação para cada carta usada no palpite (vale para acerto exato e para o mais próximo por baixo). Ações podem ser misturadas e em oponentes diferentes; cemitério vazio → ações restantes viram eliminação; vencedores simultâneos recuperam só 1 carta cada. |
-| Principais achados | Some o domínio do 'perto de 7' com 2 jogadores, mas a nova regra de ouro vira 'jogar o máximo de cartas pequenas'. Partidas mais curtas e explosivas: 23% das partidas de 2 jogadores acabam em até 5 rodadas. Melhor combinação testada: ação por carta + mais próximo só se errou por até 3 + desempate quando todos falem. |
+| Campo                     | Valor                                                                                                                                                                                                                                                                                                                         |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                    | Substituída                                                                                                                                                                                                                                                                                                                   |
+| Data                      | 2026-10-16                                                                                                                                                                                                                                                                                                                    |
+| Partidas simuladas        | 360.000                                                                                                                                                                                                                                                                                                                       |
+| Jogadores testados        | 2, 3, 4                                                                                                                                                                                                                                                                                                                       |
+| Duração mediana (rodadas) | 2p: 8 · 3p: 11 · 4p: 13                                                                                                                                                                                                                                                                                                       |
+| Empates                   | 0,6–2,6%                                                                                                                                                                                                                                                                                                                      |
+| Mudanças vs anterior      | O vencedor da rodada faz uma ação para cada carta usada no palpite (vale para acerto exato e para o mais próximo por baixo). Ações podem ser misturadas e em oponentes diferentes; cemitério vazio → ações restantes viram eliminação; vencedores simultâneos recuperam só 1 carta cada.                                      |
+| Principais achados        | Some o domínio do 'perto de 7' com 2 jogadores, mas a nova regra de ouro vira 'jogar o máximo de cartas pequenas'. Partidas mais curtas e explosivas: 23% das partidas de 2 jogadores acabam em até 5 rodadas. Melhor combinação testada: ação por carta + mais próximo só se errou por até 3 + desempate quando todos falem. |
 
 Página no Notion: https://app.notion.com/p/3fcd6cd7562b81fcb270eb6a11ce3388
 
@@ -27,13 +27,13 @@ Página no Notion: https://app.notion.com/p/3fcd6cd7562b81fcb270eb6a11ce3388
 
 ## Resultados vs v3 (estratégia mais forte em todos os assentos)
 
-|  | v3 | v4 |
-| --- | --- | --- |
-| Duração mediana (2/3/4 jogadores) | 13 / 15 / 15 | 8 / 11 / 13 |
-| Partidas de 2 jogadores com até 5 rodadas | 0,2% | 23% |
-| Cartas por jogada | ≈1 a 1,5 | ≈2,3 |
+|                                                           | v3              | v4          |
+| --------------------------------------------------------- | --------------- | ----------- |
+| Duração mediana (2/3/4 jogadores)                         | 13 / 15 / 15    | 8 / 11 / 13 |
+| Partidas de 2 jogadores com até 5 rodadas                 | 0,2%            | 23%         |
+| Cartas por jogada                                         | ≈1 a 1,5        | ≈2,3        |
 | Mirar perto de 7 contra a melhor estratégia (2 jogadores) | 67% (dominante) | 49% (justo) |
-| Empates | 1,2–1,7% | 0,6–2,6% |
+| Empates                                                   | 1,2–1,7%        | 0,6–2,6%    |
 
 - **Nova regra de ouro: jogar o máximo de cartas pequenas** (jogadas mais comuns: 1+2+3 e 1+2+3+4). Com 2 jogadores, quem joga com o mínimo de cartas vence só 13-19%. Cartas baixas passam a valer muito mais que as altas.
 - **Viradas bruscas:** uma vitória com 4 cartas pode tirar 4 cartas de um oponente de uma vez.

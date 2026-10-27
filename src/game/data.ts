@@ -120,6 +120,12 @@ export const ITEMS = {
   ],
   COROA: ['Coroa Trocada', 'Troque o seu rei ou rainha com o de outro jogador.', 'D', 2],
   PA: ['Pá de Coveiro', 'Puxe 1 carta à sua escolha do seu cemitério.', 'D', 2],
+  CICATRIZ: [
+    'Cicatrizes Compartilhadas',
+    'Mande 1 goblin com Cicatriz da sua mão para o seu cemitério. Depois pegue, à sua escolha, 1 goblin com Cicatriz de qualquer cemitério.',
+    'D',
+    2,
+  ],
   LADRAO: [
     'Ladrão de Túmulos',
     'Embaralhe o cemitério de outro jogador virado para baixo e puxe 1 carta às cegas.',
@@ -147,8 +153,8 @@ export const ITEMS = {
   ],
   TAMBOR: ['Tambor de Guerra', 'Nesta rodada você pode jogar até 4 goblins.', 'D', 2],
   SACO: ['Saco de Moedas', 'Compre 2 itens agora.', 'D', 2],
-  PORRETE: ['Porrete', '+2 na sua soma.', 'A', 3],
-  PE_CABRA: ['Pé de Cabra', '−2 na sua soma.', 'A', 3],
+  PORRETE: ['Porrete', '+2 na sua soma.', 'A', 2],
+  PE_CABRA: ['Pé de Cabra', '−2 na sua soma.', 'A', 2],
   AJUSTE: ['Ajuste Fino', 'De −3 a +3 na sua soma, à sua escolha.', 'A', 1],
   ESCUDO: ['Escudo de Panela', 'Nesta rodada ninguém rouba nem elimina cartas suas.', 'A', 2],
   AMULETO: ['Amuleto', 'Se você perder nesta rodada, não descarta nada.', 'A', 2],
@@ -201,9 +207,10 @@ export const NUMERIC: ItemKey[] = [
 export const ARMS: ItemKey[] = ['ESCUDO', 'AMULETO', 'CHINELO'];
 // reações: não têm botão, o jogo pergunta na hora
 export const REACT: ItemKey[] = ['NAO', 'ARMADILHA'];
-// o item que dá efeito a cada característica (Cicatriz não tem item)
+// o item que dá efeito a cada característica
 export const TRAIT_ITEM: Partial<Record<number, ItemKey>> = {
   [CH]: 'CHAPEU',
+  [BA]: 'CICATRIZ',
   [OC]: 'OCULOS',
   [CN]: 'CHINELO',
   [MA]: 'POCAO',
@@ -221,6 +228,7 @@ export const PRIO: Record<ItemKey, number> = {
   ESCUDO: 7,
   AMULETO: 7,
   PA: 6,
+  CICATRIZ: 6,
   LADRAO: 6,
   COROA: 5,
   GRITO: 6,

@@ -44,6 +44,7 @@ import {
   monVal,
   playLimit,
   playable,
+  scarred,
   standing,
   targetsFor,
   toGrave,
@@ -407,6 +408,52 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
         from: 'seat:' + p.id,
         to2: 'hand:' + p.id,
         card: { g: a.g, vis: [p.id] },
+      });
+      break;
+    }
+    case 'CICATRIZ': {
+      const o = G.players[a.target!],
+        g = a.g!,
+        g2 = a.g2!;
+      if (!o || !canUse(p, k, 'select')) return;
+      if (!p.hand.includes(g) || !scarred(g)) return;
+      const gr = G.grave[o.id];
+      if (!gr.includes(g2) || !scarred(g2) || g2 === g) return;
+      spendItem(p, k);
+      toGrave(p, g);
+      gr.splice(gr.indexOf(g2), 1);
+      p.hand.push(g2);
+      const de = o === p ? 'do próprio cemitério' : `do cemitério de ${nm(o)}`;
+      log(
+        `${nm(p)} usou Cicatrizes Compartilhadas: mandou o ${gobTxt(g)} ao cemitério e pegou o ${gobTxt(g2)} ${de}.`,
+        'it',
+      );
+      void fx(
+        { type: 'toast', to: p.id, text: `Você trocou o ${gobTxt(g)} pelo ${gobTxt(g2)}.` },
+        false,
+      );
+      if (o !== p)
+        void fx(
+          {
+            type: 'toast',
+            to: o.id,
+            text: `${nm(p)} pegou o ${gobTxt(g2)} do seu cemitério (Cicatrizes Compartilhadas).`,
+          },
+          false,
+        );
+      await fx({
+        type: 'fly',
+        from: 'hand:' + p.id,
+        to2: 'seat:' + p.id,
+        card: { g, pub: 1, sm: 1 },
+        dur: 500,
+        rot: 15,
+      });
+      await fx({
+        type: 'fly',
+        from: 'seat:' + o.id,
+        to2: 'hand:' + p.id,
+        card: { g: g2, pub: 1 },
       });
       break;
     }
