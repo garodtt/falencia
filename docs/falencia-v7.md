@@ -419,17 +419,10 @@ Correspondência com o código atual (`src/game/data.ts`, `src/game/rules.ts`, `
 | 16  | `MA`  | Maluco      | Maluco    | `spiral`       |
 | 32  | `VE`  | Verruga     | Pereba    | `sore`         |
 
-**Já conferido no código (bate com este documento):** `TNAME`, `TICO`, a tabela `TR` dos goblins, os 4 reis e rainhas (características e grupos), as cópias dos 50 itens e dos 50 Caos, os 31 monstros (territórios e Amigo dos Fracos), a Pomada de Pereba e todas as regras das seções 5 a 17.
+**Conferido no código (bate com este documento):** `TNAME`, `TICO`, a tabela `TR` dos goblins, os 4 reis e rainhas (características, grupos e o nome Lente de Vidro), as cópias e os nomes dos 50 itens (Monóculo Polido, Fuga Fedorenta, Pomada de Pereba) e dos 50 Caos, os 31 monstros (territórios e Amigo dos Fracos), a tela de regras e todas as regras das seções 5 a 17.
 
-**Ainda falta mudar no código:**
-
-| Onde                                          | Hoje                                          | Deve ficar                                    |
-| --------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
-| `ITEMS.OCULOS` (`data.ts`)                    | "Monóculo de Grau"                            | **Monóculo Polido**                           |
-| `ITEMS.CHINELO` (`data.ts`, `engine.ts`)      | "Chinelo Fedorento"                           | **Fuga Fedorenta**                            |
-| `KINGS[2].short` e `.text` (`data.ts`)        | "Monóculo"                                    | **Lente de Vidro**                            |
-| Tela de regras (`src/app/overlays/Rules.tsx`) | cita "Monóculo de Grau" e "Chinelo Fedorento" | nomes novos                                   |
-| Ícone do item Monóculo Polido                 | —                                             | diferente do ícone da característica Monóculo |
+- As chaves internas dos itens continuam `OCULOS`, `CHINELO` e `POMADA`.
+- As cartas de item não têm ícone próprio (só ☾/☀), então o Monóculo Polido não se confunde com o ícone da característica Monóculo.
 
 - **Totais:** 50 itens, 50 Caos, 31 monstros, 80 goblins.
 

@@ -42,10 +42,10 @@ export function Rules() {
           característica; o Rei Quebra-Crânio empresta Cicatriz aos goblins pares.
         </L>
         <L i={<Icon name="monocle" />} t="Monóculo">
-          característica usada pelo item Monóculo de Grau.
+          característica usada pelo item Monóculo Polido.
         </L>
         <L i={<Icon name="stink" />} t="Fedorento">
-          característica usada pelo item Chinelo Fedorento.
+          característica usada pelo item Fuga Fedorenta.
         </L>
         <L i={<Icon name="spiral" />} t="Maluco">
           característica usada pela Poção Maluca.
