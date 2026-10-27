@@ -92,7 +92,7 @@ function HandCard({
   return (
     <GobCard
       g={g}
-      className={`absolute bottom-1 left-1/2 [transform-origin:50%_140%] [transition:transform_0.18s_ease,filter_0.2s] ${can ? 'cursor-pointer' : ''}`}
+      className={`!absolute bottom-1 left-1/2 [transform-origin:50%_140%] [transition:transform_0.18s_ease,filter_0.2s] ${can ? 'cursor-pointer' : ''}`}
       data-g={g}
       data-pick={can ? '' : undefined}
       data-selected={selected ? '' : undefined}

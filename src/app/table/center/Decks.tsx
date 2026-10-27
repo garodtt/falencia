@@ -26,9 +26,9 @@ export function Decks({ pe }: { pe: Pending | null }) {
       >
         {G.monsters.length ? (
           <>
-            <MonsterBack className="absolute inset-0 translate-[5px]" />
-            <MonsterBack className="absolute inset-0 translate-[2.5px]" />
-            <MonsterBack className="absolute inset-0" />
+            <MonsterBack className="!absolute inset-0 translate-[5px]" />
+            <MonsterBack className="!absolute inset-0 translate-[2.5px]" />
+            <MonsterBack className="!absolute inset-0" />
           </>
         ) : null}
       </Pile>
@@ -41,9 +41,9 @@ export function Decks({ pe }: { pe: Pending | null }) {
         need={ph === 'draw' ? pe!.data.left : undefined}
         onClick={drawItem}
       >
-        <ItemBack className="absolute inset-0 translate-[5px]" />
-        <ItemBack className="absolute inset-0 translate-[2.5px]" />
-        <ItemBack className={`absolute inset-0 ${ph === 'draw' ? GLOW : ''}`} />
+        <ItemBack className="!absolute inset-0 translate-[5px]" />
+        <ItemBack className="!absolute inset-0 translate-[2.5px]" />
+        <ItemBack className={`!absolute inset-0 ${ph === 'draw' ? GLOW : ''}`} />
       </Pile>
       <Pile
         id="chaosDeck"
@@ -54,9 +54,9 @@ export function Decks({ pe }: { pe: Pending | null }) {
         need={ph === 'chaos' ? 1 : undefined}
         onClick={revealChaos}
       >
-        <ChaosBack className="absolute inset-0 translate-[5px]" />
-        <ChaosBack className="absolute inset-0 translate-[2.5px]" />
-        <ChaosBack className={`absolute inset-0 ${ph === 'chaos' ? GLOW : ''}`} />
+        <ChaosBack className="!absolute inset-0 translate-[5px]" />
+        <ChaosBack className="!absolute inset-0 translate-[2.5px]" />
+        <ChaosBack className={`!absolute inset-0 ${ph === 'chaos' ? GLOW : ''}`} />
       </Pile>
     </div>
   );

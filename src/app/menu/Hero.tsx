@@ -23,7 +23,7 @@ export function Hero() {
           <GobCard
             key={g}
             g={g}
-            className="absolute bottom-0 left-1/2 [transform-origin:50%_130%]"
+            className="!absolute bottom-0 left-1/2 [transform-origin:50%_130%]"
             style={
               {
                 transform: `translateX(-50%) rotate(${(i - 2) * 11}deg) translateY(${Math.abs(i - 2) * 6}px)`,
