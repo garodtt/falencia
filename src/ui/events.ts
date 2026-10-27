@@ -9,7 +9,7 @@ import { goMenu } from '../app/table/actions.ts';
 import { $, ic } from './html.ts';
 import { render } from './render.ts';
 
-document.querySelector('header.bar')!.addEventListener('click', async (e) => {
+$('bar').addEventListener('click', async (e) => {
   const t = (e.target as Element).closest<HTMLElement>('button');
   if (!t) return;
   if (t.id === 'btnMenu') return goMenu();
