@@ -1,5 +1,5 @@
 // Regras: valores, margens, quem está ganhando, o que pode ser usado agora.
-import { ARMS, CH, ITEMS, KINGS, LEND, MA, OC, TR, VE, gc, gv, shuffle } from './data.ts';
+import { ARMS, CH, ITEMS, KINGS, LEND, MA, OC, REACT, TR, VE, gc, gv, shuffle } from './data.ts';
 import { G, alivePl, chaosIs, log, nm, ord } from './state.ts';
 import type { ChaosKey, Gob, ItemKey, Monster } from './data.ts';
 import type { Player, UsedItem } from './types.ts';
@@ -250,7 +250,7 @@ export function canUse(p: Player | null | undefined, k: ItemKey, phase: string) 
     return true;
   }
   if (phase === 'window' && w === 'A') {
-    if (k === 'NAO') return false;
+    if (REACT.includes(k)) return false;
     if (ARMS.includes(k)) return !armed(p, k);
     if (k === 'GRITO') return true;
     if (k === 'ISCA') return G.monsters.length + G.mused.length > 2;

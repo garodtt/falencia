@@ -1,4 +1,4 @@
-import { ITEMS } from '../../../game/data.ts';
+import { ITEMS, REACT } from '../../../game/data.ts';
 import type { ItemKey } from '../../../game/data.ts';
 import { canUse } from '../../../game/rules.ts';
 import type { Pending, Player } from '../../../game/types.ts';
@@ -51,7 +51,7 @@ function TrayItem({ k, usable }: { k: ItemKey; usable: boolean }) {
         <b className="block font-bold">{name}</b>
         <small className="block text-xs text-muted">{text}</small>
       </div>
-      {k === 'NAO' ? (
+      {REACT.includes(k) ? (
         <span className="text-xs font-bold text-muted">reação</span>
       ) : usable ? (
         <button

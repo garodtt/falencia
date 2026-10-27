@@ -164,13 +164,13 @@ export const ITEMS = {
   ],
   NAO: [
     'NÃO!',
-    'Cancele um item de Monstro Acordado de qualquer jogador. Pode ser respondido com outro NÃO!. O jogo pergunta na hora.',
+    'Cancele um item de Monstro Acordado ou uma Armadilha de qualquer jogador. Pode ser respondido com outro NÃO!. O jogo pergunta na hora.',
     'A',
     3,
   ],
   ARMADILHA: [
     'Armadilha',
-    'Nesta rodada, quem roubar ou eliminar uma carta sua perde 1 carta: o jogador à direita dele escolhe qual, às cegas.',
+    'Reação: quando alguém roubar ou eliminar uma carta da sua mão, revele esta carta: quem atacou perde 1 carta (o jogador à direita dele escolhe qual, às cegas). O jogo pergunta na hora.',
     'A',
     2,
   ],
@@ -198,7 +198,9 @@ export const NUMERIC: ItemKey[] = [
   'POCAO',
   'POMADA',
 ];
-export const ARMS: ItemKey[] = ['ESCUDO', 'AMULETO', 'CHINELO', 'ARMADILHA'];
+export const ARMS: ItemKey[] = ['ESCUDO', 'AMULETO', 'CHINELO'];
+// reações: não têm botão, o jogo pergunta na hora
+export const REACT: ItemKey[] = ['NAO', 'ARMADILHA'];
 // o item que dá efeito a cada característica (Cicatriz não tem item)
 export const TRAIT_ITEM: Partial<Record<number, ItemKey>> = {
   [CH]: 'CHAPEU',

@@ -1,11 +1,11 @@
 # 🧌 v7 — Regras completas com as características novas
 
-| Campo                | Valor                                                                                                                                                                                                                                                                                             |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Status               | Atual                                                                                                                                                                                                                                                                                             |
-| Data                 | 2026-10-27                                                                                                                                                                                                                                                                                        |
-| Partidas simuladas   | Não simulada de novo: só os nomes mudaram, então os números da v6.2 continuam valendo                                                                                                                                                                                                             |
-| Mudanças vs anterior | Características renomeadas (Barba → Cicatriz, Óculos → Monóculo, Chinelo → Fedorento, Verruga → Pereba). Itens renomeados: Monóculo Polido, Fuga Fedorenta, Pomada de Pereba. A habilidade do Rei Azul passa a se chamar Lente de Vidro. Documento completo, conferido com o código (`src/game`). |
+| Campo                | Valor                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status               | Atual                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Data                 | 2026-10-27                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Partidas simuladas   | Piloto de 120 partidas de bots (40 por mesa de 2, 3 e 4), sem erros; a simulação grande da Armadilha nova ainda não foi feita                                                                                                                                                                                                                                                                                                     |
+| Mudanças vs anterior | Características renomeadas (Barba → Cicatriz, Óculos → Monóculo, Chinelo → Fedorento, Verruga → Pereba). Itens renomeados: Monóculo Polido, Fuga Fedorenta, Pomada de Pereba. A habilidade do Rei Azul passa a se chamar Lente de Vidro. A Armadilha vira reação, como o NÃO!: fica escondida na mão e é revelada quando tiram uma carta sua (e o NÃO! pode cancelá-la). Documento completo, conferido com o código (`src/game`). |
 
 > Documento de referência das regras atuais do jogo.
 > Base: versão **v6.2** (limite de 3 itens, regras de virada, monstros com efeito, Mapa do Tesouro, Profecia do Caos, Necromante).
@@ -49,14 +49,14 @@
 
 ## 2. Componentes
 
-| Componente             | Quantidade  | Descrição                                                                                               |
-| ---------------------- | ----------- | ------------------------------------------------------------------------------------------------------- |
-| Goblins                | 4 × 20 = 80 | Uma cor por território, valores 1 a 20, cada um com 3 características.                                  |
-| Monstros               | 31          | Valores 10 a 40. Cada monstro é de 1 ou 2 territórios; 7 têm um efeito impresso.                        |
-| Itens                  | 50          | Cada um marcado ☾ **Monstro Dormindo** (antes da revelação) ou ☀ **Monstro Acordado** (depois).         |
-| Caos                   | 50          | Um revelado no fim de cada rodada; muda a regra da rodada seguinte para todos.                          |
-| Reis e rainhas         | 4           | Um por território: habilidade, 2 características e o grupo de goblins que recebe essas características. |
-| Marcador Chefe da Toca | 1           | Define quem começa e quem decide o Duelo. Passa para a esquerda a cada rodada.                          |
+| Componente             | Quantidade  | Descrição                                                                                                                                     |
+| ---------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| Goblins                | 4 × 20 = 80 | Uma cor por território, valores 1 a 20, cada um com 3 características.                                                                        |
+| Monstros               | 31          | Valores 10 a 40. Cada monstro é de 1 ou 2 territórios; 7 têm um efeito impresso.                                                              |
+| Itens                  | 50          | Cada um marcado ☾ **Monstro Dormindo** (antes da revelação), ☀ **Monstro Acordado** (depois) ou ⚡ **Reação** (na hora em que algo acontece). |
+| Caos                   | 50          | Um revelado no fim de cada rodada; muda a regra da rodada seguinte para todos.                                                                |
+| Reis e rainhas         | 4           | Um por território: habilidade, 2 características e o grupo de goblins que recebe essas características.                                       |
+| Marcador Chefe da Toca | 1           | Define quem começa e quem decide o Duelo. Passa para a esquerda a cada rodada.                                                                |
 
 ## 3. Características dos goblins
 
@@ -198,6 +198,7 @@ A posição de cada característica nos goblins não mudou, só o nome. Por isso
 - **Pressa não Compensa:** a carta puxada na Roleta não conta para os 3 goblins. Vale mesmo para quem não descartou (Amuleto, última carta).
 - **Última carta:** se restam 2 jogadores com 1 carta cada, quem perde não descarta, e quem vence por aproximação só compra o item. Cravar ainda rouba.
 - **Escudo de Panela:** ninguém rouba nem elimina cartas de quem preparou o Escudo nesta rodada.
+- **Armadilha:** para cada carta que alguém tira da sua mão, você pode revelar uma Armadilha e o atacante perde 1 carta (seção 11).
 - **Amigo dos Fracos** (efeito do monstro): o item de quem venceu vai para quem tem **menos itens na mão** (empate: todos os empatados). O roubo e a eliminação continuam iguais.
 
 ## 8. Território
@@ -237,37 +238,38 @@ A posição de cada característica nos goblins não mudou, só o nome. Por isso
 - **Limite de 3 itens na mão.** Se você tem 3 e compra outro (vencendo, na Feira, pelo Saco de Moedas, com a Mão Leve, com o Mapa do Tesouro…), escolha 1 dos 4 para mandar para o **fundo do monte de itens**.
 - Item usado vai para o descarte de itens. Quando o monte acaba, embaralhe o descarte.
 - Itens não são secretos depois de usados: todos veem quem usou o quê.
-- **Preparados:** Escudo de Panela, Amuleto, Fuga Fedorenta e Armadilha são usados na janela ☀ e valem até o fim da rodada.
-- **NÃO!:** cancela um item ☀ de qualquer jogador e pode ser respondido com outro NÃO!.
+- **Preparados:** Escudo de Panela, Amuleto e Fuga Fedorenta são usados na janela ☀ e valem até o fim da rodada.
+- **Reações:** NÃO! e Armadilha ficam escondidas na mão e não são usadas na janela. Você as revela na hora em que acontece o que elas respondem (no digital, o jogo pergunta).
+- **NÃO!:** cancela um item ☀ ou uma Armadilha de qualquer jogador e pode ser respondido com outro NÃO!.
 
-| Cópias | Item                  | Quando     | Texto da carta                                                                                                      |
-| ------ | --------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------- |
-| 2      | **Bandeira**          | ☾ Dormindo | Escolha um território: para você, o monstro também é desse território nesta rodada.                                 |
-| 2      | **Coroa Trocada**     | ☾ Dormindo | Troque o seu rei ou rainha com o de outro jogador.                                                                  |
-| 2      | **Disfarce**          | ☾ Dormindo | Escolha uma característica: todos os goblins que você jogar nesta rodada a têm.                                     |
-| 2      | **Ladrão de Túmulos** | ☾ Dormindo | Embaralhe o cemitério de outro jogador virado para baixo e puxe 1 carta às cegas.                                   |
-| 2      | **Luneta**            | ☾ Dormindo | Espie o valor do monstro.                                                                                           |
-| 2      | **Mapa do Tesouro**   | ☾ Dormindo | Olhe o monte de itens, escolha 1 carta e fique com ela. Depois embaralhe o monte.                                   |
-| 2      | **Mão Leve**          | ☾ Dormindo | Roube, às cegas, 1 item da mão de um oponente.                                                                      |
-| 2      | **Profecia do Caos**  | ☾ Dormindo | Olhe o monte de Caos e escolha a carta da próxima rodada. Embaralhe o resto e coloque a escolhida no topo.          |
-| 2      | **Pá de Coveiro**     | ☾ Dormindo | Puxe 1 carta à sua escolha do seu cemitério.                                                                        |
-| 2      | **Saco de Moedas**    | Na hora    | Compre 2 itens agora. É usado assim que entra na sua mão.                                                           |
-| 2      | **Sacrifício**        | ☾ Dormindo | Mande 1 goblin seu para o seu cemitério e pegue, às cegas, 1 carta da mão de um oponente.                           |
-| 2      | **Tambor de Guerra**  | ☾ Dormindo | Nesta rodada você pode jogar até 4 goblins.                                                                         |
-| 1      | **Ajuste Fino**       | ☀ Acordado | De −3 a +3 na sua soma, à sua escolha.                                                                              |
-| 2      | **Amuleto**           | ☀ Acordado | Se você perder nesta rodada, não descarta nada.                                                                     |
-| 2      | **Armadilha**         | ☀ Acordado | Nesta rodada, quem roubar ou eliminar uma carta sua perde 1 carta: o jogador à direita dele escolhe qual, às cegas. |
-| 2      | **Chapéu Pontudo**    | ☀ Acordado | Cada goblin de Chapéu jogado vale até ±2.                                                                           |
-| 2      | **Escudo de Panela**  | ☀ Acordado | Nesta rodada ninguém rouba nem elimina cartas suas.                                                                 |
-| 1      | **Fuga Fedorenta**    | ☀ Acordado | Se você perder nesta rodada, um goblin Fedorento jogado, à sua escolha, volta para a mão.                           |
-| 1      | **Grito de Guerra**   | ☀ Acordado | O monstro vale +2 ou −2 para todos, à sua escolha.                                                                  |
-| 2      | **Isca de Monstro**   | ☀ Acordado | Depois que o monstro acorda, troque-o pelo próximo do monte. O Caos da rodada continua valendo para o novo monstro. |
-| 1      | **Monóculo Polido**   | ☀ Acordado | Cada goblin de Monóculo jogado vale até +2.                                                                         |
-| 3      | **NÃO!**              | ☀ Acordado | Cancele um item de Monstro Acordado de qualquer jogador. Pode ser respondido com outro NÃO!.                        |
-| 2      | **Pomada de Pereba**  | ☀ Acordado | Se jogou goblin com Pereba: de −3 a +3 na sua soma.                                                                 |
-| 3      | **Porrete**           | ☀ Acordado | +2 na sua soma.                                                                                                     |
-| 1      | **Poção Maluca**      | ☀ Acordado | Um goblin Maluco jogado vale o dobro ou a metade.                                                                   |
-| 3      | **Pé de Cabra**       | ☀ Acordado | −2 na sua soma.                                                                                                     |
+| Cópias | Item                  | Quando     | Texto da carta                                                                                                                                         |
+| ------ | --------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 2      | **Bandeira**          | ☾ Dormindo | Escolha um território: para você, o monstro também é desse território nesta rodada.                                                                    |
+| 2      | **Coroa Trocada**     | ☾ Dormindo | Troque o seu rei ou rainha com o de outro jogador.                                                                                                     |
+| 2      | **Disfarce**          | ☾ Dormindo | Escolha uma característica: todos os goblins que você jogar nesta rodada a têm.                                                                        |
+| 2      | **Ladrão de Túmulos** | ☾ Dormindo | Embaralhe o cemitério de outro jogador virado para baixo e puxe 1 carta às cegas.                                                                      |
+| 2      | **Luneta**            | ☾ Dormindo | Espie o valor do monstro.                                                                                                                              |
+| 2      | **Mapa do Tesouro**   | ☾ Dormindo | Olhe o monte de itens, escolha 1 carta e fique com ela. Depois embaralhe o monte.                                                                      |
+| 2      | **Mão Leve**          | ☾ Dormindo | Roube, às cegas, 1 item da mão de um oponente.                                                                                                         |
+| 2      | **Profecia do Caos**  | ☾ Dormindo | Olhe o monte de Caos e escolha a carta da próxima rodada. Embaralhe o resto e coloque a escolhida no topo.                                             |
+| 2      | **Pá de Coveiro**     | ☾ Dormindo | Puxe 1 carta à sua escolha do seu cemitério.                                                                                                           |
+| 2      | **Saco de Moedas**    | Na hora    | Compre 2 itens agora. É usado assim que entra na sua mão.                                                                                              |
+| 2      | **Sacrifício**        | ☾ Dormindo | Mande 1 goblin seu para o seu cemitério e pegue, às cegas, 1 carta da mão de um oponente.                                                              |
+| 2      | **Tambor de Guerra**  | ☾ Dormindo | Nesta rodada você pode jogar até 4 goblins.                                                                                                            |
+| 1      | **Ajuste Fino**       | ☀ Acordado | De −3 a +3 na sua soma, à sua escolha.                                                                                                                 |
+| 2      | **Amuleto**           | ☀ Acordado | Se você perder nesta rodada, não descarta nada.                                                                                                        |
+| 2      | **Chapéu Pontudo**    | ☀ Acordado | Cada goblin de Chapéu jogado vale até ±2.                                                                                                              |
+| 2      | **Escudo de Panela**  | ☀ Acordado | Nesta rodada ninguém rouba nem elimina cartas suas.                                                                                                    |
+| 1      | **Fuga Fedorenta**    | ☀ Acordado | Se você perder nesta rodada, um goblin Fedorento jogado, à sua escolha, volta para a mão.                                                              |
+| 1      | **Grito de Guerra**   | ☀ Acordado | O monstro vale +2 ou −2 para todos, à sua escolha.                                                                                                     |
+| 2      | **Isca de Monstro**   | ☀ Acordado | Depois que o monstro acorda, troque-o pelo próximo do monte. O Caos da rodada continua valendo para o novo monstro.                                    |
+| 1      | **Monóculo Polido**   | ☀ Acordado | Cada goblin de Monóculo jogado vale até +2.                                                                                                            |
+| 2      | **Pomada de Pereba**  | ☀ Acordado | Se jogou goblin com Pereba: de −3 a +3 na sua soma.                                                                                                    |
+| 3      | **Porrete**           | ☀ Acordado | +2 na sua soma.                                                                                                                                        |
+| 1      | **Poção Maluca**      | ☀ Acordado | Um goblin Maluco jogado vale o dobro ou a metade.                                                                                                      |
+| 3      | **Pé de Cabra**       | ☀ Acordado | −2 na sua soma.                                                                                                                                        |
+| 2      | **Armadilha**         | ⚡ Reação  | Quando alguém roubar ou eliminar uma carta da sua mão, revele esta carta: quem atacou perde 1 carta (o jogador à direita dele escolhe qual, às cegas). |
+| 3      | **NÃO!**              | ⚡ Reação  | Cancele um item de Monstro Acordado ou uma Armadilha de qualquer jogador. Pode ser respondido com outro NÃO!.                                          |
 
 **Total: 50 cartas.**
 
@@ -275,7 +277,14 @@ A posição de cada característica nos goblins não mudou, só o nome. Por isso
 - **Profecia do Caos:** escolhe o Caos da **próxima** rodada, porque o da rodada atual já foi revelado.
 - **Disfarce:** a característica escolhida pode ser qualquer uma das 6 (Chapéu, Cicatriz, Monóculo, Fedorento, Maluco, Pereba).
 - **Saco de Moedas:** não fica na mão. Quando você o compra (ou pega com Mão Leve ou Mapa do Tesouro), ele vai para o descarte e você compra 2 itens.
-- **Armadilha:** dispara uma vez só, no primeiro jogador que roubar ou eliminar uma carta sua.
+- **Armadilha:**
+  - Fica escondida na sua mão de itens e continua ocupando espaço no limite de 3.
+  - Dispara quando outro jogador tira uma carta da sua **mão**: roubo ou eliminação de quem vence a rodada (cravada, aproximação, Fúria, Cravada do Azarão), roubo do Duelo e Sacrifício.
+  - **Não** dispara no Ladrão de Túmulos (pega do cemitério) nem na Mão Leve (pega item).
+  - O roubo ou a eliminação acontece normalmente. A Armadilha só faz o atacante perder 1 carta da mão dele, que vai para o cemitério do atacante. Se ele não tiver mais cartas na mão, não acontece nada.
+  - Uma Armadilha por carta tirada: se o vencedor tirar 2 ou 3 cartas suas, você pode usar uma Armadilha em cada (se tiver mais de uma).
+  - Com Escudo de Panela ninguém tira cartas suas, então a Armadilha não dispara.
+  - Ao revelar, qualquer outro jogador pode cancelá-la com NÃO! (com a cadeia normal de NÃO!). Valendo ou cancelada, ela vai para o descarte e aparece como item usado no seu assento (riscada se foi cancelada).
 - **Poção Maluca:** a metade é arredondada para baixo.
 - **Luneta com Monstros Opostos:** mostra só o monstro baixo.
 - **Grito de Guerra com Monstros Opostos:** vale para os dois monstros.
@@ -401,7 +410,7 @@ Existem para que quem está perdendo continue com chance de voltar ao jogo.
 - **Jogador com menos cartas do que o mínimo pedido** (ex.: Corrida dos Pequenos): joga todas as que tiver.
 - **Monte de monstros acabou:** embaralhe os usados (menos o da mesa) e continue.
 - **Itens e Caos acabaram:** embaralhe o descarte correspondente.
-- **NÃO! em cadeia:** cada NÃO! inverte o anterior. Se o número de NÃO! usados for ímpar, o item foi cancelado; o item cancelado também vai para o descarte.
+- **NÃO! em cadeia:** cada NÃO! inverte o anterior. Se o número de NÃO! usados for ímpar, o item (ou a Armadilha) foi cancelado; o item cancelado também vai para o descarte.
 - **Vários vencedores e Banquete:** as cartas dos perdedores são distribuídas entre os vencedores, uma de cada vez, na ordem da mesa.
 - **Coroa Trocada:** o novo dono passa a usar a habilidade e o empréstimo na hora.
 - **Roubo de goblin de outra cor:** a carta mantém a cor original. Ela conta para o território daquela cor e, se for descartada, vai para o cemitério de quem a tinha na mão.
@@ -422,17 +431,21 @@ Correspondência com o código atual (`src/game/data.ts`, `src/game/rules.ts`, `
 **Conferido no código (bate com este documento):** `TNAME`, `TICO`, a tabela `TR` dos goblins, os 4 reis e rainhas (características, grupos e o nome Lente de Vidro), as cópias e os nomes dos 50 itens (Monóculo Polido, Fuga Fedorenta, Pomada de Pereba) e dos 50 Caos, os 31 monstros (territórios e Amigo dos Fracos), a tela de regras e todas as regras das seções 5 a 17.
 
 - As chaves internas dos itens continuam `OCULOS`, `CHINELO` e `POMADA`.
+- **Reações:** `REACT` (`data.ts`) lista NÃO! e Armadilha. Elas não têm botão (a bandeja mostra "reação") e não entram em `canUse(..., 'window')`. Na carta continuam marcadas como ☀.
+- **Armadilha:** `trap()` (`engine.ts`) roda depois de cada `takeCard` e do Sacrifício. Ela pergunta à vítima e roda `naoChain` (o atacante quer cancelar, o dono quer que valha, os outros bots não se metem). Os bots sempre revelam.
+- **Pedidos empilhados:** se a vítima já tem um pedido aberto (ex.: escolher goblins no online), a pergunta entra na frente e o pedido anterior volta depois.
+- `ARMS` (preparados) agora é só Escudo, Amuleto e Fuga Fedorenta.
 - As cartas de item não têm ícone próprio (só ☾/☀), então o Monóculo Polido não se confunde com o ícone da característica Monóculo.
 
 - **Totais:** 50 itens, 50 Caos, 31 monstros, 80 goblins.
 
 ## 19. Histórico de versões
 
-| Versão    | Resumo                                                                                                                                      |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| v1–v4     | Jogo com baralho comum (naipes 1–10); evolução das regras de erro, empate e ações.                                                          |
-| v5 / v5.1 | Tema goblins, estilo 21 (estouro), cartas de ação dupla face; versão visual com tutorial.                                                   |
-| v6        | Monstros 10–40, sem estouro, cravar rouba, reis e rainhas, Itens e Caos separados.                                                          |
-| v6.1      | Caos contra o meio, janela de itens livre com NÃO! em cadeia, Monóculo do Rei Azul, bots com personalidade, sem sorteio automático.         |
-| v6.2      | Limite de 3 itens, regras de virada, monstros com efeito, Mapa do Tesouro, Profecia do Caos, Mínimo Máximo, Feira dos Goblins e Necromante. |
-| **v7**    | Pereba, Monóculo, Chapéu, Maluco, Fedorento e Cicatriz; itens renomeados; habilidade do Rei Azul passa a se chamar Lente de Vidro.          |
+| Versão    | Resumo                                                                                                                                                                                                               |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v1–v4     | Jogo com baralho comum (naipes 1–10); evolução das regras de erro, empate e ações.                                                                                                                                   |
+| v5 / v5.1 | Tema goblins, estilo 21 (estouro), cartas de ação dupla face; versão visual com tutorial.                                                                                                                            |
+| v6        | Monstros 10–40, sem estouro, cravar rouba, reis e rainhas, Itens e Caos separados.                                                                                                                                   |
+| v6.1      | Caos contra o meio, janela de itens livre com NÃO! em cadeia, Monóculo do Rei Azul, bots com personalidade, sem sorteio automático.                                                                                  |
+| v6.2      | Limite de 3 itens, regras de virada, monstros com efeito, Mapa do Tesouro, Profecia do Caos, Mínimo Máximo, Feira dos Goblins e Necromante.                                                                          |
+| **v7**    | Pereba, Monóculo, Chapéu, Maluco, Fedorento e Cicatriz; itens renomeados; habilidade do Rei Azul passa a se chamar Lente de Vidro; Armadilha vira reação (revelada quando tiram uma carta sua, cancelável com NÃO!). |

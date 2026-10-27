@@ -203,9 +203,14 @@ export function raceAsk(
       });
   });
 }
-export async function naoChain(p: Player, k: ItemKey, args: ItemArgs) {
-  const want = itemPrefs(p, k, args),
-    item = ITEMS[k][0];
+// `want` diz se cada bot quer que o item valha (true), não valha (false) ou tanto faz (null)
+export async function naoChain(
+  p: Player,
+  k: ItemKey,
+  args: ItemArgs,
+  want: (q: Player) => boolean | null = itemPrefs(p, k, args),
+) {
+  const item = ITEMS[k][0];
   let cancelled = false,
     last = p;
   for (let g = 0; g < 12; g++) {
@@ -261,11 +266,14 @@ export async function itemWindow() {
   G.win = false;
   sync();
 }
+// pedidos que ficaram embaixo de outro (ex.: a Armadilha pergunta enquanto a vítima escolhe goblins)
+const UNDER: Record<number, GameState['pend'][number][]> = {};
 export function prompt(pid: number, kind: PromptKind, data: PromptData = {}): Promise<Reply> {
   const p = P(pid);
   if (p.bot) return Promise.resolve(botDecide(pid, kind, data));
   G.nonce = (G.nonce || 0) + 1;
   const nonce = G.nonce;
+  if (G.pend[pid]) (UNDER[pid] ||= []).push(G.pend[pid]);
   G.pend[pid] = { kind, data, nonce };
   NET.waitSince[pid] = Date.now();
   return new Promise<Reply>((res) => {
@@ -281,6 +289,18 @@ export function resolvePrompt(pid: number, nonce: number, value?: Reply | null) 
   delete PENDRES[nonce];
   delete G.pend[pid];
   delete NET.waitSince[pid];
+  // volta o pedido que estava embaixo, se ainda estiver esperando resposta
+  const st = UNDER[pid];
+  while (st && st.length) {
+    const prev = st.pop()!;
+    if (!PENDRES[prev.nonce]) continue;
+    if (P(pid).bot) {
+      queueMicrotask(() => resolvePrompt(pid, prev.nonce, botDecide(pid, prev.kind, prev.data)));
+    }
+    G.pend[pid] = prev;
+    NET.waitSince[pid] = Date.now();
+    break;
+  }
   sync();
   r.res(value || {});
   return true;
@@ -358,6 +378,7 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
         card: { g: got, vis: [p.id, o.id] },
         dur: 560,
       });
+      await trap(p, o);
       break;
     }
     case 'COROA': {
@@ -544,7 +565,6 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
     case 'ESCUDO':
     case 'AMULETO':
     case 'CHINELO':
-    case 'ARMADILHA':
       if (armed(p, k)) return;
       spendItem(p, k);
       rd.armed.push(k);
@@ -659,17 +679,62 @@ export async function takeCard(p: Player, o: Player, kind: string) {
       rot: 18,
     });
   }
-  if (armed(o, 'ARMADILHA') && p.hand.length) {
-    G.rd[o.id].armed = G.rd[o.id].armed.filter((x) => x !== 'ARMADILHA');
-    const x = p.hand.splice(rnd(p.hand.length), 1)[0];
-    G.grave[p.id].push(x);
-    const q = rightOf(p);
-    log(
-      `Armadilha de ${nm(o)}: ${q ? nm(q) + ' escolheu às cegas e ' : ''}${nm(p)} perdeu o ${gobTxt(x)}.`,
-      'it',
-    );
-    void fx({ type: 'pop', pid: o.id, text: 'Armadilha!', good: true }, false);
+  sync();
+  await trap(p, o);
+}
+// Armadilha (reação): `p` acabou de tirar uma carta da mão de `o`; `o` pode revelar a Armadilha
+export async function trap(p: Player, o: Player) {
+  if (!o.items.includes('ARMADILHA') || !p.hand.length) return;
+  const r = await prompt(o.id, 'ask', {
+    title: 'Usar Armadilha?',
+    text: `${nm(p)} tirou uma carta da sua mão. Revelar a Armadilha? ${nm(p)} perde 1 carta.`,
+    options: [
+      { label: 'Usar Armadilha', value: 1, cls: 'red' },
+      { label: 'Deixar', value: 0, cls: 'ghost' },
+    ],
+    cards: ['ARMADILHA'],
+    botValue: 1,
+  });
+  if (!r.value || !o.items.includes('ARMADILHA')) return;
+  void fx({ type: 'pop', pid: o.id, text: 'Armadilha!', good: true }, false);
+  void fx(
+    {
+      type: 'toast',
+      to: G.players.filter((q) => q !== o).map((q) => q.id),
+      text: `${nm(o)} revelou uma Armadilha contra ${nm(p)}.`,
+    },
+    false,
+  );
+  // quem caiu na Armadilha quer cancelar; o dono quer que valha; os outros não se metem
+  const cancelled = await naoChain(o, 'ARMADILHA', {}, (q) =>
+    q === o ? true : q === p ? false : null,
+  );
+  spendItem(o, 'ARMADILHA');
+  if (cancelled) {
+    lastUse(o).x = 1;
+    log(`A Armadilha de ${nm(o)} foi cancelada pelo NÃO!.`, 'it');
+    void fx({ type: 'toast', text: `A Armadilha de ${nm(o)} foi cancelada pelo NÃO!.` }, false);
+    sync();
+    return;
   }
+  if (!p.hand.length) return sync();
+  const x = p.hand.splice(rnd(p.hand.length), 1)[0];
+  G.grave[p.id].push(x);
+  const q = rightOf(p);
+  log(
+    `Armadilha de ${nm(o)}: ${q ? nm(q) + ' escolheu às cegas e ' : ''}${nm(p)} perdeu o ${gobTxt(x)}.`,
+    'it',
+  );
+  void fx({ type: 'toast', text: `Armadilha de ${nm(o)}: ${nm(p)} perdeu uma carta.` }, false);
+  void fx({ type: 'pop', pid: p.id, text: `−1 carta (${gv(x)})` }, false);
+  await fx({
+    type: 'fly',
+    from: 'hand:' + p.id,
+    to2: 'seat:' + p.id,
+    card: { g: x, pub: 1, sm: 1 },
+    dur: 560,
+    rot: 18,
+  });
   sync();
 }
 export async function chaosStart() {

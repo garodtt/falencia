@@ -12,14 +12,20 @@ export function ItemTip({ k, used }: { k: ItemKey; used?: UsedItem }) {
       accent={when === 'D' ? 'var(--color-moon)' : 'var(--color-sun)'}
       title={name}
       sub={
-        when === 'D'
-          ? 'Monstro dormindo: use antes de o monstro acordar'
-          : 'Monstro acordado: use na janela de itens'
+        k === 'ARMADILHA'
+          ? 'Reação: o jogo pergunta quando tiram uma carta sua'
+          : when === 'D'
+            ? 'Monstro dormindo: use antes de o monstro acordar'
+            : 'Monstro acordado: use na janela de itens'
       }
     >
       <TipNote>{text}</TipNote>
       {k === 'NAO' ? (
-        <TipNote>Não tem botão: o jogo pergunta na hora em que alguém usa um item.</TipNote>
+        <TipNote>
+          Não tem botão: o jogo pergunta na hora em que alguém usa um item ou revela uma Armadilha.
+        </TipNote>
+      ) : k === 'ARMADILHA' ? (
+        <TipNote>Não tem botão: fica escondida na sua mão até alguém tirar uma carta sua.</TipNote>
       ) : null}
       {choice ? <TipNote>{`Usado: ${choice}`}</TipNote> : null}
       {used && used.x ? <TipNote warn>Cancelado com NÃO!</TipNote> : null}

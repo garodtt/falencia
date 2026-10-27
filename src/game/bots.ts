@@ -303,7 +303,7 @@ export function botWindowPick(p: Player): WindowPick | null {
     if (bestO) return bestO;
   }
   if (!winning) {
-    for (const k of ['AMULETO', 'ESCUDO', 'ARMADILHA'] as const)
+    for (const k of ['AMULETO', 'ESCUDO'] as const)
       if (
         p.items.includes(k) &&
         !armed(p, k) &&
@@ -379,7 +379,7 @@ export async function botWindow(p: Player) {
     }
   }
   if (!winning) {
-    for (const k of ['AMULETO', 'ESCUDO', 'ARMADILHA'] as const)
+    for (const k of ['AMULETO', 'ESCUDO'] as const)
       if (
         p.items.includes(k) &&
         !armed(p, k) &&
