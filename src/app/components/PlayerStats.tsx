@@ -26,9 +26,9 @@ export function Stat({
       )}
     >
       {(anchor) => (
-        <span {...anchor()}>
+        <span className="inline-flex items-center gap-1" {...anchor()}>
           <Icon name={icon} />
-          <b>{n}</b>
+          <b className="font-bold text-text">{n}</b>
         </span>
       )}
     </Tooltip>
@@ -38,7 +38,7 @@ export function Stat({
 // cartas na mão, itens e cemitério de um jogador; `children` entra no fim da linha
 export function PlayerStats({ p, children }: { p: Player; children?: ReactNode }) {
   return (
-    <div className="stats">
+    <div className="mt-[3px] flex flex-wrap gap-3 text-[13px] text-muted">
       <Stat
         icon="cards"
         title="Cartas na mão"

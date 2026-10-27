@@ -18,7 +18,6 @@ import {
 import type { Placement } from '@floating-ui/react';
 import { useState } from 'react';
 import type { HTMLProps, ReactNode } from 'react';
-import css from './Tooltip.module.css';
 
 // Balão de informação que abre ao passar o mouse ou ao focar pelo teclado (no toque, não abre:
 // o toque é para jogar). `content` é uma função: o conteúdo só é montado com o balão aberto.
@@ -69,17 +68,19 @@ export function useTooltip(content: (() => ReactNode) | null, placement: Placeme
         <FloatingPortal>
           <div
             ref={setFloating}
-            className={css.float}
+            className="z-[60] pointer-events-none"
             style={floatingStyles}
             {...getFloatingProps()}
           >
             <div style={styles}>
-              <div className={css.box}>{content()}</div>
+              <div className="w-max max-w-[264px] overflow-hidden rounded-[10px] border border-line bg-surface-2 text-left font-ui text-[13px] leading-[1.45] font-medium text-text shadow-[0_14px_34px_rgba(0,0,0,0.5)]">
+                {content()}
+              </div>
               <FloatingArrow
                 ref={setArrowEl}
                 context={context}
-                fill="var(--surface2)"
-                stroke="var(--line)"
+                fill="var(--color-surface-2)"
+                stroke="var(--color-line)"
                 strokeWidth={1}
               />
             </div>

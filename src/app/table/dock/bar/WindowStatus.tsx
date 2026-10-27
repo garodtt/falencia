@@ -14,11 +14,11 @@ export function WindowStatus({ me }: { me: Player }) {
       <Say>
         Você está a <b>{x ? x.d : '—'}</b> do alvo e{' '}
         {x && x.out ? (
-          <b style={{ color: 'var(--bad)' }}>{`já perdeu (${outLabel(ME)})`}</b>
+          <b className="text-bad">{`já perdeu (${outLabel(ME)})`}</b>
         ) : R.w.includes(me) ? (
-          <b style={{ color: 'var(--good)' }}>{R.kind === 'exact' ? 'cravando' : 'vencendo'}</b>
+          <b className="text-good">{R.kind === 'exact' ? 'cravando' : 'vencendo'}</b>
         ) : (
-          <b style={{ color: 'var(--bad)' }}>perdendo</b>
+          <b className="text-bad">perdendo</b>
         )}
         .
       </Say>

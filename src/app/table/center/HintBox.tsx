@@ -8,9 +8,12 @@ import { Icon } from '../../components/Icon.tsx';
 export function HintBox({ pe, me }: { pe: Pending | null; me: Player }) {
   const text = hintText(pe && pe.kind, me) || G.rd[ME].note;
   return (
-    <div className="side" id="hintBox">
+    <div
+      className="max-w-[300px] justify-self-end max-[960px]:order-3 max-[960px]:justify-self-center"
+      id="hintBox"
+    >
       {text ? (
-        <div className="hint">
+        <div className="flex items-start gap-2 rounded-[10px] border border-dashed border-line px-3 py-2.5 text-[13px] text-muted">
           <Icon name="info" />
           <span>{text}</span>
         </div>

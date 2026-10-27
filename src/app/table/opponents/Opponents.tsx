@@ -8,7 +8,11 @@ export function Opponents() {
   const opps: Player[] = [];
   for (let k = 1; k < G.n; k++) opps.push(G.players[(ME + k) % G.n]);
   return (
-    <div className="opps" id="opps" style={{ '--no': String(opps.length) } as CSSProperties}>
+    <div
+      className="grid gap-3 [grid-template-columns:repeat(var(--no,3),minmax(0,1fr))] max-[960px]:grid-cols-1"
+      id="opps"
+      style={{ '--no': String(opps.length) } as CSSProperties}
+    >
       {opps.map((p) => (
         <Seat key={p.id} p={p} />
       ))}

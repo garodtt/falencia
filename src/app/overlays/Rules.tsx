@@ -4,28 +4,15 @@ import type { ReactNode } from 'react';
 import { CHAOS, CLAN, KINGS, lendTxt, traitNames } from '../../game/data.ts';
 import { Icon } from '../components/Icon.tsx';
 
-const strong = { color: 'var(--text)' };
-
 // uma linha da legenda: ícone, nome e o que significa. O " — " fica no mesmo nó de texto da
 // descrição (como no HTML original): separados, o navegador posiciona as letras com diferença
 // de subpixel. Descrição com marcação (não-string) já começa com o " — ".
 function L({ i, t, children }: { i: ReactNode; t: string; children: ReactNode }) {
   return (
-    <div style={{ display: 'flex', gap: 8, alignItems: 'flex-start' }}>
-      <span
-        style={{
-          color: 'var(--text)',
-          flex: 'none',
-          width: 18,
-          display: 'inline-flex',
-          justifyContent: 'center',
-          paddingTop: 1,
-        }}
-      >
-        {i}
-      </span>
+    <div className="flex items-start gap-2">
+      <span className="inline-flex w-[18px] flex-none justify-center pt-px text-text">{i}</span>
       <span>
-        <b style={strong}>{t}</b>
+        <b className="text-text">{t}</b>
         {typeof children === 'string' ? ` — ${children}` : children}
       </span>
     </div>
@@ -34,14 +21,7 @@ function L({ i, t, children }: { i: ReactNode; t: string; children: ReactNode })
 
 function Section({ first, children }: { first?: boolean; children: ReactNode }) {
   return (
-    <div
-      style={{
-        fontSize: 11,
-        letterSpacing: '.06em',
-        textTransform: 'uppercase',
-        marginTop: first ? undefined : 4,
-      }}
-    >
+    <div className={`text-[11px] tracking-[0.06em] uppercase ${first ? '' : 'mt-1'}`}>
       {children}
     </div>
   );
@@ -49,30 +29,11 @@ function Section({ first, children }: { first?: boolean; children: ReactNode }) 
 
 export function Rules() {
   return (
-    <div
-      style={{
-        textAlign: 'left',
-        fontSize: 13,
-        maxHeight: '60vh',
-        overflow: 'auto',
-        width: '100%',
-        color: 'var(--muted)',
-        display: 'grid',
-        gap: 8,
-      }}
-    >
-      <p style={{ margin: 0 }}>
-        <b style={strong}>O que cada ícone significa</b>
+    <div className="grid w-full gap-2 text-left text-[13px] text-muted max-h-[60vh] overflow-auto">
+      <p className="m-0">
+        <b className="text-text">O que cada ícone significa</b>
       </p>
-      <div
-        style={{
-          display: 'grid',
-          gap: 5,
-          padding: '10px 12px',
-          border: '1px solid var(--line, rgba(255,255,255,.12))',
-          borderRadius: 10,
-        }}
-      >
+      <div className="grid gap-[5px] rounded-[10px] border border-line px-3 py-2.5">
         <Section first>Características dos goblins (canto da carta)</Section>
         <L i={<Icon name="hat" />} t="Chapéu">
           característica usada por itens (Chapéu Pontudo, Disfarce) e pela Maldição.
@@ -95,7 +56,7 @@ export function Rules() {
         <Section>Mesa e jogadores</Section>
         <L
           i={
-            <span style={{ color: 'var(--accent)' }}>
+            <span className="text-accent">
               <Icon name="crown" />
             </span>
           }
@@ -149,59 +110,59 @@ export function Rules() {
         </L>
         <L i={<Icon name="gauge" />} t="Normal / Rápido">
           {' — só muda a velocidade das animações e pausas na sua tela. '}
-          <b style={strong}>Normal</b>: cartas voando, avisos e resultados com tempo para ler.{' '}
-          <b style={strong}>Rápido</b>: tudo dura menos da metade do tempo (cerca de 2× mais
-          rápido), bom quando você já conhece o jogo. As regras e as jogadas dos bots são as mesmas
-          nos dois. Online, a escolha de quem criou a mesa define o ritmo da partida; a sua muda só
-          as animações na sua tela.
+          <b className="text-text">Normal</b>: cartas voando, avisos e resultados com tempo para
+          ler. <b className="text-text">Rápido</b>: tudo dura menos da metade do tempo (cerca de 2×
+          mais rápido), bom quando você já conhece o jogo. As regras e as jogadas dos bots são as
+          mesmas nos dois. Online, a escolha de quem criou a mesa define o ritmo da partida; a sua
+          muda só as animações na sua tela.
         </L>
         <L i={<Icon name="home" />} t="Menu">
           volta para a tela inicial.
         </L>
       </div>
       <p>
-        <b style={strong}>Objetivo:</b> ser o último jogador com cartas na mão.
+        <b className="text-text">Objetivo:</b> ser o último jogador com cartas na mão.
       </p>
       <p>
-        <b style={strong}>Rodada:</b> monstro dormindo (escolha até 3 goblins; itens de lua) →
-        monstro acordado (revela; itens de sol; resultado) → revela o Caos da próxima rodada.
+        <b className="text-text">Rodada:</b> monstro dormindo (escolha até 3 goblins; itens de lua)
+        → monstro acordado (revela; itens de sol; resultado) → revela o Caos da próxima rodada.
       </p>
       <p>
-        <b style={strong}>Cravou</b> (diferença 0): rouba 2 cartas às cegas e compra 1 item. Se
-        alguém cravar, só quem cravou ganha.
+        <b className="text-text">Cravou</b> (diferença 0): rouba 2 cartas às cegas e compra 1 item.
+        Se alguém cravar, só quem cravou ganha.
         <br />
-        <b style={strong}>Aproximação</b> (ninguém cravou): quem chegou mais perto, para cima ou
-        para baixo, elimina 1 carta às cegas de um rival e compra 1 item.
+        <b className="text-text">Aproximação</b> (ninguém cravou): quem chegou mais perto, para cima
+        ou para baixo, elimina 1 carta às cegas de um rival e compra 1 item.
         <br />
-        <b style={strong}>Perdeu:</b> descarta as cartas jogadas no próprio cemitério. Vencedores
-        pegam as cartas de volta.
+        <b className="text-text">Perdeu:</b> descarta as cartas jogadas no próprio cemitério.
+        Vencedores pegam as cartas de volta.
         <br />
-        <b style={strong}>Última carta:</b> se só restam 2 jogadores com 1 carta cada, quem perde
-        por aproximação não descarta.
+        <b className="text-text">Última carta:</b> se só restam 2 jogadores com 1 carta cada, quem
+        perde por aproximação não descarta.
       </p>
       <p>
-        <b style={strong}>Itens:</b> no máximo 3 na mão. Se comprar o 4º, escolha 1 para mandar para
-        o fundo do monte de itens.
+        <b className="text-text">Itens:</b> no máximo 3 na mão. Se comprar o 4º, escolha 1 para
+        mandar para o fundo do monte de itens.
       </p>
       <p>
-        <b style={strong}>Viradas:</b> <b style={strong}>Vingança do Cemitério</b> — no início da
-        rodada, quem tem o maior cemitério compra 1 item. <b style={strong}>Cravada do Azarão</b> —
-        quem crava tendo a menor mão da mesa rouba 3 cartas em vez de 2.{' '}
-        <b style={strong}>Pressa não Compensa</b> — quem perde tendo jogado 3 goblins ou mais compra
-        1 item.
+        <b className="text-text">Viradas:</b> <b className="text-text">Vingança do Cemitério</b> —
+        no início da rodada, quem tem o maior cemitério compra 1 item.{' '}
+        <b className="text-text">Cravada do Azarão</b> — quem crava tendo a menor mão da mesa rouba
+        3 cartas em vez de 2. <b className="text-text">Pressa não Compensa</b> — quem perde tendo
+        jogado 3 goblins ou mais compra 1 item.
       </p>
       <p>
-        <b style={strong}>Monstros com efeito:</b> alguns monstros têm um efeito, revelado quando
-        acordam. <b style={strong}>Amigo dos Fracos</b> (10, 15, 20, 25, 30, 35 e 40): quando alguém
-        vence a rodada, quem compra o item é o jogador com menos itens na mão (empate: todos os
-        empatados).
+        <b className="text-text">Monstros com efeito:</b> alguns monstros têm um efeito, revelado
+        quando acordam. <b className="text-text">Amigo dos Fracos</b> (10, 15, 20, 25, 30, 35 e 40):
+        quando alguém vence a rodada, quem compra o item é o jogador com menos itens na mão (empate:
+        todos os empatados).
       </p>
       <p>
-        <b style={strong}>Território:</b> se algum goblin jogado for de um território do monstro,
-        você tem margem de ±1.
+        <b className="text-text">Território:</b> se algum goblin jogado for de um território do
+        monstro, você tem margem de ±1.
       </p>
       <p>
-        <b style={strong}>Reis e rainhas:</b>
+        <b className="text-text">Reis e rainhas:</b>
         {KINGS.map((k, i) => (
           <Fragment key={i}>
             <br />
@@ -211,9 +172,9 @@ export function Rules() {
         <br />A Maldição desliga o rei que tiver a característica sorteada.
       </p>
       <p>
-        <b style={strong}>Caos (50 cartas):</b>
+        <b className="text-text">Caos (50 cartas):</b>
       </p>
-      <ul style={{ margin: 0, paddingLeft: 18, display: 'grid', gap: 4 }}>
+      <ul className="m-0 grid gap-1 pl-[18px]">
         {Object.entries(CHAOS).map(([k, c]) => (
           <li key={k}>
             <b>{c[0]}</b>

@@ -30,7 +30,7 @@ export function MonsterTip({ m }: { m: Monster }) {
 // o monstro ainda dormindo
 export function SleepingMonsterTip() {
   return (
-    <TipBody accent="var(--moon)" title="Monstro dormindo">
+    <TipBody accent="var(--color-moon)" title="Monstro dormindo">
       <TipNote>Vale de 10 a 40. Ele acorda depois que todos jogarem.</TipNote>
       <TipNote>A Luneta revela o valor antes da hora.</TipNote>
     </TipBody>

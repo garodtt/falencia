@@ -35,7 +35,7 @@ export function Hand({ me, sel, can }: { me: Player; sel: Gob[]; can: boolean })
     span = Math.min(box.cw * 0.75, Math.max(10, (box.hw - box.cw - 10) / Math.max(n - 1, 1)));
 
   return (
-    <div id="hand" ref={ref}>
+    <div id="hand" className="relative w-full h-[calc(var(--ch)+40px)]" ref={ref}>
       {n ? (
         hand.map((g, i) => (
           <HandCard
@@ -52,7 +52,7 @@ export function Hand({ me, sel, can }: { me: Player; sel: Gob[]; can: boolean })
           />
         ))
       ) : (
-        <div className="muted" style={{ textAlign: 'center', paddingTop: 40 }}>
+        <div className="pt-10 text-center text-muted">
           {LOCAL.spec
             ? 'Você está assistindo esta mesa.'
             : rd.gs.length
@@ -92,8 +92,10 @@ function HandCard({
   return (
     <GobCard
       g={g}
-      className={`${can ? 'pick' : ''} ${selected ? 'sel' : ''}`}
+      className={`absolute bottom-1 left-1/2 [transform-origin:50%_140%] [transition:transform_0.18s_ease,filter_0.2s] ${can ? 'cursor-pointer' : ''}`}
       data-g={g}
+      data-pick={can ? '' : undefined}
+      data-selected={selected ? '' : undefined}
       style={
         {
           '--base': base,

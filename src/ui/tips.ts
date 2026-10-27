@@ -16,13 +16,13 @@ export function tipFor(key: string) {
   TIPS.seen.add(key);
   TIPS.cur = key;
   if (key === 'start') TIPS.after = 'king';
-  $('tut').classList.remove('hidden');
+  $('tut').classList.remove('!hidden');
   tipPlace();
 }
 
 export function tipClose() {
   TIPS.cur = null;
-  $('tut').classList.add('hidden');
+  $('tut').classList.add('!hidden');
   if (TIPS.after) {
     const k = TIPS.after;
     TIPS.after = null;

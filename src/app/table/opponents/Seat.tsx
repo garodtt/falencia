@@ -5,6 +5,7 @@ import { G, LOCAL, ME, nameOf } from '../../../game/state.ts';
 import type { Player } from '../../../game/types.ts';
 import { CCSS } from '../../../ui/html.ts';
 import { Badge } from '../../components/Badge.tsx';
+import { GHOST } from '../../components/buttonVariants.ts';
 import { ChiefCrown } from '../../components/ChiefCrown.tsx';
 import { ColorDot } from '../../components/ColorDot.tsx';
 import { Icon } from '../../components/Icon.tsx';
@@ -15,6 +16,33 @@ import { Tooltip } from '../../components/tooltip/Tooltip.tsx';
 import { kick, pickTarget } from '../actions.ts';
 import { canKick, outLabel } from '../view.ts';
 import { SeatPlay } from './SeatPlay.tsx';
+
+// a cor da borda/sombra do assento: várias coisas podem estar valendo ao mesmo tempo (o rival
+// pode ser o chefe E estar vencendo, por ex.); esta é a ordem de prioridade, maior pro menor
+function seatSkin(
+  acting: boolean,
+  chief: boolean,
+  isTarget: boolean,
+  steal: boolean,
+  winner: boolean,
+) {
+  let border = 'border-line',
+    shadow = '';
+  if (chief) border = 'border-[color-mix(in_srgb,var(--color-accent)_55%,transparent)]';
+  if (isTarget) {
+    border = steal ? 'border-accent' : 'border-bad';
+    shadow = steal
+      ? 'shadow-[0_0_0_2px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]'
+      : 'shadow-[0_0_0_2px_color-mix(in_srgb,var(--color-bad)_40%,transparent)]';
+  }
+  if (winner) border = 'border-good';
+  if (acting) {
+    border = 'border-accent';
+    shadow =
+      'shadow-[0_0_0_2px_color-mix(in_srgb,var(--color-accent)_35%,transparent),0_0_22px_color-mix(in_srgb,var(--color-accent)_25%,transparent)]';
+  }
+  return `${border} ${shadow}`;
+}
 
 // um rival: nome, números, rei, o que jogou e o que está fazendo agora
 export function Seat({ p }: { p: Player }) {
@@ -30,6 +58,7 @@ export function Seat({ p }: { p: Player }) {
     myPe.data.T!.includes(p.id) &&
     !LOCAL.answered[myPe.nonce]
   );
+  const steal = isTarget && myPe!.kind === 'steal';
   const pe = G.pend[p.id];
   const waiting = !!(
     (pe && !p.bot && pe.kind !== 'next') ||
@@ -42,35 +71,29 @@ export function Seat({ p }: { p: Player }) {
       p.hand.length)
   );
   const acting = !!(G.act && G.act.pid === p.id);
+  const chief = G.chief === p.id;
   const sitting = !!(G.duel && !G.duel.includes(p.id)); // fora do Duelo
   const shown = !!(G.last && G.last[p.id]) || rd.gs.length > 0; // há cartas na frente dele
-  const cls = [
-    'seat',
-    acting ? 'acting' : '',
-    p.alive ? '' : 'out',
-    G.chief === p.id ? 'chief' : '',
-    isTarget ? 'target' + (myPe!.kind === 'steal' ? ' steal' : '') : '',
-    won ? 'winner' : '',
-  ].join(' ');
 
   return (
     <div
-      className={cls}
+      data-seat
+      className={`relative grid min-h-[72px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 rounded-xl border bg-surface px-3 py-2.5 ${seatSkin(acting, chief, isTarget, steal, won)} ${p.alive ? '' : 'opacity-40'} ${isTarget ? 'cursor-pointer' : ''}`}
       data-id={p.id}
-      data-tgt={isTarget ? p.id : undefined}
+      data-target={isTarget ? (steal ? 'steal' : 'elim') : undefined}
       onClick={isTarget ? () => pickTarget(p.id) : undefined}
     >
       <div style={{ minWidth: 0 }}>
-        <div className="oname">
+        <div className="flex min-w-0 items-center gap-[7px] font-display text-base font-semibold">
           <ColorDot color={p.color} />
-          <span className="nmtx">{nameOf(p.id)}</span>
+          <span className="truncate">{nameOf(p.id)}</span>
           {p.bot ? <Icon name="bot" /> : null}
           {p.bot && p.persona && PERSONAS[p.persona] ? (
-            <span className="muted" style={{ font: '500 12px var(--ui)' }}>
+            <span className="font-ui text-xs font-medium text-muted">
               {PERSONAS[p.persona].name}
             </span>
           ) : null}
-          {G.chief === p.id ? <ChiefCrown /> : null}
+          {chief ? <ChiefCrown /> : null}
           {result && rd.gs.length ? (
             won ? (
               <Badge tone="w">{result.kind === 'exact' ? 'Cravou' : 'Venceu'}</Badge>
@@ -83,18 +106,27 @@ export function Seat({ p }: { p: Player }) {
           <KingStat p={p} />
         </PlayerStats>
       </div>
-      <div className="oplay">
-        {acting ? <span className="think on">{G.act!.text}</span> : null}
+      <div
+        data-oplay
+        className="flex items-center gap-1 empty:hidden [--cw:calc(clamp(52px,min(5.2vw,8vh),78px)*0.5)]"
+      >
+        {acting ? <span className="animate-blink text-xs text-accent">{G.act!.text}</span> : null}
         <SeatPlay p={p} />
-        {!shown && waiting && !acting ? <span className="think on">escolhendo…</span> : null}
-        {shown && !G.revealed && !G.openPlays && rd.gs.length && G.phase === 'dormindo' ? (
-          <span className="think">pronto</span>
+        {!shown && waiting && !acting ? (
+          <span className="animate-blink text-xs text-accent">escolhendo…</span>
         ) : null}
-        {!shown && sitting ? <span className="think">fora do duelo</span> : null}
+        {shown && !G.revealed && !G.openPlays && rd.gs.length && G.phase === 'dormindo' ? (
+          <span className="text-xs text-muted">pronto</span>
+        ) : null}
+        {!shown && sitting ? <span className="text-xs text-muted">fora do duelo</span> : null}
       </div>
       <UsedChips rd={rd} />
       {canKick(p, waiting) ? (
-        <button className="ghost kick" data-kick={p.id} onClick={() => kick(p.id)}>
+        <button
+          className={`col-span-full justify-self-start px-2.5 py-[5px] text-xs ${GHOST}`}
+          data-kick={p.id}
+          onClick={() => kick(p.id)}
+        >
           Bot assume a vez
         </button>
       ) : null}
@@ -108,9 +140,9 @@ function KingStat({ p }: { p: Player }) {
   return (
     <Tooltip content={() => <KingTip king={p.king} on={on} />}>
       {(anchor) => (
-        <span className={on ? '' : 'off'} style={{ color: CCSS[p.king] }} {...anchor()}>
+        <span style={{ color: CCSS[p.king] }} {...anchor()}>
           <Icon name="crown" />
-          <span style={{ color: 'var(--muted)' }}>{KINGS[p.king].short}</span>
+          <span className="text-muted">{KINGS[p.king].short}</span>
         </span>
       )}
     </Tooltip>

@@ -17,14 +17,16 @@ export function MyPlay({ me }: { me: Player }) {
       {rd.gs.map((g) => (
         <GobCard key={g} g={g} eff={val(me, g)} owner={me} />
       ))}
-      <span className="sumT">
+      <span className="ml-2 font-display text-[26px] font-extrabold leading-none">
         {`= ${x ? x.S : rawSum(me)}`}
         {x && x.mg ? (
-          <small>
+          <small className="ml-1.5 font-ui text-[13px] font-medium text-good">
             {monocle(me, rd.gs) ? 'Monóculo: a 1 conta como cravada' : `±${x.mg} território`}
           </small>
         ) : null}
-        {x && x.add ? <small>{`+${x.add} do vizinho`}</small> : null}
+        {x && x.add ? (
+          <small className="ml-1.5 font-ui text-[13px] font-medium text-good">{`+${x.add} do vizinho`}</small>
+        ) : null}
       </span>
     </>
   );

@@ -7,14 +7,14 @@ import { TableList } from './TableList.tsx';
 // "Jogar online com amigos" (a lógica das mesas fica em net/online.ts)
 export function OnlinePanel() {
   return (
-    <div className="panel">
-      <h3>
+    <div className="grid gap-3 rounded-[14px] border border-line bg-surface p-4">
+      <h3 className="m-0 font-display text-lg font-semibold">
         <Icon name="users" /> Jogar online com amigos
       </h3>
       <NameField />
       <div id="onlineBox">
         {!NET.db ? (
-          <p className="muted" style={{ margin: 0 }}>
+          <p className="m-0 text-muted">
             As mesas online estão desligadas: falta preencher o arquivo .env com a configuração do
             Firebase (veja o .env.example). O jogo contra bots funciona normalmente.
           </p>

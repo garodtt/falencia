@@ -10,10 +10,10 @@ export function GameOver() {
         {G.winner === null || G.winner === undefined ? (
           'Empate.'
         ) : G.winner === ME ? (
-          <b>Você é o último goblin em pé!</b>
+          <b className="text-text">Você é o último goblin em pé!</b>
         ) : (
           <>
-            <b>{nameOf(G.winner)}</b>
+            <b className="text-text">{nameOf(G.winner)}</b>
             {' venceu a partida.'}
           </>
         )}

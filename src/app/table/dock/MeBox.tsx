@@ -19,8 +19,11 @@ export function MeBox({ me }: { me: Player }) {
     k = KINGS[me.king],
     won = G.result && G.result.w.includes(ME) && G.phase === 'resultado';
   return (
-    <div className={`me ${won ? 'winner' : ''}`} id="meBox">
-      <div className="oname">
+    <div
+      className={`grid gap-2.5 rounded-xl border bg-surface p-3 ${won ? 'border-good' : 'border-line'}`}
+      id="meBox"
+    >
+      <div className="flex min-w-0 items-center gap-[7px] font-display text-base font-semibold">
         <ColorDot color={me.color} />
         {nameOf(ME)}
         {G.chief === ME ? <ChiefCrown /> : null}
@@ -29,7 +32,7 @@ export function MeBox({ me }: { me: Player }) {
       <PlayerStats p={me} />
       <UsedChips rd={rd} />
       <KingRow me={me} />
-      <div className="lend">
+      <div className="flex flex-wrap items-center gap-[5px] text-xs text-muted">
         Empresta <TraitIcons t={k.tr} />
         {` aos ${lendTxt(me.king)}`}
       </div>
@@ -55,22 +58,32 @@ function KingRow({ me }: { me: Player }) {
   const k = KINGS[me.king],
     on = kingActive(me);
   return (
-    <button className={`kingrow ${on ? '' : 'off'}`} id="kingToggle" onClick={toggleKing}>
+    <button
+      className="grid w-full grid-cols-[auto_1fr] items-center gap-2.5 rounded-[10px] bg-surface-2 p-[9px] text-left text-text shadow-none hover:bg-surface-3 hover:filter-none"
+      id="kingToggle"
+      onClick={toggleKing}
+    >
       <span
-        className="cr"
+        className="grid size-8 place-items-center rounded-lg"
         id="myKing"
         style={{
           color: CCSS[me.king],
           background: `color-mix(in srgb, ${CCSS[me.king]} 22%, transparent)`,
         }}
       >
-        <Icon name="crown" />
+        <Icon name="crown" style={{ width: 19, height: 19 }} />
       </span>
       <span>
-        <b>{k.name}</b>
-        <small>{`${k.short}${on ? '' : ' · desligado nesta rodada'} · ${open ? 'toque para fechar' : 'toque para ver'}`}</small>
+        <b
+          className={`block font-display text-sm font-semibold ${on ? '' : 'line-through opacity-70'}`}
+        >
+          {k.name}
+        </b>
+        <small className="block font-medium text-muted">{`${k.short}${on ? '' : ' · desligado nesta rodada'} · ${open ? 'toque para fechar' : 'toque para ver'}`}</small>
       </span>
-      {open ? <span className="full">{k.text}</span> : null}
+      {open ? (
+        <span className="col-span-full text-[12.5px] font-medium text-muted">{k.text}</span>
+      ) : null}
     </button>
   );
 }
@@ -78,8 +91,8 @@ function KingRow({ me }: { me: Player }) {
 // um efeito valendo nesta rodada (item preparado, Bandeira, Disfarce)
 function EffectLine({ title, text }: { title: ReactNode; text: string }) {
   return (
-    <div className="fx">
-      <b>{title}</b>
+    <div className="rounded-lg bg-surface-2 px-2 py-1.5 text-xs">
+      <b className="text-sun">{title}</b>
       {text}
     </div>
   );

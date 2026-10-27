@@ -9,7 +9,7 @@ export function ItemTip({ k, used }: { k: ItemKey; used?: UsedItem }) {
   const choice = used && usedChoice(used);
   return (
     <TipBody
-      accent={when === 'D' ? 'var(--moon)' : 'var(--sun)'}
+      accent={when === 'D' ? 'var(--color-moon)' : 'var(--color-sun)'}
       title={name}
       sub={
         when === 'D'

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { Gob } from '../../../../game/data.ts';
 import { G, LOCAL, ME, MODE, nameOf } from '../../../../game/state.ts';
 import type { Pending, Player } from '../../../../game/types.ts';
+import { GHOST } from '../../../components/buttonVariants.ts';
 import { leaveAfterBust, nextRound } from '../../actions.ts';
 import { GameOver } from './GameOver.tsx';
 import { Say } from './Say.tsx';
@@ -26,7 +27,7 @@ export function ActionBar({
     return (
       <>
         <Say>Você faliu. A partida segue entre os outros.</Say>
-        <button className="ghost" id="btnLeave" onClick={leaveAfterBust}>
+        <button className={GHOST} id="btnLeave" onClick={leaveAfterBust}>
           Sair da partida
         </button>
       </>
@@ -46,14 +47,14 @@ export function ActionBar({
     case 'draw':
       return (
         <Say>
-          Clique no monte de <b>Itens</b>
+          Clique no monte de <b className="text-text">Itens</b>
           {` (faltam ${pe!.data.left})`}
         </Say>
       );
     case 'chaos':
       return (
         <Say>
-          Clique no monte de <b>Caos</b>
+          Clique no monte de <b className="text-text">Caos</b>
         </Say>
       );
     case 'next':

@@ -10,7 +10,15 @@ export function Chip({ u }: { u: UsedItem }) {
   return (
     <Tooltip content={() => <ItemTip k={u.k} used={u} />}>
       {(anchor) => (
-        <span className={`chip ${when} ${u.x ? 'x' : ''}`} {...anchor()}>
+        <span
+          data-chip
+          className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
+            when === 'D'
+              ? 'bg-[color-mix(in_srgb,var(--color-moon)_18%,transparent)] text-moon'
+              : 'bg-[color-mix(in_srgb,var(--color-sun)_16%,transparent)] text-sun'
+          } ${u.x ? 'line-through opacity-60' : ''}`}
+          {...anchor()}
+        >
           {name + detail}
         </span>
       )}
@@ -22,7 +30,7 @@ export function Chip({ u }: { u: UsedItem }) {
 export function UsedChips({ rd }: { rd: Round }) {
   if (!rd.used || !rd.used.length) return null;
   return (
-    <div className="chips">
+    <div className="col-span-full flex flex-wrap gap-1">
       {rd.used.map((u, i) => (
         <Chip key={i} u={u} />
       ))}

@@ -19,7 +19,7 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
-const clans = () => [...document.querySelectorAll<HTMLElement>('.clanPick')];
+const clans = () => [...document.querySelectorAll<HTMLElement>('[data-clan-pick]')];
 
 describe('Menu', () => {
   it('escolhe o território com clique e com Enter', () => {
@@ -37,8 +37,8 @@ describe('Menu', () => {
     render(<Menu />);
     fireEvent.click(screen.getByRole('button', { name: '2' }));
     expect(MENU.n).toBe(2);
-    expect(screen.getByRole('button', { name: '2' }).className).toBe('on');
-    expect(screen.getByRole('button', { name: '4' }).className).toBe('');
+    expect(screen.getByRole('button', { name: '2' }).getAttribute('aria-pressed')).toBe('true');
+    expect(screen.getByRole('button', { name: '4' }).getAttribute('aria-pressed')).toBe('false');
   });
 
   it('começa a partida contra bots com as dicas como marcado', () => {
@@ -54,7 +54,7 @@ describe('Menu', () => {
   it('sem Firebase, avisa que o online está desligado', () => {
     render(<Menu />);
     expect(screen.getByText(/mesas online estão desligadas/)).toBeTruthy();
-    expect(document.getElementById('nameRow')!.classList.contains('hidden')).toBe(true);
+    expect(document.getElementById('nameRow')!.classList.contains('!hidden')).toBe(true);
   });
 
   it('com Firebase, entra numa mesa pelo código digitado', () => {
