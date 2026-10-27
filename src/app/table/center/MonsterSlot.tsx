@@ -1,6 +1,7 @@
 import { monOf, monVal } from '../../../game/rules.ts';
 import { G, ME } from '../../../game/state.ts';
 import { CCSS } from '../../../ui/html.ts';
+import { CARD_BASE } from '../../components/cards/cardBase.ts';
 import { MonsterBack } from '../../components/cards/MonsterBack.tsx';
 import { MonsterCard } from '../../components/cards/MonsterCard.tsx';
 import { Icon } from '../../components/Icon.tsx';
@@ -18,11 +19,15 @@ export function MonsterSlot() {
   );
   const tip2 = useTooltip(second ? () => <MonsterTip m={second} /> : null, 'right');
   return (
-    <div className="mons">
-      <div id="monsterSlot" {...tip1.anchor()}>
+    <div className="flex items-center gap-3.5">
+      <div id="monsterSlot" className="[--cw:clamp(92px,min(9vw,15vh),140px)]" {...tip1.anchor()}>
         <Monster />
       </div>
-      <div id="monsterSlot2" className={second ? '' : 'hidden'} {...tip2.anchor()}>
+      <div
+        id="monsterSlot2"
+        className={`[--cw:clamp(92px,min(9vw,15vh),140px)] ${second ? '' : '!hidden'}`}
+        {...tip2.anchor()}
+      >
         {second ? <MonsterCard m={second} mod={monOf(second) - second.v} /> : null}
       </div>
       {tip1.tooltip}
@@ -35,7 +40,10 @@ export function MonsterSlot() {
 function Monster() {
   if (!G.monster)
     return (
-      <div className="card mback" style={{ opacity: 0.25 }}>
+      <div
+        data-card
+        className={`${CARD_BASE} grid place-items-center border border-[#45425e] bg-[linear-gradient(170deg,#2b2a3a,#1c1b26)] text-moon opacity-25`}
+      >
         <Icon name="moon" />
       </div>
     );
@@ -49,13 +57,18 @@ function Monster() {
         : 'vale de 10 a 40';
   return (
     <Flip key={`${G.round}-${G.monster.v}-${mod}`} open={!!G.revealed}>
-      <MonsterBack className="backside">
+      <MonsterBack>
         {h.t1 !== undefined && h.t1 !== null ? (
-          <span className="terr">
-            <i style={{ background: CCSS[h.t1] }} />
+          <span className="absolute top-[8%] right-0 left-0 flex justify-center gap-[5px]">
+            <i
+              className="block h-[calc(var(--cw)*0.1)] w-[calc(var(--cw)*0.1)] min-h-[9px] min-w-[9px] rounded-full"
+              style={{ background: CCSS[h.t1] }}
+            />
           </span>
         ) : null}
-        <span className="hint2">{hint}</span>
+        <span className="absolute bottom-[9%] right-0 left-0 text-center text-[calc(var(--cw)*0.1)] text-muted">
+          {hint}
+        </span>
       </MonsterBack>
       <MonsterCard m={G.monster} mod={mod} className="front" />
     </Flip>

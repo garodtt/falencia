@@ -17,33 +17,38 @@ export { askLocal };
 
 export function showGame() {
   LOCAL.deadShown = false;
-  $('menu').classList.add('hidden');
-  $('lobby').classList.add('hidden');
-  $('game').classList.remove('hidden');
+  $('menu').classList.add('!hidden');
+  $('lobby').classList.add('!hidden');
+  $('game').classList.remove('!hidden');
 }
 
 // sala de espera das mesas online (fica como estava até mexermos no online)
 export function showLobby() {
-  $('menu').classList.add('hidden');
-  $('game').classList.add('hidden');
-  $('lobby').classList.remove('hidden');
+  $('menu').classList.add('!hidden');
+  $('game').classList.add('!hidden');
+  $('lobby').classList.remove('!hidden');
   const S = G,
     seats = S.seats || [];
   void resolveNames(seats.map((s) => s.uid).filter(Boolean));
   const mine = seats.find((s) => s.uid === NET.uid);
+  const ghost =
+    'bg-transparent text-text shadow-[inset_0_0_0_1px_var(--color-line)] hover:enabled:bg-surface-2';
+  const dot = 'inline-block size-3 flex-none rounded-full';
   const rows = Array.from({ length: S.n }, (_, i) => {
     const s = seats[i];
     if (!s)
-      return `<div class="lseat empty"><span class="dot" style="background:var(--surface3)"></span>Vaga livre <span class="muted">· vira bot se ninguém entrar</span></div>`;
-    return `<div class="lseat"><span class="dot" style="background:${CCSS[s.color]}"></span><b>${esc(s.uid === NET.uid ? 'Você' : NET.names[s.uid!] || 'Jogador')}</b><span class="muted">${CLAN[s.color]} · ${KINGS[s.color].name}</span>${s.uid === S.hostUid ? '<span class="tagS">anfitrião</span>' : ''}</div>`;
+      return `<div class="flex items-center gap-2.5 rounded-[10px] bg-surface-2 px-3.5 py-3 text-muted"><span class="${dot}" style="background:var(--color-surface-3)"></span>Vaga livre <span class="text-muted">· vira bot se ninguém entrar</span></div>`;
+    return `<div class="flex items-center gap-2.5 rounded-[10px] bg-surface-2 px-3.5 py-3"><span class="${dot}" style="background:${CCSS[s.color]}"></span><b>${esc(s.uid === NET.uid ? 'Você' : NET.names[s.uid!] || 'Jogador')}</b><span class="text-muted">${CLAN[s.color]} · ${KINGS[s.color].name}</span>${s.uid === S.hostUid ? '<span class="rounded-full bg-surface-3 px-2 py-0.5 text-[11px] font-bold text-muted">anfitrião</span>' : ''}</div>`;
   }).join('');
   const free = [0, 1, 2, 3].filter((c) => !seats.some((s) => s.color === c));
-  $('lobby').innerHTML = `<div class="lobbyBox">
-    <h2>Mesa <span class="code">${esc(S.code)}</span></h2>
-    <p class="muted">Peça para os outros abrirem esta mesma página e entrarem com o código <b class="code">${esc(S.code)}</b>.</p>
+  const code = 'font-display text-lg font-extrabold tracking-[2px] text-accent';
+  const row = 'flex flex-wrap items-center gap-2.5';
+  $('lobby').innerHTML = `<div class="grid w-[min(640px,100%)] gap-3.5">
+    <h2 class="m-0 font-display text-4xl font-extrabold">Mesa <span class="${code}">${esc(S.code)}</span></h2>
+    <p class="text-muted">Peça para os outros abrirem esta mesma página e entrarem com o código <b class="${code}">${esc(S.code)}</b>.</p>
     <div style="display:grid;gap:8px">${rows}</div>
-    ${mine && free.length && !NET.isHost ? `<div class="row"><span class="muted">Trocar de território:</span>${free.map((c) => `<button class="ghost" data-color="${c}"><span class="dot" style="background:${CCSS[c]}"></span>${CLAN[c]}</button>`).join('')}</div>` : ''}
-    <div class="row">${NET.isHost ? `<button id="btnStartOnline">Começar partida</button>` : `<span class="muted">${mine ? 'Aguardando o anfitrião começar…' : 'Entrando na mesa…'}</span>`}<button class="ghost" id="btnLeave">Sair da mesa</button></div>
+    ${mine && free.length && !NET.isHost ? `<div class="${row}"><span class="text-muted">Trocar de território:</span>${free.map((c) => `<button class="${ghost}" data-color="${c}"><span class="${dot}" style="background:${CCSS[c]}"></span>${CLAN[c]}</button>`).join('')}</div>` : ''}
+    <div class="${row}">${NET.isHost ? `<button id="btnStartOnline">Começar partida</button>` : `<span class="text-muted">${mine ? 'Aguardando o anfitrião começar…' : 'Entrando na mesa…'}</span>`}<button class="${ghost}" id="btnLeave">Sair da mesa</button></div>
   </div>`;
 }
 
@@ -51,7 +56,7 @@ let dealT: ReturnType<typeof setTimeout> | undefined;
 
 // deal: a mão acabou de ser distribuída (as cartas entram animadas)
 export function render(deal?: boolean) {
-  if (!G || !G.players || $('game').classList.contains('hidden')) return;
+  if (!G || !G.players || $('game').classList.contains('!hidden')) return;
   closeStaleModal();
   // a barra do topo fica fora do React: a rede limpa #barInfo direto ao sair da mesa
   $('barInfo').innerHTML = G.round

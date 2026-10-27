@@ -11,7 +11,7 @@ export function SeatPlay({ p }: { p: Player }) {
     L = G.last && G.last[p.id];
   if (L) return <LastPlay p={p} gs={L.gs} sum={L.S} small />;
   if (!rd.gs.length) return null;
-  if (!(G.revealed || G.openPlays)) return rd.gs.map((_, i) => <BackCard key={i} className="sm" />);
+  if (!(G.revealed || G.openPlays)) return rd.gs.map((_, i) => <BackCard key={i} />);
 
   // revelação lenta: cada carta vira uma por uma, assento por assento. A animação toca uma vez,
   // quando a carta aparece; os nós continuam os mesmos nos próximos renders, então ela não reinicia.
@@ -23,9 +23,20 @@ export function SeatPlay({ p }: { p: Player }) {
   return (
     <>
       {rd.gs.map((g, i) => (
-        <GobCard key={g} g={g} className="sm revIn" style={delay(i)} eff={val(p, g)} owner={p} />
+        <GobCard
+          key={g}
+          g={g}
+          sm
+          className="animate-rev-in"
+          style={delay(i)}
+          eff={val(p, g)}
+          owner={p}
+        />
       ))}
-      <span className="sumT revIn" style={delay(rd.gs.length)}>
+      <span
+        className="ml-1 animate-rev-in font-display text-lg font-extrabold leading-none"
+        style={delay(rd.gs.length)}
+      >
         {x ? x.S : rawSum(p)}
       </span>
     </>

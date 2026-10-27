@@ -2,6 +2,7 @@ import type { Gob } from '../../../../game/data.ts';
 import { inZone, playLimit, val } from '../../../../game/rules.ts';
 import { chaosIs } from '../../../../game/state.ts';
 import type { Player } from '../../../../game/types.ts';
+import { GHOST } from '../../../components/buttonVariants.ts';
 import { Warn } from '../../../components/Warn.tsx';
 import { clearCards, playCards } from '../../actions.ts';
 
@@ -11,7 +12,9 @@ export function SelectActions({ me, sel }: { me: Player; sel: Gob[] }) {
     [kmin, kmax] = playLimit(me);
   return (
     <>
-      <span className="sum">{sel.length ? sum : '—'}</span>
+      <span data-sum className="font-display text-[32px] leading-none text-accent">
+        {sel.length ? sum : '—'}
+      </span>
       {sel.length && chaosIs('ZONA') && inZone(sum) ? (
         <Warn>{`Zona Proibida: ${sum} perde nesta rodada`}</Warn>
       ) : sel.length && chaosIs('IMA') && inZone(sum) ? (
@@ -24,7 +27,7 @@ export function SelectActions({ me, sel }: { me: Player; sel: Gob[] }) {
       >
         {`Jogar ${sel.length || ''}`}
       </button>
-      <button className="ghost" id="btnClear" disabled={!sel.length} onClick={clearCards}>
+      <button className={GHOST} id="btnClear" disabled={!sel.length} onClick={clearCards}>
         Limpar
       </button>
     </>

@@ -20,7 +20,7 @@ beforeEach(() => {
 describe('balões de informação', () => {
   it('a carta de goblin mostra território e características, sem lista de itens', async () => {
     render(<GobCard g={mk(2, 3)} tabIndex={0} />); // 3 azul, fora de partida: Chapéu, Barba, Óculos
-    const tip = await openTip(document.querySelector('.card')!);
+    const tip = await openTip(document.querySelector('[data-card]')!);
     expect(tip.textContent).toContain('Goblin 3');
     expect(tip.textContent).toContain('Território Azul');
     expect(within(tip).getByText('Chapéu')).toBeTruthy();
@@ -31,7 +31,7 @@ describe('balões de informação', () => {
     const me = G.players[0];
     me.items = ['CHAPEU'];
     render(<GobCard g={mk(0, 1)} owner={me} tabIndex={0} />); // o 1 tem Chapéu
-    const tip = await openTip(document.querySelector('.card')!);
+    const tip = await openTip(document.querySelector('[data-card]')!);
     expect(tip.textContent).toContain('Você tem Chapéu Pontudo');
   });
 
@@ -39,27 +39,27 @@ describe('balões de informação', () => {
     const rival = G.players[1];
     rival.items = ['CHAPEU'];
     render(<GobCard g={mk(1, 1)} owner={rival} tabIndex={0} />);
-    const tip = await openTip(document.querySelector('.card')!);
+    const tip = await openTip(document.querySelector('[data-card]')!);
     expect(tip.textContent).not.toContain('Chapéu Pontudo');
   });
 
   it('mostra as características que o rei emprestou', async () => {
     // o 2 tem Óculos, Chinelo e Maluco impressos; por ser par, ganha Chapéu e Barba do rei
     render(<GobCard g={mk(0, 2)} owner={G.players[0]} tabIndex={0} />);
-    const tip = await openTip(document.querySelector('.card')!);
+    const tip = await openTip(document.querySelector('[data-card]')!);
     expect(within(tip).getAllByText('de Rei Quebra-Crânio')).toHaveLength(2);
   });
 
   it('avisa quando a Maldição zera o goblin', async () => {
     Object.assign(G, { chaos: 'MALDICAO', curse: OC });
     render(<GobCard g={mk(0, 2)} owner={G.players[0]} tabIndex={0} />); // o 2 tem Óculos
-    const tip = await openTip(document.querySelector('.card')!);
+    const tip = await openTip(document.querySelector('[data-card]')!);
     expect(tip.textContent).toContain('Vale 0 nesta rodada: a Maldição anula Óculos.');
   });
 
   it('item usado mostra o que foi escolhido e se levou NÃO!', async () => {
     render(<Chip u={{ k: 'AJUSTE', d: -3, x: 1 }} />);
-    const tip = await openTip(document.querySelector('.chip')!);
+    const tip = await openTip(document.querySelector('[data-chip]')!);
     expect(tip.textContent).toContain('Usado: -3');
     expect(tip.textContent).toContain('Cancelado com NÃO!');
   });

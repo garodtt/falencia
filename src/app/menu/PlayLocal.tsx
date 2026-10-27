@@ -7,7 +7,7 @@ export function PlayLocal() {
   const tipsOn = useUi((s) => s.tipsOn);
   const setTipsOn = useUi((s) => s.setTipsOn);
   return (
-    <div className="row">
+    <div className="flex flex-wrap items-center gap-2.5">
       <button
         id="btnPlay"
         onClick={() => {
@@ -18,7 +18,7 @@ export function PlayLocal() {
         <Icon name="bot" />
         Jogar contra bots
       </button>
-      <label className="muted">
+      <label className="text-muted">
         <input
           type="checkbox"
           id="cfgTips"

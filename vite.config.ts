@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite-plus';
 
@@ -160,7 +161,7 @@ export default defineConfig({
     sortPackageJson: false,
     ignorePatterns: ['dist', 'package-lock.json', 'test/golden.json'],
   },
-  plugins: [react()],
+  plugins: [tailwindcss(), react()],
   test: {
     // testes de componente; o teste do motor (test/engine.test.ts) roda no node:test
     include: ['src/**/*.test.{ts,tsx}'],

@@ -8,11 +8,15 @@ import { TipBody, TipNote } from '../../components/tooltip/TipBody.tsx';
 import { useTooltip } from '../../components/tooltip/useTooltip.tsx';
 import { drawItem, revealChaos } from '../actions.ts';
 
+// o brilho de quem pode ser comprado agora (o monte de monstros nunca é clicável)
+const GLOW =
+  'shadow-[0_0_0_2px_var(--color-accent),0_0_18px_color-mix(in_srgb,var(--color-accent)_50%,transparent)]';
+
 // os três montes: monstros, itens e Caos
 export function Decks({ pe }: { pe: Pending | null }) {
   const ph = pe && pe.kind;
   return (
-    <div className="decks">
+    <div className="flex items-end gap-3.5 max-[960px]:order-2">
       <Pile
         id="monsterDeck"
         countId="mCount"
@@ -22,9 +26,9 @@ export function Decks({ pe }: { pe: Pending | null }) {
       >
         {G.monsters.length ? (
           <>
-            <MonsterBack />
-            <MonsterBack />
-            <MonsterBack />
+            <MonsterBack className="absolute inset-0 translate-[5px]" />
+            <MonsterBack className="absolute inset-0 translate-[2.5px]" />
+            <MonsterBack className="absolute inset-0" />
           </>
         ) : null}
       </Pile>
@@ -37,9 +41,9 @@ export function Decks({ pe }: { pe: Pending | null }) {
         need={ph === 'draw' ? pe!.data.left : undefined}
         onClick={drawItem}
       >
-        <ItemBack />
-        <ItemBack />
-        <ItemBack />
+        <ItemBack className="absolute inset-0 translate-[5px]" />
+        <ItemBack className="absolute inset-0 translate-[2.5px]" />
+        <ItemBack className={`absolute inset-0 ${ph === 'draw' ? GLOW : ''}`} />
       </Pile>
       <Pile
         id="chaosDeck"
@@ -50,9 +54,9 @@ export function Decks({ pe }: { pe: Pending | null }) {
         need={ph === 'chaos' ? 1 : undefined}
         onClick={revealChaos}
       >
-        <ChaosBack />
-        <ChaosBack />
-        <ChaosBack />
+        <ChaosBack className="absolute inset-0 translate-[5px]" />
+        <ChaosBack className="absolute inset-0 translate-[2.5px]" />
+        <ChaosBack className={`absolute inset-0 ${ph === 'chaos' ? GLOW : ''}`} />
       </Pile>
     </div>
   );
@@ -87,7 +91,7 @@ function Pile({
   const act = need !== undefined && onClick;
   return (
     <div
-      className={`pile ${need !== undefined ? 'drawable' : ''}`}
+      className={`relative grid justify-items-center gap-[5px] text-xs text-muted ${need !== undefined ? 'cursor-pointer' : ''}`}
       id={id}
       {...(act ? { role: 'button', tabIndex: 0 } : {})}
       {...tip.anchor({
@@ -101,13 +105,19 @@ function Pile({
           : undefined,
       })}
     >
-      <div className="stack">
+      <div className="relative h-[72px] w-[52px] [--cw:52px]">
         {children}
-        {need !== undefined ? <span className="need">{need}</span> : null}
+        {need !== undefined ? (
+          <span className="absolute -top-2 -right-2 z-[3] grid h-[22px] min-w-[22px] place-items-center rounded-full bg-accent font-ui text-xs font-extrabold text-[#1d1600]">
+            {need}
+          </span>
+        ) : null}
       </div>
       <span>
         {`${label} `}
-        <b id={countId}>{count}</b>
+        <b className="text-text" id={countId}>
+          {count}
+        </b>
       </span>
       {tip.tooltip}
     </div>

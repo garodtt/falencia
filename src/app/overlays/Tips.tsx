@@ -1,6 +1,7 @@
 // Dicas de como jogar: uma bolha que aponta para a parte da tela que importa agora.
 import { useLayoutEffect, useRef } from 'react';
 import { TIPS, tipClose } from '../../ui/tips.ts';
+import { GHOST } from '../components/buttonVariants.ts';
 import { useTick, useUi } from '../store.ts';
 import { TIP } from './tipContent.tsx';
 
@@ -17,15 +18,21 @@ export function Tips() {
 
   return (
     <>
-      <div className="spot" ref={spot} />
-      <div className="bub" ref={bub}>
+      <div
+        className="fixed rounded-xl pointer-events-none outline-2 outline-accent outline-offset-4 shadow-[0_0_0_9999px_rgba(10,11,14,0.55)] transition-all duration-[250ms]"
+        ref={spot}
+      />
+      <div
+        className="fixed grid w-[min(360px,calc(100vw-24px))] gap-2 rounded-[14px] border border-line bg-surface-2 px-4 py-3.5 pointer-events-auto text-text shadow-[0_16px_40px_rgba(0,0,0,0.5)] animate-rise"
+        ref={bub}
+      >
         {st ? (
           <>
-            <b className="t">{st.title}</b>
-            <p>{st.text}</p>
-            <div className="rowb">
+            <b className="font-display text-lg font-semibold">{st.title}</b>
+            <p className="m-0 text-muted">{st.text}</p>
+            <div className="flex justify-between gap-2">
               <button
-                className="ghost"
+                className={GHOST}
                 id="tipOff"
                 onClick={() => {
                   TIPS.on = false;

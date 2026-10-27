@@ -56,8 +56,8 @@ describe('mesa', () => {
 
     fireEvent.click(handCard(7));
     fireEvent.click(handCard(5));
-    expect(document.querySelector('.actionBar .sum')!.textContent).toBe('12');
-    expect(handCard(7).classList.contains('sel')).toBe(true);
+    expect(document.querySelector('#actionBar [data-sum]')!.textContent).toBe('12');
+    expect(handCard(7).hasAttribute('data-selected')).toBe(true);
 
     await act(() => fireEvent.click(screen.getByRole('button', { name: 'Jogar 2' })));
     expect(respond).toHaveBeenCalledWith({ play: [mk(0, 7), mk(0, 5)] });
@@ -67,7 +67,7 @@ describe('mesa', () => {
     game('select');
     render(<Table />);
     for (const v of [1, 2, 3, 4]) fireEvent.click(handCard(v));
-    expect(document.querySelectorAll('#hand .sel')).toHaveLength(3);
+    expect(document.querySelectorAll('#hand [data-selected]')).toHaveLength(3);
     expect(useUi.getState().toast!.msg).toMatch(/No máximo 3/);
   });
 
@@ -76,9 +76,9 @@ describe('mesa', () => {
     G.chaos = 'ZONA';
     render(<Table />);
     fireEvent.click(handCard(19));
-    expect(document.querySelector('.warn')).toBeNull();
+    expect(document.querySelector('[data-warn]')).toBeNull();
     fireEvent.click(handCard(4));
-    expect(document.querySelector('.warn')!.textContent).toBe(
+    expect(document.querySelector('[data-warn]')!.textContent).toBe(
       'Zona Proibida: 23 perde nesta rodada',
     );
   });
@@ -86,9 +86,10 @@ describe('mesa', () => {
   it('ao cravar, os rivais que podem ser alvo ficam clicáveis', () => {
     game('steal', { left: 2, T: [1, 3], exact: true });
     render(<Table />);
-    const seat = (id: number) => document.querySelector<HTMLElement>(`.seat[data-id="${id}"]`)!;
-    expect(seat(1).className).toContain('target steal');
-    expect(seat(2).className).not.toContain('target');
+    const seat = (id: number) =>
+      document.querySelector<HTMLElement>(`[data-seat][data-id="${id}"]`)!;
+    expect(seat(1).dataset.target).toBe('steal');
+    expect(seat(2).dataset.target).toBeUndefined();
     fireEvent.click(seat(3));
     expect(respond).toHaveBeenCalledWith({ target: 3 });
   });

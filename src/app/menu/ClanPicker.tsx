@@ -8,7 +8,7 @@ import { setMenu } from '../store.ts';
 // a escolha de território (e do rei ou rainha que vem com ele)
 export function ClanPicker() {
   return (
-    <div className="clans" id="clanPicks">
+    <div className="grid grid-cols-4 gap-2.5 max-[760px]:grid-cols-2" id="clanPicks">
       {CLAN.map((name, i) => (
         <ClanCard key={name} clan={i} on={MENU.color === i} onPick={() => setMenu({ color: i })} />
       ))}
@@ -20,7 +20,8 @@ function ClanCard({ clan, on, onPick }: { clan: number; on: boolean; onPick: () 
   const king = KINGS[clan];
   return (
     <div
-      className={`clanPick ${on ? 'on' : ''}`}
+      data-clan-pick
+      className={`grid cursor-pointer gap-1.5 rounded-xl border bg-surface-2 p-3 ${on ? 'border-accent' : 'border-transparent'}`}
       role="button"
       aria-pressed={on}
       tabIndex={0}
@@ -31,18 +32,18 @@ function ClanCard({ clan, on, onPick }: { clan: number; on: boolean; onPick: () 
         onPick();
       }}
     >
-      <div className="nm">
+      <div className="flex items-center gap-2 font-display text-base font-semibold">
         <ColorDot color={clan} />
         {CLAN[clan]}
       </div>
-      <div className="kn">
+      <div className="flex items-center gap-1.5 font-bold text-text">
         <span style={{ color: CCSS[clan] }}>
           <Icon name="crown" />
         </span>
         {king.name}
       </div>
-      <p>{king.text}</p>
-      <p>
+      <p className="m-0 text-[12.5px] text-muted">{king.text}</p>
+      <p className="m-0 text-[12.5px] text-muted">
         Empresta <TraitIcons t={king.tr} />
         {` aos ${lendTxt(clan)}.`}
       </p>

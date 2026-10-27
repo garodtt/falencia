@@ -215,7 +215,7 @@ export function subscribeGame() {
       setME(S.players.findIndex((p) => p.uid === NET.uid));
       LOCAL.spec = ME < 0;
       if (ME < 0) setME(0);
-      if ($('game').classList.contains('hidden')) {
+      if ($('game').classList.contains('!hidden')) {
         showGame();
         first = true;
       }
@@ -388,10 +388,10 @@ export function leaveTable() {
   setME(0);
   LOCAL.spec = false;
   LOCAL.answered = {};
-  $('lobby').classList.add('hidden');
-  $('game').classList.add('hidden');
-  $('menu').classList.remove('hidden');
-  $('tut').classList.add('hidden');
+  $('lobby').classList.add('!hidden');
+  $('game').classList.add('!hidden');
+  $('menu').classList.remove('!hidden');
+  $('tut').classList.add('!hidden');
   TIPS.cur = null;
   $('barInfo').innerHTML = '';
   renderMenu();

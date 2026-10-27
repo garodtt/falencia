@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createTable } from '../../../net/online.ts';
+import { GHOST } from '../../components/buttonVariants.ts';
 import { resetTips } from '../../store.ts';
 import { joinWithTips } from './join.ts';
 
@@ -7,7 +8,7 @@ import { joinWithTips } from './join.ts';
 export function JoinByCode() {
   const [code, setCode] = useState('');
   return (
-    <div className="row">
+    <div className="flex flex-wrap items-center gap-2.5">
       <button
         id="btnCreate"
         onClick={() => {
@@ -17,16 +18,17 @@ export function JoinByCode() {
       >
         Criar mesa
       </button>
-      <span className="muted">ou entre com um código</span>
+      <span className="text-muted">ou entre com um código</span>
       <input
         id="codeIn"
+        className="w-[130px] rounded-[10px] border border-line bg-surface-2 px-3 py-[9px] text-center font-ui text-base font-bold tracking-[3px] text-text uppercase"
         maxLength={5}
         placeholder="CÓDIGO"
         aria-label="Código da mesa"
         value={code}
         onChange={(e) => setCode(e.target.value)}
       />
-      <button className="ghost" id="btnJoin" onClick={() => joinWithTips(code)}>
+      <button className={GHOST} id="btnJoin" onClick={() => joinWithTips(code)}>
         Entrar
       </button>
     </div>

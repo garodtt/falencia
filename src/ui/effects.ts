@@ -31,7 +31,7 @@ export function anchorEl(a: string | undefined) {
   const [t, id] = String(a).split(':'),
     pid = +id;
   const seat = (sel?: string) =>
-    document.querySelector(`.seat[data-id="${pid}"]${sel ? ' ' + sel : ''}`);
+    document.querySelector(`[data-seat][data-id="${pid}"]${sel ? ' ' + sel : ''}`);
   const mine = pid === ME;
   switch (t) {
     case 'hand':
@@ -40,7 +40,7 @@ export function anchorEl(a: string | undefined) {
     case 'grave':
       return mine ? $('meBox') : seat();
     case 'play':
-      return mine ? $('myPlay') : seat('.oplay') || seat();
+      return mine ? $('myPlay') : seat('[data-oplay]') || seat();
     case 'tray':
       return mine ? $('trayBox') : seat();
     default:
@@ -51,7 +51,7 @@ export function cardHTML(c: FxCard | undefined) {
   if (!c) return backCard();
   if (c.g !== undefined) {
     const vis = c.pub || (c.vis || []).includes(ME);
-    return vis ? gobCard(c.g, c.sm ? 'sm' : '') : backCard();
+    return vis ? gobCard(c.g, !!c.sm) : backCard();
   }
   if (c.item) return (c.vis || []).includes(ME) ? itemCard(c.item) : itemBack();
   if (c.chaos) return chaosCard(c.chaos, c.curse);
@@ -60,7 +60,7 @@ export function cardHTML(c: FxCard | undefined) {
   );
 }
 export async function playFx(ev: FxEvent) {
-  if (!$('game') || $('game').classList.contains('hidden')) return;
+  if (!$('game') || $('game').classList.contains('!hidden')) return;
   const forMe = ev.to === undefined || ev.to === ME || (Array.isArray(ev.to) && ev.to.includes(ME));
   switch (ev.type) {
     case 'fly':
@@ -99,8 +99,8 @@ export async function playFx(ev: FxEvent) {
             ev.kind === 'exact' ? 'Você rouba cartas e compra um item' : 'Você chegou mais perto',
           );
         else {
-          $('game').classList.add('shake');
-          setTimeout(() => $('game').classList.remove('shake'), 500);
+          $('game').classList.add('animate-shake');
+          setTimeout(() => $('game').classList.remove('animate-shake'), 500);
           await banner(
             'Perdeu',
             `${ev.w.map(nameOf).join(' e ')} ${ev.w.length > 1 ? 'venceram' : 'venceu'} a rodada`,
@@ -153,7 +153,7 @@ export async function fly(
     b = to instanceof DOMRect ? to : rectOf(to);
   if (!a || !b || !a.width || !b.width) return;
   const d = document.createElement('div');
-  d.className = 'flyer';
+  d.className = 'fixed top-0 left-0 z-30 pointer-events-none';
   d.innerHTML = html;
   document.body.appendChild(d);
   const c = d.firstElementChild as HTMLElement,
@@ -188,7 +188,7 @@ export function confetti() {
   const cols = ['#e5484d', '#30a46c', '#3e63dd', '#f5b300', '#eceef2'];
   for (let i = 0; i < 110; i++) {
     const d = document.createElement('div');
-    d.className = 'confetti';
+    d.className = 'fixed top-[-20px] z-50 h-3 w-2 animate-fall pointer-events-none';
     d.style.left = Math.random() * 100 + 'vw';
     d.style.background = pick(cols);
     d.style.animationDuration = 2 + Math.random() * 2.5 + 's';
@@ -200,7 +200,9 @@ export function confetti() {
 export function popAt(el: Element | null, text: string, good?: boolean) {
   if (!el) return;
   const p = document.createElement('div');
-  p.className = 'pop' + (good ? ' good' : '');
+  p.className =
+    'pointer-events-none absolute top-[-8px] left-1/2 z-[6] -translate-x-1/2 -translate-y-full animate-fade-up rounded-lg border border-line bg-surface-3 px-2.5 py-[5px] text-xs font-bold whitespace-nowrap text-text' +
+    (good ? ' text-good' : '');
   p.textContent = text;
   el.appendChild(p);
   setTimeout(() => p.remove(), 2300);
