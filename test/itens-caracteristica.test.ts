@@ -40,6 +40,8 @@ function play(pid: number, gs: Gob[]) {
   S.G.rd[pid].gs = gs;
 }
 
+// de 1 até o limite, com o sinal do item (Chapéu: +1, +2; Machucado: −1, −2, −3)
+const upTo = (d: number) => Array.from({ length: Math.abs(d) }, (_, i) => Math.sign(d) * (i + 1));
 const FIXED: [ItemKey, number, number][] = [
   ['CHAPEU', CH, 2],
   ['NARIZ', CN, 3],
@@ -48,23 +50,25 @@ const FIXED: [ItemKey, number, number][] = [
 ];
 
 for (const [k, t, d] of FIXED) {
-  void test(`${ITEMS[k][0]}: ${d > 0 ? '+' : ''}${d} uma vez, basta 1 goblin`, async () => {
+  void test(`${ITEMS[k][0]}: até ${d > 0 ? '+' : ''}${d} uma vez, basta 1 goblin`, async () => {
     const G = table([[k], [], []]);
     const p = G.players[1]; // Rainha Musgo-Podre
     p.items = [k];
     play(1, gobs(1, t).slice(0, 1));
     assert.deepEqual(
       itemOptions(p, k).map((o) => o.d),
-      [d],
+      upTo(d),
     );
-    play(1, gobs(1, t).slice(0, 3));
+    play(1, gobs(1, t).slice(0, 3)); // mais goblins não aumentam o limite
     assert.deepEqual(
       itemOptions(p, k).map((o) => o.d),
-      [d],
+      upTo(d),
     );
     assert.equal(canUse(p, k, 'window'), true);
-    await execUse(p, k, { d });
-    assert.equal(G.rd[1].delta, d);
+    await execUse(p, k, { d: d + Math.sign(d) }); // passar do limite não vale
+    assert.equal(G.rd[1].delta, 0);
+    await execUse(p, k, { d: Math.sign(d) }); // dá para usar menos que o limite
+    assert.equal(G.rd[1].delta, Math.sign(d));
     assert.deepEqual(p.items, []);
   });
   void test(`${ITEMS[k][0]}: sem a característica não pode ser usado`, async () => {
@@ -130,7 +134,7 @@ void test('característica emprestada pelo rei vale (Machucado com par do Quebra
   play(0, [g]);
   assert.deepEqual(
     itemOptions(p, 'MACHUCADO').map((o) => o.d),
-    [-3],
+    [-1, -2, -3],
   );
   p.king = 1; // sem o empréstimo, o mesmo goblin não serve
   assert.deepEqual(itemOptions(p, 'MACHUCADO'), []);
@@ -143,7 +147,7 @@ void test('característica do Disfarce vale (Nariz de Ferro)', () => {
   G.rd[0].disg = CN;
   assert.deepEqual(
     itemOptions(G.players[0], 'NARIZ').map((o) => o.d),
-    [3],
+    [1, 2, 3],
   );
 });
 

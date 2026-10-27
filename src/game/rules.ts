@@ -200,7 +200,8 @@ export function standing(): Standing {
   const m = Math.min(...pool.map((x) => x.d));
   return { w: pool.filter((x) => x.d === m).map((x) => x.p), kind: 'closest', F, M };
 }
-// itens de característica: ajuste fixo, só com goblin jogado que tenha a característica
+// itens de característica, só com goblin jogado que tenha a característica: os de valor único
+// deixam escolher até o limite (Chapéu de +1 a +2, Machucado de −1 a −3); os "por goblin" são fixos
 const TRAIT_D: Partial<Record<ItemKey, [trait: number, d: number, each: boolean]>> = {
   CHAPEU: [CH, 2, false],
   OCULOS: [OC, 1, true],
@@ -230,8 +231,12 @@ export function itemOptions(p: Player, k: ItemKey) {
     const [t, d, each] = td,
       n = gs.filter((g) => traitsOf(p, g) & t).length;
     if (!n) return [];
-    const x = each ? d * n : d;
-    return [{ d: x, label: x > 0 ? '+' + x : '−' + -x }];
+    const lab = (x: number) => (x > 0 ? '+' + x : '−' + -x);
+    if (each) return [{ d: d * n, label: lab(d * n) }];
+    return Array.from({ length: Math.abs(d) }, (_, i) => Math.sign(d) * (i + 1)).map((x) => ({
+      d: x,
+      label: lab(x),
+    }));
   }
   return [];
 }

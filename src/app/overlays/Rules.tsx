@@ -256,9 +256,9 @@ function RulesText() {
         mandar para o fundo do monte de itens.
         <br />
         <b className="text-text">Itens de característica</b> (☀, só se você jogou goblin com a
-        característica): Chapéu Pontudo +2, Monóculo Polido +1 por goblin de Monóculo, Nariz de
-        Ferro +3 (Fedorento); Pomada de Pereba −2, Poção Maluca −1 por goblin Maluco, Machucado −3
-        (Cicatriz).
+        característica): Chapéu Pontudo até +2, Monóculo Polido +1 por goblin de Monóculo, Nariz de
+        Ferro até +3 (Fedorento); Pomada de Pereba até −2, Poção Maluca −1 por goblin Maluco,
+        Machucado até −3 (Cicatriz).
       </p>
       <p>
         <b className="text-text">Viradas:</b> <b className="text-text">Vingança do Cemitério</b> —

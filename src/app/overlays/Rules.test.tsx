@@ -10,7 +10,7 @@ describe('tela de regras', () => {
     await act(() => fireEvent.click(screen.getByRole('tab', { name: 'Itens' })));
     expect(document.body.textContent).toContain('62 cartas no monte de itens');
     for (const [name] of Object.values(ITEMS)) expect(document.body.textContent).toContain(name);
-    expect(document.body.textContent).toContain('Se jogou goblin Fedorento: +3 na sua soma.');
+    expect(document.body.textContent).toContain('Se jogou goblin Fedorento: até +3 na sua soma.');
     await act(() => fireEvent.click(screen.getByRole('tab', { name: 'Caos' })));
     expect(document.body.textContent).toContain('50 cartas no monte de Caos');
     for (const [name] of Object.values(CHAOS)) expect(document.body.textContent).toContain(name);
