@@ -38,20 +38,20 @@ export function Rules() {
         <L i={<Icon name="hat" />} t="Chapéu">
           característica usada por itens (Chapéu Pontudo, Disfarce) e pela Maldição.
         </L>
-        <L i={<Icon name="beard" />} t="Barba">
-          característica; o Rei Quebra-Crânio empresta Barba aos goblins pares.
+        <L i={<Icon name="scar" />} t="Cicatriz">
+          característica; o Rei Quebra-Crânio empresta Cicatriz aos goblins pares.
         </L>
-        <L i={<Icon name="glasses" />} t="Óculos">
-          característica usada pelo item Óculos de Grau.
+        <L i={<Icon name="monocle" />} t="Monóculo">
+          característica usada pelo item Monóculo de Grau.
         </L>
-        <L i={<Icon name="sandal" />} t="Chinelo">
-          característica usada pelo item Chinelo Veloz.
+        <L i={<Icon name="stink" />} t="Fedorento">
+          característica usada pelo item Chinelo Fedorento.
         </L>
         <L i={<Icon name="spiral" />} t="Maluco">
           característica usada pela Poção Maluca.
         </L>
-        <L i={<Icon name="wart" />} t="Verruga">
-          característica usada pela Pomada de Verruga.
+        <L i={<Icon name="sore" />} t="Pereba">
+          característica usada pela Pomada de Pereba.
         </L>
         <Section>Mesa e jogadores</Section>
         <L

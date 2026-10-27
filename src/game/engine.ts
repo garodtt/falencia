@@ -1168,14 +1168,14 @@ export async function playRound() {
         const c = rd.gs.filter((g) => traitsOf(p, g) & CN && g !== rd.borrow);
         if (c.length > 1 && isHuman(p)) {
           const r = await prompt(p.id, 'ask', {
-            title: 'Chinelo Veloz',
-            text: 'Você perdeu. Qual goblin de Chinelo volta para a sua mão?',
+            title: 'Chinelo Fedorento',
+            text: 'Você perdeu. Qual goblin de Fedorento volta para a sua mão?',
             options: c.map((g) => ({ label: gobTxt(g), value: g })),
             botValue: c[0],
           });
           keep = c.includes(+r.value!) ? +r.value! : c[0];
         } else if (c.length) keep = c.reduce((a, g) => (gv(g) > gv(a) ? g : a));
-        if (keep) log(`Chinelo Veloz: ${nm(p)} salvou o ${gobTxt(keep)}.`, 'it');
+        if (keep) log(`Chinelo Fedorento: ${nm(p)} salvou o ${gobTxt(keep)}.`, 'it');
       }
       const gone = rd.gs.filter((g) => g !== keep && g !== rd.borrow);
       if (chaosIs('BANQUETE') && winners.size) {
@@ -1212,7 +1212,7 @@ export async function playRound() {
           {
             type: 'toast',
             to: p.id,
-            text: `Você perdeu: ${gone.map(gobTxt).join(', ')} ${gone.length > 1 ? 'foram' : 'foi'} para o seu cemitério.${keep ? ` O Chinelo Veloz salvou o ${gobTxt(keep)}.` : ''}`,
+            text: `Você perdeu: ${gone.map(gobTxt).join(', ')} ${gone.length > 1 ? 'foram' : 'foi'} para o seu cemitério.${keep ? ` O Chinelo Fedorento salvou o ${gobTxt(keep)}.` : ''}`,
           },
           false,
         );

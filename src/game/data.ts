@@ -26,19 +26,19 @@ export const CH = 1,
   TRAITS: readonly number[] = [1, 2, 4, 8, 16, 32];
 export const TNAME: Record<number, string> = {
   1: 'Chapéu',
-  2: 'Barba',
-  4: 'Óculos',
-  8: 'Chinelo',
+  2: 'Cicatriz',
+  4: 'Monóculo',
+  8: 'Fedorento',
   16: 'Maluco',
-  32: 'Verruga',
+  32: 'Pereba',
 };
 export const TICO: Record<number, string> = {
   1: 'hat',
-  2: 'beard',
-  4: 'glasses',
-  8: 'sandal',
+  2: 'scar',
+  4: 'monocle',
+  8: 'stink',
   16: 'spiral',
-  32: 'wart',
+  32: 'sore',
 };
 export const TR = [
   0,
@@ -152,13 +152,13 @@ export const ITEMS = {
   AJUSTE: ['Ajuste Fino', 'De −3 a +3 na sua soma, à sua escolha.', 'A', 1],
   ESCUDO: ['Escudo de Panela', 'Nesta rodada ninguém rouba nem elimina cartas suas.', 'A', 2],
   AMULETO: ['Amuleto', 'Se você perder nesta rodada, não descarta nada.', 'A', 2],
-  OCULOS: ['Óculos de Grau', 'Cada goblin de Óculos jogado vale até +2.', 'A', 1],
+  OCULOS: ['Monóculo de Grau', 'Cada goblin de Monóculo jogado vale até +2.', 'A', 1],
   CHAPEU: ['Chapéu Pontudo', 'Cada goblin de Chapéu jogado vale até ±2.', 'A', 2],
   POCAO: ['Poção Maluca', 'Um goblin Maluco jogado vale o dobro ou a metade.', 'A', 1],
-  POMADA: ['Pomada de Verruga', 'Se jogou goblin de Verruga: de −3 a +3 na sua soma.', 'A', 2],
+  POMADA: ['Pomada de Pereba', 'Se jogou goblin de Pereba: de −3 a +3 na sua soma.', 'A', 2],
   CHINELO: [
-    'Chinelo Veloz',
-    'Se você perder nesta rodada, um goblin de Chinelo jogado, à sua escolha, volta para a mão.',
+    'Chinelo Fedorento',
+    'Se você perder nesta rodada, um goblin de Fedorento jogado, à sua escolha, volta para a mão.',
     'A',
     1,
   ],
@@ -199,7 +199,7 @@ export const NUMERIC: ItemKey[] = [
   'POMADA',
 ];
 export const ARMS: ItemKey[] = ['ESCUDO', 'AMULETO', 'CHINELO', 'ARMADILHA'];
-// o item que dá efeito a cada característica (Barba não tem item)
+// o item que dá efeito a cada característica (Cicatriz não tem item)
 export const TRAIT_ITEM: Partial<Record<number, ItemKey>> = {
   [CH]: 'CHAPEU',
   [OC]: 'OCULOS',

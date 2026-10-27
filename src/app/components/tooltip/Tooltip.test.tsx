@@ -12,14 +12,14 @@ async function openTip(el: Element) {
   return screen.findByRole('tooltip');
 }
 
-// partida de 2: eu sou o Vermelho, com o Rei Quebra-Crânio (empresta Chapéu e Barba aos pares)
+// partida de 2: eu sou o Vermelho, com o Rei Quebra-Crânio (empresta Chapéu e Cicatriz aos pares)
 beforeEach(() => {
   setG(newState(2, [{ color: 0 }, { color: 1, bot: true }]));
 });
 
 describe('balões de informação', () => {
   it('a carta de goblin mostra território e características, sem lista de itens', async () => {
-    render(<GobCard g={mk(2, 3)} tabIndex={0} />); // 3 azul, fora de partida: Chapéu, Barba, Óculos
+    render(<GobCard g={mk(2, 3)} tabIndex={0} />); // 3 azul, fora de partida: Chapéu, Cicatriz, Monóculo
     const tip = await openTip(document.querySelector('[data-card]')!);
     expect(tip.textContent).toContain('Goblin 3');
     expect(tip.textContent).toContain('Território Azul');
@@ -44,7 +44,7 @@ describe('balões de informação', () => {
   });
 
   it('mostra as características que o rei emprestou', async () => {
-    // o 2 tem Óculos, Chinelo e Maluco impressos; por ser par, ganha Chapéu e Barba do rei
+    // o 2 tem Monóculo, Fedorento e Maluco impressos; por ser par, ganha Chapéu e Cicatriz do rei
     render(<GobCard g={mk(0, 2)} owner={G.players[0]} tabIndex={0} />);
     const tip = await openTip(document.querySelector('[data-card]')!);
     expect(within(tip).getAllByText('de Rei Quebra-Crânio')).toHaveLength(2);
@@ -52,9 +52,9 @@ describe('balões de informação', () => {
 
   it('avisa quando a Maldição zera o goblin', async () => {
     Object.assign(G, { chaos: 'MALDICAO', curse: OC });
-    render(<GobCard g={mk(0, 2)} owner={G.players[0]} tabIndex={0} />); // o 2 tem Óculos
+    render(<GobCard g={mk(0, 2)} owner={G.players[0]} tabIndex={0} />); // o 2 tem Monóculo
     const tip = await openTip(document.querySelector('[data-card]')!);
-    expect(tip.textContent).toContain('Vale 0 nesta rodada: a Maldição anula Óculos.');
+    expect(tip.textContent).toContain('Vale 0 nesta rodada: a Maldição anula Monóculo.');
   });
 
   it('item usado mostra o que foi escolhido e se levou NÃO!', async () => {
