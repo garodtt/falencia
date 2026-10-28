@@ -5,7 +5,7 @@ import { CARD_BASE } from './cardBase.ts';
 const iconSize = { width: 'calc(var(--cw) * 0.09)', height: 'calc(var(--cw) * 0.09)' };
 
 // carta de Caos com nome e regra
-export function ChaosCard({ k, curse }: { k: string; curse?: number }) {
+export function ChaosCard({ k }: { k: string }) {
   return (
     <div
       data-card
@@ -16,9 +16,9 @@ export function ChaosCard({ k, curse }: { k: string; curse?: number }) {
         Caos · para todos
       </i>
       <b className="font-display text-[calc(var(--cw)*0.12)] leading-[1.1] font-semibold">
-        {chaosTitle(k, curse)}
+        {chaosTitle(k)}
       </b>
-      <span>{chaosDesc(k, curse)}</span>
+      <span>{chaosDesc(k)}</span>
     </div>
   );
 }

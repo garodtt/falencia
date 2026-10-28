@@ -18,7 +18,7 @@ export function RuleBar() {
         </span>
       </div>
     );
-  const [k, curse] = shown === 'now' ? [G.chaos!, G.curse] : [G.nextChaos!, G.nextCurse];
+  const k = shown === 'now' ? G.chaos! : G.nextChaos!;
   return (
     <div
       className={`${base} border border-[color-mix(in_srgb,var(--color-chaos)_45%,transparent)] bg-[color-mix(in_srgb,var(--color-chaos)_13%,var(--color-surface))]`}
@@ -30,8 +30,8 @@ export function RuleBar() {
       <span className={`${tg} text-chaos`}>
         {shown === 'now' ? 'Regra da rodada' : 'Próxima rodada'}
       </span>
-      <b className="font-display text-base font-semibold">{chaosTitle(k, curse)}</b>
-      <span className="text-muted">{`— ${chaosDesc(k, curse)}`}</span>
+      <b className="font-display text-base font-semibold">{chaosTitle(k)}</b>
+      <span className="text-muted">{`— ${chaosDesc(k)}`}</span>
     </div>
   );
 }

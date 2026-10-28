@@ -95,7 +95,6 @@ export interface FxCard {
   sm?: number;
   item?: ItemKey;
   chaos?: ChaosKey;
-  curse?: number;
   t?: 'back' | 'item' | 'chaos' | 'mon';
 }
 export type FxEvent = { id?: number; to?: number | number[] } & (
@@ -112,7 +111,7 @@ export type FxEvent = { id?: number; to?: number | number[] } & (
   | { type: 'pop'; pid: number; text: string; good?: boolean }
   | { type: 'banner'; text: string; sub?: string; kind?: string }
   | { type: 'result'; w: number[]; kind: string; played: number[] }
-  | { type: 'chaosShow'; k: ChaosKey; curse: number }
+  | { type: 'chaosShow'; k: ChaosKey }
   | { type: 'end' }
 );
 
@@ -169,8 +168,6 @@ export interface GameState {
   cdisc: ChaosKey[];
   chaos: ChaosKey | null;
   nextChaos: ChaosKey | null;
-  curse: number;
-  nextCurse: number;
   duel: number[] | null;
   leaders: number[];
   openPlays: boolean;

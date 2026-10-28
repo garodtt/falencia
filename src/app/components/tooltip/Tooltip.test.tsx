@@ -50,11 +50,11 @@ describe('balões de informação', () => {
     expect(within(tip).getAllByText('de Rei Quebra-Crânio')).toHaveLength(2);
   });
 
-  it('avisa quando a Maldição zera o goblin', async () => {
-    Object.assign(G, { chaos: 'MALDICAO', curse: OC });
+  it('avisa quando a passiva do monstro zera o goblin', async () => {
+    Object.assign(G, { monster: { v: 22, ts: [0], fx: null, curse: OC }, revealed: true });
     render(<GobCard g={mk(0, 2)} owner={G.players[0]} tabIndex={0} />); // o 2 tem Monóculo
     const tip = await openTip(document.querySelector('[data-card]')!);
-    expect(tip.textContent).toContain('Vale 0 nesta rodada: a Maldição anula Monóculo.');
+    expect(tip.textContent).toContain('Vale 0 nesta rodada: a passiva do monstro anula Monóculo.');
   });
 
   it('item usado mostra o que foi escolhido e se levou NÃO!', async () => {

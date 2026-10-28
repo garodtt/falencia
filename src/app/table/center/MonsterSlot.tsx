@@ -1,3 +1,4 @@
+import { TICO, TNAME } from '../../../game/data.ts';
 import { monOf, monVal } from '../../../game/rules.ts';
 import { G, ME } from '../../../game/state.ts';
 import { CCSS } from '../../../ui/html.ts';
@@ -36,7 +37,7 @@ export function MonsterSlot() {
   );
 }
 
-// verso com as pistas (Luneta, Faro, território) enquanto dorme; vira quando acorda
+// verso com as pistas (Luneta com a passiva, Faro, território) enquanto dorme; vira quando acorda
 function Monster() {
   if (!G.monster)
     return (
@@ -64,6 +65,12 @@ function Monster() {
               className="block h-[calc(var(--cw)*0.1)] w-[calc(var(--cw)*0.1)] min-h-[9px] min-w-[9px] rounded-full"
               style={{ background: CCSS[h.t1] }}
             />
+          </span>
+        ) : null}
+        {h.value >= 0 && G.monster.curse ? (
+          <span className="absolute bottom-[21%] right-0 left-0 flex items-center justify-center gap-1 text-[calc(var(--cw)*0.09)] font-bold text-bad">
+            <Icon name={TICO[G.monster.curse]} />
+            {`${TNAME[G.monster.curse]} = 0`}
           </span>
         ) : null}
         <span className="absolute bottom-[9%] right-0 left-0 text-center text-[calc(var(--cw)*0.1)] text-muted">

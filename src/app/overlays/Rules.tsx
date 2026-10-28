@@ -146,7 +146,7 @@ function RulesText() {
       <div className="grid gap-[5px] rounded-[10px] border border-line px-3 py-2.5">
         <Section first>Características dos goblins (canto da carta)</Section>
         <L i={<Icon name="hat" />} t="Chapéu">
-          característica usada por itens (Chapéu Pontudo, Disfarce) e pela Maldição.
+          característica usada por itens (Chapéu Pontudo, Disfarce) e pela passiva do monstro 11.
         </L>
         <L i={<Icon name="scar" />} t="Cicatriz">
           característica usada pelos itens Machucado e Cicatrizes Compartilhadas; o Rei
@@ -261,17 +261,25 @@ function RulesText() {
         Machucado até −3 (Cicatriz).
       </p>
       <p>
-        <b className="text-text">Viradas:</b> <b className="text-text">Vingança do Cemitério</b> —
-        no início da rodada, quem tem o maior cemitério compra 1 item.{' '}
-        <b className="text-text">Cravada do Azarão</b> — quem crava tendo a menor mão da mesa rouba
-        3 cartas em vez de 2. <b className="text-text">Pressa não Compensa</b> — quem perde tendo
-        jogado 3 goblins ou mais compra 1 item.
+        <b className="text-text">Viradas:</b> <b className="text-text">Cravada do Azarão</b> — quem
+        crava tendo a menor mão da mesa rouba 3 cartas em vez de 2.{' '}
+        <b className="text-text">Pressa não Compensa</b> — quem perde tendo jogado 3 goblins ou mais
+        compra 1 item.
       </p>
       <p>
         <b className="text-text">Monstros com efeito:</b> alguns monstros têm um efeito, revelado
         quando acordam. <b className="text-text">Amigo dos Fracos</b> (10, 15, 20, 25, 30, 35 e 40):
         quando alguém vence a rodada, quem compra o item é o jogador com menos itens na mão (empate:
-        todos os empatados).
+        todos os empatados). <b className="text-text">Vingança do Cemitério</b> (17, 26, 31 e 38):
+        quando o monstro acorda, quem tem o maior cemitério compra 1 item (empate: todos os
+        empatados).
+      </p>
+      <p>
+        <b className="text-text">Monstros com passiva:</b> 11 Chapéu, 16 Cicatriz, 22 Monóculo, 27
+        Fedorento, 33 Maluco e 37 Pereba. Quando o monstro acorda, goblins com essa característica
+        valem 0 (contando a do rei ou rainha e a do Disfarce), e reis e rainhas com ela ficam
+        desligados, sem habilidade e sem empréstimo. É surpresa: só a Luneta mostra a passiva antes.
+        Com Monstros Opostos valem os efeitos e as passivas dos dois.
       </p>
       <p>
         <b className="text-text">Território:</b> se algum goblin jogado for de um território do
@@ -285,7 +293,7 @@ function RulesText() {
             {`${CLAN[i]} — ${k.name} (${traitNames(k.tr)}, empresta aos ${lendTxt(i)}): ${k.text}`}
           </Fragment>
         ))}
-        <br />A Maldição desliga o rei que tiver a característica sorteada.
+        <br />A passiva do monstro desliga o rei ou rainha que tiver a característica.
       </p>
       <p>
         <b className="text-text">Cartas:</b> veja as abas <b className="text-text">Itens</b> e{' '}

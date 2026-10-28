@@ -22,6 +22,7 @@ import {
   TRAITS,
   chaosDesc,
   chaosTitle,
+  curseTxt,
   gc,
   gv,
   makeMonsters,
@@ -75,7 +76,7 @@ import {
   wait,
 } from './state.ts';
 import type { PersonaKey } from './bots.ts';
-import type { ChaosKey, Gob, ItemKey } from './data.ts';
+import type { ChaosKey, Gob, ItemKey, Monster } from './data.ts';
 import type {
   FxEvent,
   GameState,
@@ -353,7 +354,14 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
       spendItem(p, k);
       rd.hint.value = G.monster!.v;
       log(`${nm(p)} espiou o monstro com a Luneta.`, 'it');
-      void fx({ type: 'toast', to: p.id, text: `Luneta: o monstro é ${G.monster!.v}!` }, false);
+      void fx(
+        {
+          type: 'toast',
+          to: p.id,
+          text: `Luneta: o monstro é ${G.monster!.v}!${G.monster!.curse ? ` Passiva: ${TNAME[G.monster!.curse]} — ${curseTxt(G.monster!.curse)}` : ''}`,
+        },
+        false,
+      );
       void fx({ type: 'pop', pid: p.id, text: 'Luneta', good: true }, false);
       break;
     case 'SACRIFICIO': {
@@ -508,6 +516,7 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
         },
         false,
       );
+      await monsterAwake([G.monster]);
       break;
     }
     case 'BANDEIRA': {
@@ -649,10 +658,41 @@ export async function enforceCap(p: Player) {
     sync();
   }
 }
+// o monstro acabou de acordar (na revelação ou trocado pela Isca): anuncia o efeito e a passiva
+// e roda a Vingança do Cemitério. Com Monstros Opostos, vale para cada um dos dois
+export async function monsterAwake(ms: (Monster | null)[]) {
+  for (const m of ms) {
+    if (!m) continue;
+    if (m.fx && MFX[m.fx]) {
+      log(`Efeito do monstro ${m.v}: ${MFX[m.fx][0]} — ${MFX[m.fx][1]}`, 'ch');
+      void fx({ type: 'toast', text: `Monstro ${MFX[m.fx][0]}: ${MFX[m.fx][1]}` }, false);
+    }
+    if (m.curse) {
+      log(`Passiva do monstro ${m.v}: ${TNAME[m.curse]} — ${curseTxt(m.curse)}`, 'ch');
+      void fx(
+        { type: 'toast', text: `Passiva do monstro: ${TNAME[m.curse]} — ${curseTxt(m.curse)}` },
+        false,
+      );
+    }
+    if (m.fx === 'VINGANCA') await vinganca();
+  }
+}
+// Vingança do Cemitério: quem tem o maior cemitério compra 1 item (empate: todos os empatados)
+export async function vinganca() {
+  const A = alivePl(),
+    gm = Math.max(0, ...A.map((p) => G.grave[p.id].length));
+  if (gm <= 0) return;
+  const V = A.filter((p) => G.grave[p.id].length === gm && p.hand.length);
+  if (!V.length) return;
+  const txt = `${V.map(nm).join(', ')} ${V.length > 1 ? 'compram' : 'compra'} 1 item`;
+  log(`Vingança do Cemitério: ${txt} (maior cemitério: ${gm}).`, 'it');
+  void fx({ type: 'toast', text: `Vingança do Cemitério: ${txt}.` }, false);
+  for (const p of V) await drawItems(p, 1);
+}
 // quem compra o item quando alguém vence a rodada (o monstro pode mudar isso)
 export async function rewardItems(W: Player[]) {
   if (!W.length) return;
-  if (monFx() === 'FRACOS') {
+  if (monFx().includes('FRACOS')) {
     const A = alivePl().filter((q) => q.hand.length);
     if (!A.length) return;
     const mn = Math.min(...A.map((q) => q.items.length)),
@@ -790,7 +830,7 @@ export async function chaosStart() {
   const A = alivePl(),
     k = G.chaos;
   if (k) {
-    log(`Caos ativo: ${chaosTitle(k, G.curse)} — ${chaosDesc(k, G.curse)}`, 'ch');
+    log(`Caos ativo: ${chaosTitle(k)} — ${chaosDesc(k)}`, 'ch');
     if (k === 'TROCA') {
       const hs = A.map((p) => p.hand);
       A.forEach((p, i) => (p.hand = hs[(i - 1 + A.length) % A.length]));
@@ -985,8 +1025,6 @@ export async function playRound() {
   G.openPlays = false; // (o cast impede o TS de achar que duel continua null depois do chooseDuel)
   G.chaos = G.nextChaos;
   G.nextChaos = null;
-  G.curse = G.nextCurse || 0;
-  G.nextCurse = 0;
   G.rd = G.players.map(() => ({
     gs: [],
     delta: 0,
@@ -1018,19 +1056,6 @@ export async function playRound() {
   {
     const mn = Math.min(...A0.map((p) => p.hand.length));
     G.underdog = mn < mx ? A0.filter((p) => p.hand.length === mn).map((p) => p.id) : [];
-  }
-  {
-    // Vingança do Cemitério: quem tem o maior cemitério compra 1 item
-    const gm = Math.max(...A0.map((p) => G.grave[p.id].length));
-    if (gm > 0) {
-      const V = A0.filter((p) => G.grave[p.id].length === gm && p.hand.length);
-      if (V.length) {
-        const txt = `${V.map(nm).join(', ')} ${V.length > 1 ? 'compram' : 'compra'} 1 item`;
-        log(`Vingança do Cemitério: ${txt} (maior cemitério: ${gm}).`, 'it');
-        void fx({ type: 'toast', text: `Vingança do Cemitério: ${txt}.` }, false);
-        for (const p of V) await drawItems(p, 1);
-      }
-    }
   }
   G.leaders = A0.every((p) => p.hand.length === mx)
     ? []
@@ -1196,11 +1221,7 @@ export async function playRound() {
   }
   G.revealed = true;
   sync();
-  const mfx = monFx();
-  if (mfx) {
-    log(`Efeito do monstro: ${MFX[mfx][0]} — ${MFX[mfx][1]}`, 'ch');
-    void fx({ type: 'toast', text: `Monstro ${MFX[mfx][0]}: ${MFX[mfx][1]}` }, false);
-  }
+  await monsterAwake([G.monster!, G.monster2]);
   await wait(1700 + 350 * G.n);
   log(
     `Monstro acordou: ${G.monster.v}${monVal() !== G.monster.v ? ` (vale ${monVal()})` : ''} — território ${G.monster.ts.map((c) => CLAN[c]).join(' e ')}${G.monster2 ? ` · segundo monstro: ${G.monster2.v}` : ''}${G.mutantCard ? ` · mutante: ${G.mutantCard} (${G.mutant > 0 ? '+5' : '−5'})` : ''}`,
@@ -1439,12 +1460,8 @@ export async function playRound() {
   const ck = drawFrom('cdeck', 'cdisc')!;
   G.cdisc.push(ck);
   G.nextChaos = ck;
-  G.nextCurse = ck === 'MALDICAO' ? pick(TRAITS) : 0;
-  log(
-    `Caos para a próxima rodada: ${chaosTitle(ck, G.nextCurse)} — ${chaosDesc(ck, G.nextCurse)}`,
-    'ch',
-  );
-  await fx({ type: 'chaosShow', k: ck, curse: G.nextCurse });
+  log(`Caos para a próxima rodada: ${chaosTitle(ck)} — ${chaosDesc(ck)}`, 'ch');
+  await fx({ type: 'chaosShow', k: ck });
 }
 export function endByDeck() {
   const A = alivePl(),
@@ -1495,8 +1512,6 @@ export function newState(n: number, seats: Seat[]) {
     fxc: 0,
     pend: {},
     nonce: 0,
-    curse: 0,
-    nextCurse: 0,
     duel: null,
     leaders: [],
     mutant: 0,

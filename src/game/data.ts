@@ -6,6 +6,9 @@ export interface Monster {
   v: number;
   ts: number[];
   fx: MonsterFx | null;
+  // passiva (bit da característica): goblins com ela valem 0 e reis com ela ficam desligados.
+  // Só vale depois que o monstro acorda (antes, só quem usou a Luneta sabe)
+  curse?: number;
 }
 
 export const rnd = (n: number) => Math.floor(Math.random() * n),
@@ -282,12 +285,7 @@ export const CHAOS = {
   MUTANTE: [
     'Monstro Mutante',
     'Na revelação vira um segundo monstro: se for par, o monstro vale +5; se for ímpar, −5.',
-    2,
-  ],
-  MALDICAO: [
-    'Maldição',
-    'Uma característica sorteada vale 0. Reis e rainhas com ela ficam desligados.',
-    2,
+    3,
   ],
   TROCA: [
     'Troca-Troca',
@@ -329,7 +327,7 @@ export const CHAOS = {
   MINMAX: [
     'Mínimo Máximo',
     'Os valores dos goblins se invertem: 1 vale 20, 2 vale 19, 3 vale 18 … 20 vale 1.',
-    2,
+    3,
   ],
   FEIRA: ['Feira dos Goblins', 'No fim desta rodada, todos os jogadores compram 1 item.', 2],
   NECRO: [
@@ -341,35 +339,52 @@ export const CHAOS = {
 export type ChaosKey = keyof typeof CHAOS;
 // estados salvos por versões antigas podem trazer cartas de Caos que não existem mais
 const chaosOf = (k: string): ChaosDef | undefined => (CHAOS as Record<string, ChaosDef>)[k];
-export const chaosTitle = (k: string, curse?: number) =>
-  !chaosOf(k)
-    ? 'Caos antigo'
-    : k === 'MALDICAO' && curse
-      ? `Maldição: ${TNAME[curse]}`
-      : chaosOf(k)![0];
-export const chaosDesc = (k: string, curse?: number) =>
-  !chaosOf(k)
-    ? 'Carta da versão anterior, sem efeito.'
-    : k === 'MALDICAO' && curse
-      ? `Goblins com ${TNAME[curse]} valem 0. Reis e rainhas com ${TNAME[curse]} ficam desligados.`
-      : chaosOf(k)![1];
+export const chaosTitle = (k: string) => (chaosOf(k) ? chaosOf(k)![0] : 'Caos antigo');
+export const chaosDesc = (k: string) =>
+  chaosOf(k) ? chaosOf(k)![1] : 'Carta da versão anterior, sem efeito.';
 // monstros com efeito: [nome, texto]
 export const MFX = {
   FRACOS: [
     'Amigo dos Fracos',
     'Quando derrotado, quem compra o item é o jogador com menos itens na mão (empate: todos os empatados compram).',
   ],
+  VINGANCA: [
+    'Vingança do Cemitério',
+    'Quando acorda, quem tem o maior cemitério compra 1 item (empate: todos os empatados compram).',
+  ],
 } satisfies Record<string, [name: string, text: string]>;
 export type MonsterFx = keyof typeof MFX;
 // o Necromante tem ícone próprio; o resto do Caos usa o raio
 export const chaosIc = (k: string) => (k === 'NECRO' ? 'skull' : 'bolt');
+// efeito e passiva impressos em cada monstro (o Amigo dos Fracos é dos múltiplos de 5)
+export const MON_FX: Partial<Record<number, MonsterFx>> = {
+  17: 'VINGANCA',
+  26: 'VINGANCA',
+  31: 'VINGANCA',
+  38: 'VINGANCA',
+};
+export const MON_CURSE: Partial<Record<number, number>> = {
+  11: CH,
+  16: BA,
+  22: OC,
+  27: CN,
+  33: MA,
+  37: VE,
+};
+export const curseTxt = (t: number) =>
+  `Goblins com ${TNAME[t]} valem 0. Reis e rainhas com ${TNAME[t]} ficam desligados (sem habilidade e sem empréstimo).`;
 export function makeMonsters() {
   const out: Monster[] = [];
   for (let v = 10; v <= 40; v++) {
     const t1 = (v - 10) % 4,
       ts = [t1];
     if (v % 3 === 1) ts.push((t1 + 1 + (v % 2)) % 4);
-    out.push({ v, ts, fx: v % 5 === 0 ? 'FRACOS' : null });
+    out.push({
+      v,
+      ts,
+      fx: v % 5 === 0 ? 'FRACOS' : MON_FX[v] || null,
+      curse: MON_CURSE[v] || 0,
+    });
   }
   return out;
 }

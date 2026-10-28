@@ -11,7 +11,7 @@ import {
   gv,
 } from '../../../game/data.ts';
 import type { Gob } from '../../../game/data.ts';
-import { lendsTo, traitsOf, val } from '../../../game/rules.ts';
+import { lendsTo, monCurse, traitsOf } from '../../../game/rules.ts';
 import { G, ME } from '../../../game/state.ts';
 import type { Player } from '../../../game/types.ts';
 import { CCSS } from '../../../ui/html.ts';
@@ -28,11 +28,13 @@ export function GoblinTip({ g, p }: { g: Gob; p?: Player }) {
   const live = p && G && G.rd ? p : undefined; // fora de partida (menu): só o que está impresso
   const traits = live ? traitsOf(live, g) : printed;
   const fromKing = live && lendsTo(live, g) ? KINGS[live.king].tr & ~printed : 0;
-  const cursed = live ? val(live, g) !== v : false;
+  const cursed = live ? !!(traits & monCurse()) : false;
   return (
     <TipBody accent={CCSS[clan]} title={`Goblin ${v}`} sub={`Território ${CLAN[clan]}`}>
       {cursed ? (
-        <TipNote warn>{`Vale 0 nesta rodada: a Maldição anula ${TNAME[G.curse]}.`}</TipNote>
+        <TipNote
+          warn
+        >{`Vale 0 nesta rodada: a passiva do monstro anula ${cursedBy(traits)}.`}</TipNote>
       ) : null}
       {TRAITS.filter((t) => traits & t).map((t) => (
         <TipRow
@@ -47,6 +49,12 @@ export function GoblinTip({ g, p }: { g: Gob; p?: Player }) {
     </TipBody>
   );
 }
+
+// as características do goblin que a passiva do monstro anula
+const cursedBy = (t: number) =>
+  TRAITS.filter((x) => t & x & monCurse())
+    .map((x) => TNAME[x])
+    .join(' e ');
 
 // os itens que você tem e que dão efeito a esta característica (nada, se não tiver). Só nas
 // suas cartas: os itens dos rivais são segredo.

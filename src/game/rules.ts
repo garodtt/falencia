@@ -17,7 +17,7 @@ import {
   shuffle,
 } from './data.ts';
 import { G, alivePl, chaosIs, log, nm, ord } from './state.ts';
-import type { ChaosKey, Gob, ItemKey, Monster } from './data.ts';
+import type { ChaosKey, Gob, ItemKey, Monster, MonsterFx } from './data.ts';
 import type { Player, UsedItem } from './types.ts';
 
 // como cada jogador está na rodada: soma, distância até o alvo, margem e se caiu fora (Zona, Somas Iguais)
@@ -36,14 +36,21 @@ export interface Standing {
   M: number;
 }
 
-export function kingActive(p: Player) {
-  return !(chaosIs('MALDICAO') && G.curse && KINGS[p.king].tr & G.curse);
+// passivas dos monstros acordados (com Monstros Opostos, as dos dois). Antes de acordar: nenhuma
+export const monCurse = () => (G.revealed ? (G.monster?.curse || 0) | (G.monster2?.curse || 0) : 0);
+// a passiva que `p` conhece: a de verdade depois que acorda; antes, só a que a Luneta mostrou
+export const seenCurse = (p: Player) =>
+  G.revealed ? monCurse() : G.rd?.[p.id]?.hint.value >= 0 ? G.monster?.curse || 0 : 0;
+// `cu` = passiva considerada (o padrão é a que vale de fato agora)
+export function kingActive(p: Player, cu = monCurse()) {
+  return !(KINGS[p.king].tr & cu);
 }
 export const hasKing = (p: Player, k: number) => p.king === k && kingActive(p);
-export const lendsTo = (p: Player, g: Gob) => kingActive(p) && LEND[KINGS[p.king].lend][1](gv(g));
-export function traitsOf(p: Player, g: Gob) {
+export const lendsTo = (p: Player, g: Gob, cu = monCurse()) =>
+  kingActive(p, cu) && LEND[KINGS[p.king].lend][1](gv(g));
+export function traitsOf(p: Player, g: Gob, cu = monCurse()) {
   let t = TR[gv(g)];
-  if (lendsTo(p, g)) t |= KINGS[p.king].tr;
+  if (lendsTo(p, g, cu)) t |= KINGS[p.king].tr;
   const d = G.rd[p.id].disg;
   if (d) t |= d;
   return t;
@@ -53,8 +60,8 @@ export const scarred = (g: Gob) => !!(TR[gv(g)] & BA);
 // goblins com Cicatriz que dá para pegar com Cicatrizes Compartilhadas: [dono do cemitério, goblin]
 export const scarGraves = () =>
   G.players.flatMap((o) => G.grave[o.id].filter(scarred).map((g) => [o.id, g] as const));
-export function val(p: Player, g: Gob) {
-  if (chaosIs('MALDICAO') && G.curse && traitsOf(p, g) & G.curse) return 0;
+export function val(p: Player, g: Gob, cu = monCurse()) {
+  if (cu && traitsOf(p, g, cu) & cu) return 0;
   return chaosIs('MINMAX') ? 21 - gv(g) : gv(g);
 }
 export const monOf = (m: Monster) =>
@@ -62,7 +69,8 @@ export const monOf = (m: Monster) =>
   (chaosIs('MUTANTE') ? G.mutant || 0 : 0) +
   G.monMod;
 export const monVal = () => monOf(G.monster!);
-export const monFx = () => G.monster?.fx || G.monster2?.fx || null;
+// efeitos dos monstros da mesa (com Monstros Opostos, os dos dois)
+export const monFx = () => [G.monster?.fx, G.monster2?.fx].filter((x): x is MonsterFx => !!x);
 export const noTarget = () => chaosIs('INVERSO') || chaosIs('MENOR') || chaosIs('MAIOR');
 export function terrOf(p: Player, m: Monster) {
   const s = m.ts.slice();

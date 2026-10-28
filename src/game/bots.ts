@@ -4,6 +4,7 @@ import { execUse } from './engine.ts';
 import {
   armed,
   canUse,
+  seenCurse,
   inZone,
   itemOptions,
   itemsBlocked,
@@ -84,7 +85,7 @@ export function humanChoose(p: Player, info: Hint): Gob[] {
     pool = p.hand,
     [kmin, kmax] = playLimit(p);
   if (!pool.length) return [];
-  const vals = pool.map((g) => val(p, g));
+  const vals = pool.map((g) => val(p, g, seenCurse(p)));
   let k: number;
   {
     const r = Math.random();
@@ -135,7 +136,7 @@ export function botChoose(p: Player, info: Hint): Gob[] {
   if (!IS_SIM() || p.strat === 'human') return humanChoose(p, info);
   const pool = p.hand,
     [kmin, kmax] = playLimit(p),
-    vals = pool.map((g) => val(p, g)),
+    vals = pool.map((g) => val(p, g, seenCurse(p))),
     n = pool.length;
   if (!n) return [];
   const byVal = pool.map((g, i) => i).sort((a, b) => vals[a] - vals[b]);

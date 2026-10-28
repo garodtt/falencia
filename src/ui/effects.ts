@@ -54,7 +54,7 @@ export function cardHTML(c: FxCard | undefined) {
     return vis ? gobCard(c.g, !!c.sm) : backCard();
   }
   if (c.item) return (c.vis || []).includes(ME) ? itemCard(c.item) : itemBack();
-  if (c.chaos) return chaosCard(c.chaos, c.curse);
+  if (c.chaos) return chaosCard(c.chaos);
   return (
     { back: backCard(), item: itemBack(), chaos: chaosBack(), mon: monBack() }[c.t!] || backCard()
   );
@@ -118,11 +118,7 @@ export async function playFx(ev: FxEvent) {
     case 'chaosShow':
       render();
       void fly(anchorEl('chaosDeck'), anchorEl('chaosSlot'), chaosBack(), { dur: 380 });
-      await banner(
-        chaosTitle(ev.k, ev.curse),
-        'Próxima rodada: ' + chaosDesc(ev.k, ev.curse),
-        'pink',
-      );
+      await banner(chaosTitle(ev.k), 'Próxima rodada: ' + chaosDesc(ev.k), 'pink');
       break;
     case 'end':
       render();

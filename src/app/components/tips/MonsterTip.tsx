@@ -1,4 +1,4 @@
-import { CLAN, MFX } from '../../../game/data.ts';
+import { CLAN, MFX, TNAME, curseTxt } from '../../../game/data.ts';
 import type { Monster } from '../../../game/data.ts';
 import { monOf } from '../../../game/rules.ts';
 import { G, chaosIs } from '../../../game/state.ts';
@@ -16,6 +16,7 @@ export function MonsterTip({ m }: { m: Monster }) {
       sub={worth !== m.v ? `Impresso: ${m.v}` : undefined}
     >
       {m.fx && MFX[m.fx] ? <TipNote>{`${MFX[m.fx][0]}: ${MFX[m.fx][1]}`}</TipNote> : null}
+      {m.curse ? <TipNote warn>{`Passiva ${TNAME[m.curse]}: ${curseTxt(m.curse)}`}</TipNote> : null}
       {changes().map((c) => (
         <TipNote key={c}>{c}</TipNote>
       ))}
@@ -32,7 +33,10 @@ export function SleepingMonsterTip() {
   return (
     <TipBody accent="var(--color-moon)" title="Monstro dormindo">
       <TipNote>Vale de 10 a 40. Ele acorda depois que todos jogarem.</TipNote>
-      <TipNote>A Luneta revela o valor antes da hora.</TipNote>
+      <TipNote>
+        Alguns monstros têm efeito ou passiva, revelados quando acordam. A Luneta revela o valor e a
+        passiva antes da hora.
+      </TipNote>
     </TipBody>
   );
 }
