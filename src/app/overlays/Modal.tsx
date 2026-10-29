@@ -20,7 +20,9 @@ export function Modal() {
       <div className="grid w-[min(500px,100%)] max-h-[92vh] gap-3 overflow-auto rounded-2xl border border-line bg-surface p-5 shadow-[0_30px_60px_rgba(0,0,0,0.6)] animate-rise">
         <h3 className="m-0 font-display text-[22px] font-semibold">{m.title}</h3>
         {m.showcard ? (
-          <div className="flex justify-center gap-2.5 [--cw:150px]">{m.showcard}</div>
+          <div className="flex flex-wrap justify-center gap-2.5 [--cw:150px] max-sm:[--cw:min(120px,28vw)]">
+            {m.showcard}
+          </div>
         ) : null}
         {m.text ? <p className="m-0 text-muted">{m.text}</p> : null}
         <div className="flex flex-wrap gap-2">

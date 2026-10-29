@@ -35,7 +35,11 @@ export function Hand({ me, sel, can }: { me: Player; sel: Gob[]; can: boolean })
     span = Math.min(box.cw * 0.75, Math.max(10, (box.hw - box.cw - 10) / Math.max(n - 1, 1)));
 
   return (
-    <div id="hand" className="relative w-full h-[calc(var(--ch)+40px)]" ref={ref}>
+    <div
+      id="hand"
+      className="relative w-full h-[calc(var(--ch)+40px)] land:h-[calc(var(--ch)+20px)]"
+      ref={ref}
+    >
       {n ? (
         hand.map((g, i) => (
           <HandCard

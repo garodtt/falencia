@@ -32,6 +32,11 @@
   --animate-fade-up: fadeUp 2.2s forwards;
 }
 
+/* celular/tablet em pé: a mão e a barra de ação ficam presas no rodapé da tela */
+@custom-variant pin (@media (max-width: 960px) and (orientation: portrait));
+/* celular deitado: a mesa larga do desktop, espremida para caber na altura (~360-430px) */
+@custom-variant land (@media (max-width: 960px) and (orientation: landscape));
+
 :root {
   --cw: clamp(52px, min(5.2vw, 8vh), 78px);
   --spd: 1;
@@ -100,6 +105,26 @@ html {
 }
 #logDrawer.open {
   transform: none;
+}
+
+/* no celular, durante a partida, a rodada e o chefe tomam o lugar do título na barra do topo */
+@media (max-width: 639px) {
+  #bar:has(#barInfo:not(:empty)) #brand {
+    display: none;
+  }
+}
+
+/* celular deitado: cartas menores e a escolhida sobe menos (a mão tem pouca folga em cima) */
+@media (max-width: 960px) and (orientation: landscape) {
+  :root {
+    --cw: 46px;
+  }
+  #hand [data-selected] {
+    transform: var(--base) translateY(-16px) !important;
+  }
+  #hand [data-pick]:hover:not([data-selected]) {
+    transform: var(--base) translateY(-6px) !important;
+  }
 }
 
 /* a carta vira com a classe "open" posta à mão (Flip.tsx), para a transição sempre partir

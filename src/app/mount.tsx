@@ -10,6 +10,7 @@ import { Menu } from './menu/Menu.tsx';
 import { Banner } from './overlays/Banner.tsx';
 import { LogList } from './overlays/LogList.tsx';
 import { Modal } from './overlays/Modal.tsx';
+import { RotateHint } from './overlays/RotateHint.tsx';
 import { Toast } from './overlays/Toast.tsx';
 import { Tips } from './overlays/Tips.tsx';
 import { Table } from './table/Table.tsx';
@@ -22,6 +23,7 @@ const ISLANDS: [string, ComponentType][] = [
   ['modal', Modal],
   ['toast', Toast],
   ['tut', Tips],
+  ['rotate', RotateHint],
 ];
 
 export function mountApp() {

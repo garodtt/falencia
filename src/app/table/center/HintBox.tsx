@@ -9,11 +9,11 @@ export function HintBox({ pe, me }: { pe: Pending | null; me: Player }) {
   const text = hintText(pe && pe.kind, me) || G.rd[ME].note;
   return (
     <div
-      className="max-w-[300px] justify-self-end max-[960px]:order-3 max-[960px]:justify-self-center"
+      className="max-w-[300px] justify-self-end max-[960px]:order-3 max-[960px]:justify-self-center max-sm:col-span-full land:order-none land:justify-self-end"
       id="hintBox"
     >
       {text ? (
-        <div className="flex items-start gap-2 rounded-[10px] border border-dashed border-line px-3 py-2.5 text-[13px] text-muted">
+        <div className="flex items-start gap-2 rounded-[10px] border border-dashed border-line px-3 py-2.5 text-[13px] text-muted land:px-2.5 land:py-1.5 land:text-xs">
           <Icon name="info" />
           <span>{text}</span>
         </div>

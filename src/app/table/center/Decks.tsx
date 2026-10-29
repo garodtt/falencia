@@ -16,7 +16,7 @@ const GLOW =
 export function Decks({ pe }: { pe: Pending | null }) {
   const ph = pe && pe.kind;
   return (
-    <div className="flex items-end gap-3.5 max-[960px]:order-2">
+    <div className="flex items-end gap-3.5 max-[960px]:order-2 max-sm:col-start-2 max-sm:row-start-1 max-sm:flex-col max-sm:items-center max-sm:gap-2.5 land:order-none land:gap-2.5 max-[720px]:land:gap-1.5">
       <Pile
         id="monsterDeck"
         countId="mCount"
@@ -113,7 +113,7 @@ function Pile({
           </span>
         ) : null}
       </div>
-      <span>
+      <span className="whitespace-nowrap">
         {`${label} `}
         <b className="text-text" id={countId}>
           {count}

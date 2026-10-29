@@ -20,7 +20,7 @@ export function MeBox({ me }: { me: Player }) {
     won = G.result && G.result.w.includes(ME) && G.phase === 'resultado';
   return (
     <div
-      className={`grid gap-2.5 rounded-xl border bg-surface p-3 ${won ? 'border-good' : 'border-line'}`}
+      className={`grid gap-2.5 rounded-xl border bg-surface p-3 land:gap-1.5 land:p-2 ${won ? 'border-good' : 'border-line'}`}
       id="meBox"
     >
       <div className="flex min-w-0 items-center gap-[7px] font-display text-base font-semibold">
@@ -32,7 +32,7 @@ export function MeBox({ me }: { me: Player }) {
       <PlayerStats p={me} />
       <UsedChips rd={rd} />
       <KingRow me={me} />
-      <div className="flex flex-wrap items-center gap-[5px] text-xs text-muted">
+      <div className="flex flex-wrap items-center gap-[5px] text-xs text-muted land:hidden">
         Empresta <TraitIcons t={k.tr} />
         {` aos ${lendTxt(me.king)}`}
       </div>
@@ -59,7 +59,7 @@ function KingRow({ me }: { me: Player }) {
     on = kingActive(me);
   return (
     <button
-      className="grid w-full grid-cols-[auto_1fr] items-center gap-2.5 rounded-[10px] bg-surface-2 p-[9px] text-left text-text shadow-none hover:bg-surface-3 hover:filter-none"
+      className="grid w-full grid-cols-[auto_1fr] items-center gap-2.5 rounded-[10px] bg-surface-2 p-[9px] text-left land:grid-cols-[auto_minmax(0,1fr)] land:gap-2 land:p-1.5 text-text shadow-none hover:bg-surface-3 hover:filter-none"
       id="kingToggle"
       onClick={toggleKing}
     >
@@ -75,11 +75,11 @@ function KingRow({ me }: { me: Player }) {
       </span>
       <span>
         <b
-          className={`block font-display text-sm font-semibold ${on ? '' : 'line-through opacity-70'}`}
+          className={`block font-display text-sm font-semibold land:truncate ${on ? '' : 'line-through opacity-70'}`}
         >
           {k.name}
         </b>
-        <small className="block font-medium text-muted">{`${k.short}${on ? '' : ' · desligado nesta rodada'} · ${open ? 'toque para fechar' : 'toque para ver'}`}</small>
+        <small className="block font-medium text-muted land:hidden">{`${k.short}${on ? '' : ' · desligado nesta rodada'} · ${open ? 'toque para fechar' : 'toque para ver'}`}</small>
       </span>
       {open ? (
         <span className="col-span-full text-[12.5px] font-medium text-muted">{k.text}</span>

@@ -38,7 +38,7 @@ export function Stat({
 // cartas na mão, itens e cemitério de um jogador; `children` entra no fim da linha
 export function PlayerStats({ p, children }: { p: Player; children?: ReactNode }) {
   return (
-    <div className="mt-[3px] flex flex-wrap gap-3 text-[13px] text-muted">
+    <div className="mt-[3px] flex flex-wrap gap-3 text-[13px] text-muted land:mt-0 land:gap-2 land:text-xs">
       <Stat
         icon="cards"
         title="Cartas na mão"

@@ -20,13 +20,17 @@ export function MonsterSlot() {
   );
   const tip2 = useTooltip(second ? () => <MonsterTip m={second} /> : null, 'right');
   return (
-    <div className="flex items-center gap-3.5">
-      <div id="monsterSlot" className="[--cw:clamp(92px,min(9vw,15vh),140px)]" {...tip1.anchor()}>
+    <div className="flex items-center gap-3.5 land:col-start-1 land:row-span-3 land:row-start-1">
+      <div
+        id="monsterSlot"
+        className="[--cw:clamp(92px,min(9vw,15vh),140px)] land:[--cw:60px]"
+        {...tip1.anchor()}
+      >
         <Monster />
       </div>
       <div
         id="monsterSlot2"
-        className={`[--cw:clamp(92px,min(9vw,15vh),140px)] ${second ? '' : '!hidden'}`}
+        className={`[--cw:clamp(92px,min(9vw,15vh),140px)] land:[--cw:60px] ${second ? '' : '!hidden'}`}
         {...tip2.anchor()}
       >
         {second ? <MonsterCard m={second} mod={monOf(second) - second.v} /> : null}

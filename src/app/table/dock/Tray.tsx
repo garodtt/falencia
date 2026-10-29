@@ -9,18 +9,21 @@ import { activateItem } from '../actions.ts';
 export function Tray({ me, pe }: { me: Player; pe: Pending | null }) {
   const ph = pe && pe.kind;
   return (
-    <div className="grid gap-2.5 rounded-xl border border-line bg-surface p-3" id="trayBox">
+    <div
+      className="grid gap-2.5 rounded-xl border border-line bg-surface p-3 land:gap-1.5 land:p-2"
+      id="trayBox"
+    >
       <h4 className="m-0 flex justify-between font-display text-[15px] font-semibold">
         Itens{' '}
         <span className="font-ui text-[13px] font-medium text-muted" id="trayCount">
           {me.items.length}
         </span>
       </h4>
-      <div className="grid max-h-[260px] gap-1.5 overflow-auto" id="tray">
+      <div className="grid max-h-[260px] gap-1.5 overflow-auto land:max-h-[120px]" id="tray">
         {me.items.length ? (
           me.items.map((k, i) => <TrayItem key={i} k={k} usable={!!ph && canUse(me, k, ph)} />)
         ) : (
-          <div className="text-[13px] text-muted">
+          <div className="text-[13px] text-muted land:text-xs">
             Vença rodadas para ganhar itens. Os com <Icon name="moon" /> são usados antes de o
             monstro acordar; os com <Icon name="sun" />, depois.
           </div>

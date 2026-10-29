@@ -78,18 +78,18 @@ export function Seat({ p }: { p: Player }) {
   return (
     <div
       data-seat
-      className={`relative grid min-h-[72px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 rounded-xl border bg-surface px-3 py-2.5 ${seatSkin(acting, chief, isTarget, steal, won)} ${p.alive ? '' : 'opacity-40'} ${isTarget ? 'cursor-pointer' : ''}`}
+      className={`relative grid min-h-[72px] grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 rounded-xl border bg-surface px-3 py-2.5 max-sm:min-h-0 max-sm:gap-x-2 max-sm:gap-y-1 max-sm:px-2.5 max-sm:py-2 land:min-h-0 land:gap-x-2 land:gap-y-0.5 land:px-2.5 land:py-1.5 ${seatSkin(acting, chief, isTarget, steal, won)} ${p.alive ? '' : 'opacity-40'} ${isTarget ? 'cursor-pointer' : ''}`}
       data-id={p.id}
       data-target={isTarget ? (steal ? 'steal' : 'elim') : undefined}
       onClick={isTarget ? () => pickTarget(p.id) : undefined}
     >
       <div style={{ minWidth: 0 }}>
-        <div className="flex min-w-0 items-center gap-[7px] font-display text-base font-semibold">
+        <div className="flex min-w-0 items-center gap-[7px] font-display text-base font-semibold land:text-sm">
           <ColorDot color={p.color} />
           <span className="truncate">{nameOf(p.id)}</span>
           {p.bot ? <Icon name="bot" /> : null}
           {p.bot && p.persona && PERSONAS[p.persona] ? (
-            <span className="font-ui text-xs font-medium text-muted">
+            <span className="font-ui text-xs font-medium text-muted land:hidden">
               {PERSONAS[p.persona].name}
             </span>
           ) : null}
@@ -108,7 +108,7 @@ export function Seat({ p }: { p: Player }) {
       </div>
       <div
         data-oplay
-        className="flex items-center gap-1 empty:hidden [--cw:calc(clamp(52px,min(5.2vw,8vh),78px)*0.5)]"
+        className="flex items-center gap-1 empty:hidden [--cw:calc(clamp(52px,min(5.2vw,8vh),78px)*0.5)] land:[--cw:22px]"
       >
         {acting ? <span className="animate-blink text-xs text-accent">{G.act!.text}</span> : null}
         <SeatPlay p={p} />
@@ -116,7 +116,7 @@ export function Seat({ p }: { p: Player }) {
           <span className="animate-blink text-xs text-accent">escolhendo…</span>
         ) : null}
         {shown && !G.revealed && !G.openPlays && rd.gs.length && G.phase === 'dormindo' ? (
-          <span className="text-xs text-muted">pronto</span>
+          <span className="text-xs text-muted land:hidden">pronto</span>
         ) : null}
         {!shown && sitting ? <span className="text-xs text-muted">fora do duelo</span> : null}
       </div>
@@ -142,7 +142,7 @@ function KingStat({ p }: { p: Player }) {
       {(anchor) => (
         <span style={{ color: CCSS[p.king] }} {...anchor()}>
           <Icon name="crown" />
-          <span className="text-muted">{KINGS[p.king].short}</span>
+          <span className="text-muted land:hidden">{KINGS[p.king].short}</span>
         </span>
       )}
     </Tooltip>

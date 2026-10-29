@@ -23,7 +23,7 @@ $('bar').addEventListener('click', async (e) => {
     ));
   if (t.id === 'btnSpeed') {
     setSPEED(SPEED === 1 ? 0.45 : 1);
-    t.innerHTML = `${ic('gauge')}${SPEED === 1 ? 'Normal' : 'Rápido'}`;
+    t.innerHTML = `${ic('gauge')}<span class="max-[960px]:hidden">${SPEED === 1 ? 'Normal' : 'Rápido'}</span>`;
     document.documentElement.style.setProperty('--spd', String(SPEED));
   }
 });

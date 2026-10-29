@@ -6,17 +6,17 @@ export function PhaseTag() {
   return (
     <div id="phaseTag">
       {G.phase === 'dormindo' ? (
-        <span className="inline-flex min-h-[18px] items-center gap-1.5 font-ui text-xs font-bold tracking-[0.07em] text-moon uppercase">
+        <span className="inline-flex min-h-[18px] items-center gap-1.5 font-ui text-xs font-bold tracking-[0.07em] land:col-start-2 text-moon uppercase">
           <Icon name="moon" />
           Monstro dormindo
         </span>
       ) : G.phase === 'acordado' || G.phase === 'resultado' ? (
-        <span className="inline-flex min-h-[18px] items-center gap-1.5 font-ui text-xs font-bold tracking-[0.07em] text-sun uppercase">
+        <span className="inline-flex min-h-[18px] items-center gap-1.5 font-ui text-xs font-bold tracking-[0.07em] land:col-start-2 text-sun uppercase">
           <Icon name="sun" />
           Monstro acordado
         </span>
       ) : (
-        <span className="inline-flex min-h-[18px] items-center gap-1.5 font-ui text-xs font-bold tracking-[0.07em] uppercase" />
+        <span className="inline-flex min-h-[18px] items-center gap-1.5 font-ui text-xs font-bold tracking-[0.07em] land:col-start-2 uppercase" />
       )}
     </div>
   );

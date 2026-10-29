@@ -2,7 +2,8 @@ import { chaosDesc, chaosIc, chaosTitle } from '../../game/data.ts';
 import { G } from '../../game/state.ts';
 import { Icon } from '../components/Icon.tsx';
 
-const base = 'flex min-h-[42px] flex-wrap items-center gap-2.5 rounded-[10px] px-3.5 py-[9px]';
+const base =
+  'flex min-h-[42px] flex-wrap items-center gap-2.5 rounded-[10px] px-3.5 py-[9px] max-sm:gap-x-2 max-sm:gap-y-1 max-sm:px-3 max-sm:py-2 max-sm:text-[13px] land:min-h-0 land:gap-x-2 land:gap-y-0 land:px-3 land:py-1 land:text-xs';
 const tg = 'font-ui text-[11px] font-bold tracking-[0.08em] uppercase';
 
 // faixa do topo: o Caos desta rodada (ou o da próxima, entre rodadas)
@@ -30,7 +31,7 @@ export function RuleBar() {
       <span className={`${tg} text-chaos`}>
         {shown === 'now' ? 'Regra da rodada' : 'Próxima rodada'}
       </span>
-      <b className="font-display text-base font-semibold">{chaosTitle(k)}</b>
+      <b className="font-display text-base font-semibold land:text-sm">{chaosTitle(k)}</b>
       <span className="text-muted">{`— ${chaosDesc(k)}`}</span>
     </div>
   );
