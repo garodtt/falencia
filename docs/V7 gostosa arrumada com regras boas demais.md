@@ -10,14 +10,14 @@
 
 12.000 partidas com o código atual (1.000 por mesa de 2, 3 e 4 jogadores, com bots lógicos e com bots humanos), sem erros. Comparação com a versão anterior do mesmo dia, em que a Vingança do Cemitério acontecia em toda rodada e a Maldição era Caos.
 
-| Bots lógicos, 4 jogadores | Vingança em toda rodada + Maldição no Caos | Vingança e passivas nos monstros |
-| --- | --- | --- |
-| Duração mediana | 21 rodadas | 21 rodadas |
-| Vitórias por clã (Vermelho / Verde / Azul / Amarelo) | 25 / 23 / 26 / 26% | 27 / 23 / 26 / 24% |
-| Líder da rodada 10 vence | 37% | 34% |
-| Virada (quem esteve em último vence) | 62% | 65% |
-| Itens usados por partida | 36 | 27 |
-| Armadilhas valendo por partida | 0,9 | 0,7 |
+| Bots lógicos, 4 jogadores                            | Vingança em toda rodada + Maldição no Caos | Vingança e passivas nos monstros |
+| ---------------------------------------------------- | ------------------------------------------ | -------------------------------- |
+| Duração mediana                                      | 21 rodadas                                 | 21 rodadas                       |
+| Vitórias por clã (Vermelho / Verde / Azul / Amarelo) | 25 / 23 / 26 / 26%                         | 27 / 23 / 26 / 24%               |
+| Líder da rodada 10 vence                             | 37%                                        | 34%                              |
+| Virada (quem esteve em último vence)                 | 62%                                        | 65%                              |
+| Itens usados por partida                             | 36                                         | 27                               |
+| Armadilhas valendo por partida                       | 0,9                                        | 0,7                              |
 
 - O jogo continua equilibrado e com a mesma duração (2p 17, 3p 19, 4p 21 rodadas com bots lógicos; 13, 14 e 14 com bots humanos).
 - Sem a Vingança em toda rodada, entram bem menos itens: a mesa usa cerca de 25% menos itens por partida (27 contra 36 com 4 jogadores; 21 contra 26 com bots humanos).
@@ -26,18 +26,18 @@
 
 Uso por cópia, por partida (4 jogadores, bots lógicos):
 
-| Item | Uso por cópia |
-| --- | --- |
-| Ajuste Fino (±3, sem condição) | 0,68 |
-| Porrete (+2) | 0,53 |
-| Nariz de Ferro (até +3) | 0,38 |
-| Chapéu Pontudo (até +2) | 0,36 |
-| Pé de Cabra (−2) | 0,35 |
-| Monóculo Polido (+1 por goblin) | 0,27 |
-| Machucado (até −3) | 0,21 |
-| Pomada de Pereba (até −2) | 0,21 |
-| Fuga Fedorenta | 0,21 |
-| Poção Maluca (−1 por goblin) | 0,16 |
+| Item                            | Uso por cópia |
+| ------------------------------- | ------------- |
+| Ajuste Fino (±3, sem condição)  | 0,68          |
+| Porrete (+2)                    | 0,53          |
+| Nariz de Ferro (até +3)         | 0,38          |
+| Chapéu Pontudo (até +2)         | 0,36          |
+| Pé de Cabra (−2)                | 0,35          |
+| Monóculo Polido (+1 por goblin) | 0,27          |
+| Machucado (até −3)              | 0,21          |
+| Pomada de Pereba (até −2)       | 0,21          |
+| Fuga Fedorenta                  | 0,21          |
+| Poção Maluca (−1 por goblin)    | 0,16          |
 
 > Documento de referência das regras atuais do jogo.
 > Base: versão **v6.2** (limite de 3 itens, regras de virada, monstros com efeito, Mapa do Tesouro, Profecia do Caos, Necromante).
@@ -59,14 +59,14 @@ Uso por cópia, por partida (4 jogadores, bots lógicos):
 
 Quase toda regra do jogo usa estes seis conceitos. Vale entender bem antes de jogar.
 
-| Conceito | O que é |
-| --- | --- |
-| **Soma** | O valor dos goblins jogados, mais os itens de soma (Porrete, Pé de Cabra etc.). É o seu palpite. |
-| **Alvo** | O valor do monstro, ajustado pelo Caos (Gigante, Anão, Mutante) e pelo Grito de Guerra. |
-| **Distância** | Quanto a sua soma ficou longe do alvo, para cima ou para baixo. Ex.: soma 27 e alvo 30 dão distância 3. |
-| **Margem (±)** | Um desconto na distância, ganho pelo território (seção 8). **Nunca muda a soma.** |
-| **Cravar** | Terminar com distância 0, já contando a margem. Rouba cartas. |
-| **Aproximação** | Ninguém cravou: vence a menor distância, já contando a margem. Elimina 1 carta. |
+| Conceito        | O que é                                                                                                 |
+| --------------- | ------------------------------------------------------------------------------------------------------- |
+| **Soma**        | O valor dos goblins jogados, mais os itens de soma (Porrete, Pé de Cabra etc.). É o seu palpite.        |
+| **Alvo**        | O valor do monstro, ajustado pelo Caos (Gigante, Anão, Mutante) e pelo Grito de Guerra.                 |
+| **Distância**   | Quanto a sua soma ficou longe do alvo, para cima ou para baixo. Ex.: soma 27 e alvo 30 dão distância 3. |
+| **Margem (±)**  | Um desconto na distância, ganho pelo território (seção 8). **Nunca muda a soma.**                       |
+| **Cravar**      | Terminar com distância 0, já contando a margem. Rouba cartas.                                           |
+| **Aproximação** | Ninguém cravou: vence a menor distância, já contando a margem. Elimina 1 carta.                         |
 
 **Regra de ouro:**
 
@@ -76,14 +76,14 @@ Quase toda regra do jogo usa estes seis conceitos. Vale entender bem antes de jo
 
 ## 2. Componentes
 
-| Componente | Quantidade | Descrição |
-| --- | --- | --- |
-| Goblins | 4 × 20 = 80 | Uma cor por território, valores 1 a 20, cada um com 2 características. |
-| Monstros | 31 | Valores 10 a 40. Cada monstro é de 1 ou 2 territórios; alguns têm efeito impresso (Amigo dos Fracos, Vingança do Cemitério e Cravada do Azarão) ou passiva de característica (seção 13). |
-| Itens | 62 | Cada um marcado ☾ **Monstro Dormindo** (antes da revelação), ☀ **Monstro Acordado** (depois) ou ⚡ **Reação** (na hora em que algo acontece). |
-| Caos | 50 | Um revelado no fim de cada rodada; muda a regra da rodada seguinte para todos. |
-| Reis e rainhas | 4 | Um por território: habilidade, 1 característica herdada por 5 goblins. |
-| Marcador Chefe da Toca | 1 | Define quem começa e quem decide o Duelo. Passa para a esquerda a cada rodada. |
+| Componente             | Quantidade  | Descrição                                                                                                                                                                                |
+| ---------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Goblins                | 4 × 20 = 80 | Uma cor por território, valores 1 a 20, cada um com 2 características.                                                                                                                   |
+| Monstros               | 31          | Valores 10 a 40. Cada monstro é de 1 ou 2 territórios; alguns têm efeito impresso (Amigo dos Fracos, Vingança do Cemitério e Cravada do Azarão) ou passiva de característica (seção 13). |
+| Itens                  | 62          | Cada um marcado ☾ **Monstro Dormindo** (antes da revelação), ☀ **Monstro Acordado** (depois) ou ⚡ **Reação** (na hora em que algo acontece).                                            |
+| Caos                   | 50          | Um revelado no fim de cada rodada; muda a regra da rodada seguinte para todos.                                                                                                           |
+| Reis e rainhas         | 4           | Um por território: habilidade, 1 característica herdada por 5 goblins.                                                                                                                   |
+| Marcador Chefe da Toca | 1           | Define quem começa e quem decide o Duelo. Passa para a esquerda a cada rodada.                                                                                                           |
 
 ## 3. Características dos goblins
 
@@ -91,12 +91,12 @@ Cada goblin tem **2 de 6 características** impressas. Os goblins _n_ e _21 − 
 
 Além disso, **5 goblins de cada cor herdam a característica do seu rei ou rainha**. Ela vem impressa na carta com uma coroa e é **fixa no goblin**: vale em qualquer mão, inclusive quando o goblin é roubado. Cada cor tem, então, **15 goblins com 2 características e 5 com 3**.
 
-| Território | Rei ou rainha | Característica herdada | Goblins que herdam |
-| --- | --- | --- | --- |
-| Vermelho | Rei Quebra-Crânio | Cicatriz | 1 a 5 |
-| Azul | Rei Olho-de-Vidro | Monóculo | 6 a 10 |
-| Verde | Rainha Musgo-Podre | Maluco | 11 a 15 |
-| Amarelo | Rainha Dente-de-Ouro | Pereba | 16 a 20 |
+| Território | Rei ou rainha        | Característica herdada | Goblins que herdam |
+| ---------- | -------------------- | ---------------------- | ------------------ |
+| Vermelho   | Rei Quebra-Crânio    | Cicatriz               | 1 a 5              |
+| Azul       | Rei Olho-de-Vidro    | Monóculo               | 6 a 10             |
+| Verde      | Rainha Musgo-Podre   | Maluco                 | 11 a 15            |
+| Amarelo    | Rainha Dente-de-Ouro | Pereba                 | 16 a 20            |
 
 Exemplo: o 8 Azul tem Fedorento · Pereba impressos e herda Monóculo. Ele joga com as 3 características em qualquer mão, mesmo na do jogador Vermelho.
 
@@ -104,71 +104,71 @@ Exemplo: o 8 Azul tem Fedorento · Pereba impressos e herda Monóculo. Ele joga 
 - A **Coroa Trocada** troca só o rei ou a rainha e a habilidade. As características herdadas continuam nos goblins.
 - A **passiva do monstro** desliga a habilidade do rei ou da rainha que tiver a característica, mas não tira a característica herdada dos goblins. Se a passiva for dessa característica, os goblins que a herdaram valem 0, como qualquer goblin com ela.
 
-| Característica | Ícone sugerido | Onde importa |
-| --- | --- | --- |
-| **Chapéu** | chapéu pontudo | Chapéu Pontudo (até +2). Nenhum rei ou rainha passa essa característica. |
-| **Cicatriz** | risco cruzado no rosto | Machucado (até −3), Cicatrizes Compartilhadas. Herdada pelos goblins 1 a 5 Vermelhos (Rei Quebra-Crânio). |
-| **Monóculo** | lente redonda com corrente | Monóculo Polido (+1 por goblin). Herdada pelos goblins 6 a 10 Azuis (Rei Olho-de-Vidro). |
-| **Fedorento** | três ondinhas de cheiro | Fuga Fedorenta, Nariz de Ferro (até +3). Nenhum rei ou rainha passa essa característica. |
-| **Maluco** | espiral | Poção Maluca (−1 por goblin). Herdada pelos goblins 11 a 15 Verdes (Rainha Musgo-Podre). |
-| **Pereba** | manchinhas na pele | Pomada de Pereba (até −2). Herdada pelos goblins 16 a 20 Amarelos (Rainha Dente-de-Ouro). |
+| Característica | Ícone sugerido             | Onde importa                                                                                              |
+| -------------- | -------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Chapéu**     | chapéu pontudo             | Chapéu Pontudo (até +2). Nenhum rei ou rainha passa essa característica.                                  |
+| **Cicatriz**   | risco cruzado no rosto     | Machucado (até −3), Cicatrizes Compartilhadas. Herdada pelos goblins 1 a 5 Vermelhos (Rei Quebra-Crânio). |
+| **Monóculo**   | lente redonda com corrente | Monóculo Polido (+1 por goblin). Herdada pelos goblins 6 a 10 Azuis (Rei Olho-de-Vidro).                  |
+| **Fedorento**  | três ondinhas de cheiro    | Fuga Fedorenta, Nariz de Ferro (até +3). Nenhum rei ou rainha passa essa característica.                  |
+| **Maluco**     | espiral                    | Poção Maluca (−1 por goblin). Herdada pelos goblins 11 a 15 Verdes (Rainha Musgo-Podre).                  |
+| **Pereba**     | manchinhas na pele         | Pomada de Pereba (até −2). Herdada pelos goblins 16 a 20 Amarelos (Rainha Dente-de-Ouro).                 |
 
 Todas também podem ser zeradas pela **passiva de um monstro** (seção 13) e copiadas pelo **Disfarce**.
 
 ### Tabela dos goblins (vale para as 4 cores)
 
-| Goblin | Características | Goblin | Características |
-| --- | --- | --- | --- |
-| 1 | Fedorento · Maluco | 20 | Fedorento · Maluco |
-| 2 | Monóculo · Maluco | 19 | Monóculo · Maluco |
-| 3 | Chapéu · Monóculo | 18 | Chapéu · Monóculo |
-| 4 | Monóculo · Fedorento | 17 | Monóculo · Fedorento |
-| 5 | Chapéu · Maluco | 16 | Chapéu · Maluco |
-| 6 | Cicatriz · Pereba | 15 | Cicatriz · Pereba |
-| 7 | Chapéu · Cicatriz | 14 | Chapéu · Cicatriz |
-| 8 | Fedorento · Pereba | 13 | Fedorento · Pereba |
-| 9 | Cicatriz · Fedorento | 12 | Cicatriz · Fedorento |
-| 10 | Chapéu · Pereba | 11 | Chapéu · Pereba |
+| Goblin | Características      | Goblin | Características      |
+| ------ | -------------------- | ------ | -------------------- |
+| 1      | Fedorento · Maluco   | 20     | Fedorento · Maluco   |
+| 2      | Monóculo · Maluco    | 19     | Monóculo · Maluco    |
+| 3      | Chapéu · Monóculo    | 18     | Chapéu · Monóculo    |
+| 4      | Monóculo · Fedorento | 17     | Monóculo · Fedorento |
+| 5      | Chapéu · Maluco      | 16     | Chapéu · Maluco      |
+| 6      | Cicatriz · Pereba    | 15     | Cicatriz · Pereba    |
+| 7      | Chapéu · Cicatriz    | 14     | Chapéu · Cicatriz    |
+| 8      | Fedorento · Pereba   | 13     | Fedorento · Pereba   |
+| 9      | Cicatriz · Fedorento | 12     | Cicatriz · Fedorento |
+| 10     | Chapéu · Pereba      | 11     | Chapéu · Pereba      |
 
 #### 🔴 Vermelho — herdam 👑 Cicatriz
 
-| Nº | Características |
-| --- | --- |
-| 1 | Fedorento · Maluco · **Cicatriz** |
-| 2 | Monóculo · Maluco · **Cicatriz** |
-| 3 | Chapéu · Monóculo · **Cicatriz** |
-| 4 | Monóculo · Fedorento · **Cicatriz** |
-| 5 | Chapéu · Maluco · **Cicatriz** |
+| Nº  | Características                     |
+| --- | ----------------------------------- |
+| 1   | Fedorento · Maluco · **Cicatriz**   |
+| 2   | Monóculo · Maluco · **Cicatriz**    |
+| 3   | Chapéu · Monóculo · **Cicatriz**    |
+| 4   | Monóculo · Fedorento · **Cicatriz** |
+| 5   | Chapéu · Maluco · **Cicatriz**      |
 
 #### 🔵 Azul — herdam 👑 Monóculo
 
-| Nº | Características |
-| --- | --- |
-| 6 | Cicatriz · Pereba · **Monóculo** |
-| 7 | Chapéu · Cicatriz · **Monóculo** |
-| 8 | Fedorento · Pereba · **Monóculo** |
-| 9 | Cicatriz · Fedorento · **Monóculo** |
-| 10 | Chapéu · Pereba · **Monóculo** |
+| Nº  | Características                     |
+| --- | ----------------------------------- |
+| 6   | Cicatriz · Pereba · **Monóculo**    |
+| 7   | Chapéu · Cicatriz · **Monóculo**    |
+| 8   | Fedorento · Pereba · **Monóculo**   |
+| 9   | Cicatriz · Fedorento · **Monóculo** |
+| 10  | Chapéu · Pereba · **Monóculo**      |
 
 #### 🟢 Verde — herdam 👑 Maluco
 
-| Nº | Características |
-| --- | --- |
-| 11 | Chapéu · Pereba · **Maluco** |
-| 12 | Cicatriz · Fedorento · **Maluco** |
-| 13 | Fedorento · Pereba · **Maluco** |
-| 14 | Chapéu · Cicatriz · **Maluco** |
-| 15 | Cicatriz · Pereba · **Maluco** |
+| Nº  | Características                   |
+| --- | --------------------------------- |
+| 11  | Chapéu · Pereba · **Maluco**      |
+| 12  | Cicatriz · Fedorento · **Maluco** |
+| 13  | Fedorento · Pereba · **Maluco**   |
+| 14  | Chapéu · Cicatriz · **Maluco**    |
+| 15  | Cicatriz · Pereba · **Maluco**    |
 
 #### 🟡 Amarelo — herdam 👑 Pereba
 
-| Nº | Características |
-| --- | --- |
-| 16 | Chapéu · Maluco · **Pereba** |
-| 17 | Monóculo · Fedorento · **Pereba** |
-| 18 | Chapéu · Monóculo · **Pereba** |
-| 19 | Monóculo · Maluco · **Pereba** |
-| 20 | Fedorento · Maluco · **Pereba** |
+| Nº  | Características                   |
+| --- | --------------------------------- |
+| 16  | Chapéu · Maluco · **Pereba**      |
+| 17  | Monóculo · Fedorento · **Pereba** |
+| 18  | Chapéu · Monóculo · **Pereba**    |
+| 19  | Monóculo · Maluco · **Pereba**    |
+| 20  | Fedorento · Maluco · **Pereba**   |
 
 > **Atenção:** a habilidade do Rei Azul se chamava "Monóculo" e passou a se chamar **Lente de Vidro**, para não confundir com a característica.
 
@@ -264,12 +264,12 @@ Nenhum goblin herda uma característica que já tem impressa, então os 5 de cad
 
 ## 7. Ganhar e perder
 
-| Resultado | O que acontece |
-| --- | --- |
-| **Cravou** | Rouba **2 cartas às cegas** (1 de cada oponente ou 2 do mesmo) e compra 1 item. |
+| Resultado      | O que acontece                                                                                  |
+| -------------- | ----------------------------------------------------------------------------------------------- |
+| **Cravou**     | Rouba **2 cartas às cegas** (1 de cada oponente ou 2 do mesmo) e compra 1 item.                 |
 | **Mais perto** | Elimina **1 carta às cegas** da mão de um oponente (vai para o cemitério dele) e compra 1 item. |
-| **Perdeu** | Descarta as cartas jogadas no próprio cemitério. |
-| **Vencedor** | As cartas jogadas voltam para a mão. |
+| **Perdeu**     | Descarta as cartas jogadas no próprio cemitério.                                                |
+| **Vencedor**   | As cartas jogadas voltam para a mão.                                                            |
 
 - **Duelo:** só os dois escolhidos jogam. O vencedor rouba 1 carta do perdedor (mesmo se cravar) e compra 1 item. Se empatarem, os dois vencem e valem as regras normais, só entre eles. Com só 2 jogadores na mesa, o Duelo é entre eles.
 - **Pressa não Compensa:** a carta puxada na Roleta não conta para os 3 goblins. Vale mesmo para quem não descartou (Amuleto, última carta).
@@ -309,12 +309,12 @@ Nenhum goblin herda uma característica que já tem impressa, então os 5 de cad
 
 ## 10. Reis e rainhas
 
-| Território | Carta | Característica herdada → goblins que herdam | Habilidade |
-| --- | --- | --- | --- |
-| Vermelho | **Rei Quebra-Crânio** | Cicatriz → goblins 1 a 5 | **Fúria:** ao vencer por aproximação, elimina 2 cartas em vez de 1; ao cravar, além de roubar, elimina 1 carta. |
-| Azul | **Rei Olho-de-Vidro** | Monóculo → goblins 6 a 10 | **Lente de Vidro:** quando o monstro for do território Azul, sua margem é ±2, e independente do território tem margem ±1 |
-| Verde | **Rainha Musgo-Podre** | Maluco → goblins 11 a 15 | **Brotar:** no início da rodada, se tiver menos cartas que todos os rivais, o jogador à sua direita escolhe 1 carta do seu cemitério e ela volta para a sua mão. |
-| Amarelo | **Rainha Dente-de-Ouro** | Pereba → goblins 16 a 20 | **Mercadora:** sempre que compra um item, compra 2 e fica com o melhor. |
+| Território | Carta                    | Característica herdada → goblins que herdam | Habilidade                                                                                                                                                       |
+| ---------- | ------------------------ | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Vermelho   | **Rei Quebra-Crânio**    | Cicatriz → goblins 1 a 5                    | **Fúria:** ao vencer por aproximação, elimina 2 cartas em vez de 1; ao cravar, além de roubar, elimina 1 carta.                                                  |
+| Azul       | **Rei Olho-de-Vidro**    | Monóculo → goblins 6 a 10                   | **Lente de Vidro:** quando o monstro for do território Azul, sua margem é ±2, e independente do território tem margem ±1                                         |
+| Verde      | **Rainha Musgo-Podre**   | Maluco → goblins 11 a 15                    | **Brotar:** no início da rodada, se tiver menos cartas que todos os rivais, o jogador à sua direita escolhe 1 carta do seu cemitério e ela volta para a sua mão. |
+| Amarelo    | **Rainha Dente-de-Ouro** | Pereba → goblins 16 a 20                    | **Mercadora:** sempre que compra um item, compra 2 e fica com o melhor.                                                                                          |
 
 - Cada rei ou rainha tem **1 característica**, herdada por 5 goblins da sua cor (seção 3). Ela é fixa na carta do goblin e vale em qualquer mão.
 - **Passiva do monstro:** se a característica da passiva for uma das do rei ou da rainha, ele fica desligado a partir da revelação: sem habilidade. Uma característica ganha pelo Disfarce também conta para a passiva.
@@ -330,37 +330,37 @@ Nenhum goblin herda uma característica que já tem impressa, então os 5 de cad
 - **Reações:** NÃO! e Armadilha ficam escondidas na mão e não são usadas na janela. Você as revela na hora em que acontece o que elas respondem (no digital, o jogo pergunta).
 - **NÃO!:** cancela um item ☀ ou uma Armadilha de qualquer jogador e pode ser respondido com outro NÃO!.
 
-| Cópias | Item | Quando | Texto da carta |
-| --- | --- | --- | --- |
-| 2 | **Ajuste Fino** | ☀ Acordado | De −3 a +3 na sua soma, à sua escolha. |
-| 2 | **Amuleto** | ☀ Acordado | Se você perder nesta rodada, não descarta nada. |
-| 2 | **Armadilha** | ⚡ Reação | Quando alguém roubar ou eliminar uma carta da sua mão, revele esta carta: quem atacou perde 1 carta (o jogador à direita dele escolhe qual, às cegas). |
-| 2 | **Bandeira** | ☾ Dormindo | Escolha um território: para você, o monstro também é desse território nesta rodada. |
-| 2 | **Chapéu Pontudo** | ☀ Acordado | Se jogou goblin de Chapéu: até +2 na sua soma. |
-| 2 | **Cicatrizes Compartilhadas** | ☾ Dormindo | Mande 1 goblin com Cicatriz da sua mão para o seu cemitério. Depois pegue, à sua escolha, 1 goblin com Cicatriz de qualquer cemitério. |
-| 2 | **Coroa Trocada** | ☾ Dormindo | Troque o seu rei ou rainha com o de outro jogador. |
-| 2 | **Disfarce** | ☾ Dormindo | Escolha uma característica: todos os goblins que você jogar nesta rodada a têm. |
-| 2 | **Escudo de Panela** | ☀ Acordado | Nesta rodada ninguém rouba nem elimina cartas suas. |
-| 2 | **Fuga Fedorenta** | ☀ Acordado | Se você perder nesta rodada, um goblin Fedorento jogado, à sua escolha, volta para a mão. |
-| 2 | **Grito de Guerra** | ☀ Acordado | O monstro vale +2 ou −2 para todos, à sua escolha. |
-| 2 | **Isca de Monstro** | ☀ Acordado | Depois que o monstro acorda, troque-o pelo próximo do monte. O Caos da rodada continua valendo para o novo monstro. |
-| 2 | **Ladrão de Túmulos** | ☾ Dormindo | Embaralhe o cemitério de outro jogador virado para baixo e puxe 1 carta às cegas. |
-| 2 | **Luneta** | ☾ Dormindo | Espie o valor do monstro. |
-| 2 | **Machucado** | ☀ Acordado | Se jogou goblin com Cicatriz: até −3 na sua soma. |
-| 2 | **Mão Leve** | ☾ Dormindo | Roube, às cegas, 1 item da mão de um oponente. |
-| 2 | **Mapa do Tesouro** | ☾ Dormindo | Olhe o monte de itens, escolha 1 carta e fique com ela. Depois embaralhe o monte. |
-| 2 | **Monóculo Polido** | ☀ Acordado | +1 na sua soma para cada goblin de Monóculo jogado. |
-| 4 | **NÃO!** | ⚡ Reação | Cancele um item de Monstro Acordado ou uma Armadilha de qualquer jogador. Pode ser respondido com outro NÃO!. |
-| 2 | **Nariz de Ferro** | ☀ Acordado | Se jogou goblin Fedorento: até +3 na sua soma. |
-| 2 | **Pá de Coveiro** | ☾ Dormindo | Puxe 1 carta à sua escolha do seu cemitério. |
-| 3 | **Pé de Cabra** | ☀ Acordado | −2 na sua soma. |
-| 2 | **Poção Maluca** | ☀ Acordado | −1 na sua soma para cada goblin Maluco jogado. |
-| 2 | **Pomada de Pereba** | ☀ Acordado | Se jogou goblin com Pereba: até −2 na sua soma. |
-| 3 | **Porrete** | ☀ Acordado | +2 na sua soma. |
-| 2 | **Profecia do Caos** | ☾ Dormindo | Olhe o monte de Caos e escolha a carta da próxima rodada. Embaralhe o resto e coloque a escolhida no topo. |
-| 2 | **Saco de Moedas** | Na hora | Compre 2 itens agora. É usado assim que entra na sua mão. |
-| 2 | **Sacrifício** | ☾ Dormindo | Mande 1 goblin seu para o seu cemitério e pegue, às cegas, 1 carta da mão de um oponente. |
-| 2 | **Tambor de Guerra** | ☾ Dormindo | Nesta rodada você pode jogar até 4 goblins. |
+| Cópias | Item                          | Quando     | Texto da carta                                                                                                                                         |
+| ------ | ----------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 2      | **Ajuste Fino**               | ☀ Acordado | De −3 a +3 na sua soma, à sua escolha.                                                                                                                 |
+| 2      | **Amuleto**                   | ☀ Acordado | Se você perder nesta rodada, não descarta nada.                                                                                                        |
+| 2      | **Armadilha**                 | ⚡ Reação  | Quando alguém roubar ou eliminar uma carta da sua mão, revele esta carta: quem atacou perde 1 carta (o jogador à direita dele escolhe qual, às cegas). |
+| 2      | **Bandeira**                  | ☾ Dormindo | Escolha um território: para você, o monstro também é desse território nesta rodada.                                                                    |
+| 2      | **Chapéu Pontudo**            | ☀ Acordado | Se jogou goblin de Chapéu: até +2 na sua soma.                                                                                                         |
+| 2      | **Cicatrizes Compartilhadas** | ☾ Dormindo | Mande 1 goblin com Cicatriz da sua mão para o seu cemitério. Depois pegue, à sua escolha, 1 goblin com Cicatriz de qualquer cemitério.                 |
+| 2      | **Coroa Trocada**             | ☾ Dormindo | Troque o seu rei ou rainha com o de outro jogador.                                                                                                     |
+| 2      | **Disfarce**                  | ☾ Dormindo | Escolha uma característica: todos os goblins que você jogar nesta rodada a têm.                                                                        |
+| 2      | **Escudo de Panela**          | ☀ Acordado | Nesta rodada ninguém rouba nem elimina cartas suas.                                                                                                    |
+| 2      | **Fuga Fedorenta**            | ☀ Acordado | Se você perder nesta rodada, um goblin Fedorento jogado, à sua escolha, volta para a mão.                                                              |
+| 2      | **Grito de Guerra**           | ☀ Acordado | O monstro vale +2 ou −2 para todos, à sua escolha.                                                                                                     |
+| 2      | **Isca de Monstro**           | ☀ Acordado | Depois que o monstro acorda, troque-o pelo próximo do monte. O Caos da rodada continua valendo para o novo monstro.                                    |
+| 2      | **Ladrão de Túmulos**         | ☾ Dormindo | Embaralhe o cemitério de outro jogador virado para baixo e puxe 1 carta às cegas.                                                                      |
+| 2      | **Luneta**                    | ☾ Dormindo | Espie o valor do monstro.                                                                                                                              |
+| 2      | **Machucado**                 | ☀ Acordado | Se jogou goblin com Cicatriz: até −3 na sua soma.                                                                                                      |
+| 2      | **Mão Leve**                  | ☾ Dormindo | Roube, às cegas, 1 item da mão de um oponente.                                                                                                         |
+| 2      | **Mapa do Tesouro**           | ☾ Dormindo | Olhe o monte de itens, escolha 1 carta e fique com ela. Depois embaralhe o monte.                                                                      |
+| 2      | **Monóculo Polido**           | ☀ Acordado | +1 na sua soma para cada goblin de Monóculo jogado.                                                                                                    |
+| 4      | **NÃO!**                      | ⚡ Reação  | Cancele um item de Monstro Acordado ou uma Armadilha de qualquer jogador. Pode ser respondido com outro NÃO!.                                          |
+| 2      | **Nariz de Ferro**            | ☀ Acordado | Se jogou goblin Fedorento: até +3 na sua soma.                                                                                                         |
+| 2      | **Pá de Coveiro**             | ☾ Dormindo | Puxe 1 carta à sua escolha do seu cemitério.                                                                                                           |
+| 3      | **Pé de Cabra**               | ☀ Acordado | −2 na sua soma.                                                                                                                                        |
+| 2      | **Poção Maluca**              | ☀ Acordado | −1 na sua soma para cada goblin Maluco jogado.                                                                                                         |
+| 2      | **Pomada de Pereba**          | ☀ Acordado | Se jogou goblin com Pereba: até −2 na sua soma.                                                                                                        |
+| 3      | **Porrete**                   | ☀ Acordado | +2 na sua soma.                                                                                                                                        |
+| 2      | **Profecia do Caos**          | ☾ Dormindo | Olhe o monte de Caos e escolha a carta da próxima rodada. Embaralhe o resto e coloque a escolhida no topo.                                             |
+| 2      | **Saco de Moedas**            | Na hora    | Compre 2 itens agora. É usado assim que entra na sua mão.                                                                                              |
+| 2      | **Sacrifício**                | ☾ Dormindo | Mande 1 goblin seu para o seu cemitério e pegue, às cegas, 1 carta da mão de um oponente.                                                              |
+| 2      | **Tambor de Guerra**          | ☾ Dormindo | Nesta rodada você pode jogar até 4 goblins.                                                                                                            |
 
 **Total: 62 cartas** (60 + 2 Cicatrizes Compartilhadas).
 
@@ -392,30 +392,30 @@ O Caos muda o jeito de jogar da mesa em três frentes:
 - **Aleatoriedade:** deixar a rodada imprevisível.
 - **Interação:** obrigar os jogadores a reagir uns aos outros.
 
-| Cópias | Caos | Grupo | Efeito na rodada seguinte, para todos |
-| --- | --- | --- | --- |
-| 3 | **Às Cegas** | Aleatoriedade | Depois que todos jogam, o jogador à sua direita escolhe, às cegas, 1 dos seus goblins jogados e troca por 1 carta da sua mão. |
-| 2 | **Banquete** | Interação | As cartas que os perdedores descartariam vão para a mão dos vencedores. |
-| 2 | **Caça ao Líder** | Interação | Quem tem mais cartas no início da rodada não pode vencer por aproximação; só se cravar. |
-| 2 | **Corrida dos Grandes** | Tira o meio | O monstro é ignorado: vence a maior soma. Ninguém crava. |
-| 2 | **Corrida dos Pequenos** | Tira o meio | O monstro é ignorado: vence a menor soma. Todos jogam pelo menos 2 goblins (se tiverem). Ninguém crava. |
-| 2 | **Duelo** | Interação | O Chefe da Toca escolhe dois jogadores para disputar; os outros não jogam. O vencedor rouba 1 carta do perdedor e compra 1 item. |
-| 2 | **Feira dos Goblins** | Interação | No fim desta rodada, todos os jogadores compram 1 item. |
-| 3 | **Ímã** | Tira o meio | Somas de 20 a 30 contam como se estivessem 5 mais longe do monstro. |
-| 3 | **Mínimo Máximo** | Aleatoriedade | Os valores dos goblins se invertem: 1 vale 20, 2 vale 19, 3 vale 18 … 20 vale 1. |
-| 2 | **Monstro Anão** | Tira o meio | O monstro vale −6 (mínimo 1). |
-| 2 | **Monstro Gigante** | Tira o meio | O monstro vale +10. |
-| 3 | **Monstro Mutante** | Aleatoriedade | Na revelação, vire a carta do topo do monte de monstros. Se o número dela for **par**, o monstro da rodada vale **+5**; se for **ímpar**, vale **−5**. A carta virada serve só para isso: o efeito, a passiva e o território dela **não valem**. No fim da rodada, devolva-a ao monte de monstros e embaralhe. |
-| 3 | **Monstros Opostos** | Tira o meio | Puxe 2 monstros do topo do monte, virados para baixo. Na revelação, vale o mais perto da sua soma. Acertar em cheio rouba 1 carta (em vez de 2) e compra 1 item. |
-| 2 | **Mundo Invertido** | Tira o meio | Vence quem ficar mais longe do monstro. Ninguém crava. |
-| 2 | **Necromante** (arte: goblin necromante) | Aleatoriedade | Coloque seu cemitério na sua mão: nesta rodada você joga só com essas cartas. Quem vencer fica com as cartas que jogou; o resto volta para o cemitério. Quem não tem cemitério joga com a própria mão. |
-| 2 | **Palpite Aberto** | Interação | Cada um joga na ordem, a partir do Chefe da Toca, vendo os palpites de quem jogou antes. |
-| 2 | **Pedágio** | Interação | Antes de jogar, cada um escolhe 1 carta da mão para dar ao jogador da esquerda. |
-| 2 | **Roleta** | Interação | Depois que todos jogam, cada um puxa às cegas 1 carta da mão do jogador à sua direita e soma ao seu palpite. No fim da rodada a carta volta para o dono. |
-| 2 | **Soma do Vizinho** | Interação | Sua soma ganha metade da soma do jogador à sua esquerda (arredondando para baixo). |
-| 3 | **Somas Iguais se Anulam** | Interação | Jogadores com a mesma soma perdem todos. |
-| 2 | **Troca-Troca** | Aleatoriedade | No início da rodada, todos passam a mão inteira para o jogador da esquerda. |
-| 2 | **Zona Proibida** | Tira o meio | Somas de 20 a 30 perdem automaticamente. |
+| Cópias | Caos                                     | Grupo         | Efeito na rodada seguinte, para todos                                                                                                                                                                                                                                                                          |
+| ------ | ---------------------------------------- | ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 3      | **Às Cegas**                             | Aleatoriedade | Depois que todos jogam, o jogador à sua direita escolhe, às cegas, 1 dos seus goblins jogados e troca por 1 carta da sua mão.                                                                                                                                                                                  |
+| 2      | **Banquete**                             | Interação     | As cartas que os perdedores descartariam vão para a mão dos vencedores.                                                                                                                                                                                                                                        |
+| 2      | **Caça ao Líder**                        | Interação     | Quem tem mais cartas no início da rodada não pode vencer por aproximação; só se cravar.                                                                                                                                                                                                                        |
+| 2      | **Corrida dos Grandes**                  | Tira o meio   | O monstro é ignorado: vence a maior soma. Ninguém crava.                                                                                                                                                                                                                                                       |
+| 2      | **Corrida dos Pequenos**                 | Tira o meio   | O monstro é ignorado: vence a menor soma. Todos jogam pelo menos 2 goblins (se tiverem). Ninguém crava.                                                                                                                                                                                                        |
+| 2      | **Duelo**                                | Interação     | O Chefe da Toca escolhe dois jogadores para disputar; os outros não jogam. O vencedor rouba 1 carta do perdedor e compra 1 item.                                                                                                                                                                               |
+| 2      | **Feira dos Goblins**                    | Interação     | No fim desta rodada, todos os jogadores compram 1 item.                                                                                                                                                                                                                                                        |
+| 3      | **Ímã**                                  | Tira o meio   | Somas de 20 a 30 contam como se estivessem 5 mais longe do monstro.                                                                                                                                                                                                                                            |
+| 3      | **Mínimo Máximo**                        | Aleatoriedade | Os valores dos goblins se invertem: 1 vale 20, 2 vale 19, 3 vale 18 … 20 vale 1.                                                                                                                                                                                                                               |
+| 2      | **Monstro Anão**                         | Tira o meio   | O monstro vale −6 (mínimo 1).                                                                                                                                                                                                                                                                                  |
+| 2      | **Monstro Gigante**                      | Tira o meio   | O monstro vale +10.                                                                                                                                                                                                                                                                                            |
+| 3      | **Monstro Mutante**                      | Aleatoriedade | Na revelação, vire a carta do topo do monte de monstros. Se o número dela for **par**, o monstro da rodada vale **+5**; se for **ímpar**, vale **−5**. A carta virada serve só para isso: o efeito, a passiva e o território dela **não valem**. No fim da rodada, devolva-a ao monte de monstros e embaralhe. |
+| 3      | **Monstros Opostos**                     | Tira o meio   | Puxe 2 monstros do topo do monte, virados para baixo. Na revelação, vale o mais perto da sua soma. Acertar em cheio rouba 1 carta (em vez de 2) e compra 1 item.                                                                                                                                               |
+| 2      | **Mundo Invertido**                      | Tira o meio   | Vence quem ficar mais longe do monstro. Ninguém crava.                                                                                                                                                                                                                                                         |
+| 2      | **Necromante** (arte: goblin necromante) | Aleatoriedade | Coloque seu cemitério na sua mão: nesta rodada você joga só com essas cartas. Quem vencer fica com as cartas que jogou; o resto volta para o cemitério. Quem não tem cemitério joga com a própria mão.                                                                                                         |
+| 2      | **Palpite Aberto**                       | Interação     | Cada um joga na ordem, a partir do Chefe da Toca, vendo os palpites de quem jogou antes.                                                                                                                                                                                                                       |
+| 2      | **Pedágio**                              | Interação     | Antes de jogar, cada um escolhe 1 carta da mão para dar ao jogador da esquerda.                                                                                                                                                                                                                                |
+| 2      | **Roleta**                               | Interação     | Depois que todos jogam, cada um puxa às cegas 1 carta da mão do jogador à sua direita e soma ao seu palpite. No fim da rodada a carta volta para o dono.                                                                                                                                                       |
+| 2      | **Soma do Vizinho**                      | Interação     | Sua soma ganha metade da soma do jogador à sua esquerda (arredondando para baixo).                                                                                                                                                                                                                             |
+| 3      | **Somas Iguais se Anulam**               | Interação     | Jogadores com a mesma soma perdem todos.                                                                                                                                                                                                                                                                       |
+| 2      | **Troca-Troca**                          | Aleatoriedade | No início da rodada, todos passam a mão inteira para o jogador da esquerda.                                                                                                                                                                                                                                    |
+| 2      | **Zona Proibida**                        | Tira o meio   | Somas de 20 a 30 perdem automaticamente.                                                                                                                                                                                                                                                                       |
 
 **Total: 50 cartas.** A Maldição saiu do Caos e virou passiva de monstro (seção 13); no lugar das 2 cópias dela entraram +1 Monstro Mutante e +1 Mínimo Máximo.
 
@@ -436,39 +436,39 @@ O Caos muda o jeito de jogar da mesa em três frentes:
 - **Passiva:** 6 monstros têm uma passiva de característica, uma para cada: 11 Chapéu, 16 Cicatriz, 22 Monóculo, 27 Fedorento, 33 Maluco e 37 Pereba.
 - Efeito e passiva são **surpresa**: só aparecem quando o monstro acorda. A exceção é a **Luneta**: quem a usa vê o valor do monstro **e a passiva** dele.
 
-| Monstro | Território(s) | Efeito | Passiva |
-| --- | --- | --- | --- |
-| 10 | Vermelho e Verde | **Amigo dos Fracos** | — |
-| 11 | Verde | — | **Chapéu** |
-| 12 | Azul | — | — |
-| 13 | Amarelo e Verde | **Cravada do Azarão** | — |
-| 14 | Vermelho | — | — |
-| 15 | Verde | **Amigo dos Fracos** | — |
-| 16 | Azul e Amarelo | — | **Cicatriz** |
-| 17 | Amarelo | **Vingança do Cemitério** | — |
-| 18 | Vermelho | **Cravada do Azarão** | — |
-| 19 | Verde e Amarelo | — | — |
-| 20 | Azul | **Amigo dos Fracos** | — |
-| 21 | Amarelo | **Cravada do Azarão** | — |
-| 22 | Vermelho e Verde | — | **Monóculo** |
-| 23 | Verde | — | — |
-| 24 | Azul | — | — |
-| 25 | Amarelo e Verde | **Amigo dos Fracos** | — |
-| 26 | Vermelho | **Vingança do Cemitério** | — |
-| 27 | Verde | — | **Fedorento** |
-| 28 | Azul e Amarelo | — | — |
-| 29 | Amarelo | — | — |
-| 30 | Vermelho | **Amigo dos Fracos** | — |
-| 31 | Verde e Amarelo | **Vingança do Cemitério** | — |
-| 32 | Azul | **Cravada do Azarão** | — |
-| 33 | Amarelo | — | **Maluco** |
-| 34 | Vermelho e Verde | — | — |
-| 35 | Verde | **Amigo dos Fracos** | — |
-| 36 | Azul | — | — |
-| 37 | Amarelo e Verde | — | **Pereba** |
-| 38 | Vermelho | **Vingança do Cemitério** | — |
-| 39 | Verde | — | — |
-| 40 | Azul e Amarelo | **Amigo dos Fracos** | — |
+| Monstro | Território(s)    | Efeito                    | Passiva       |
+| ------- | ---------------- | ------------------------- | ------------- |
+| 10      | Vermelho e Verde | **Amigo dos Fracos**      | —             |
+| 11      | Verde            | —                         | **Chapéu**    |
+| 12      | Azul             | —                         | —             |
+| 13      | Amarelo e Verde  | **Cravada do Azarão**     | —             |
+| 14      | Vermelho         | —                         | —             |
+| 15      | Verde            | **Amigo dos Fracos**      | —             |
+| 16      | Azul e Amarelo   | —                         | **Cicatriz**  |
+| 17      | Amarelo          | **Vingança do Cemitério** | —             |
+| 18      | Vermelho         | **Cravada do Azarão**     | —             |
+| 19      | Verde e Amarelo  | —                         | —             |
+| 20      | Azul             | **Amigo dos Fracos**      | —             |
+| 21      | Amarelo          | **Cravada do Azarão**     | —             |
+| 22      | Vermelho e Verde | —                         | **Monóculo**  |
+| 23      | Verde            | —                         | —             |
+| 24      | Azul             | —                         | —             |
+| 25      | Amarelo e Verde  | **Amigo dos Fracos**      | —             |
+| 26      | Vermelho         | **Vingança do Cemitério** | —             |
+| 27      | Verde            | —                         | **Fedorento** |
+| 28      | Azul e Amarelo   | —                         | —             |
+| 29      | Amarelo          | —                         | —             |
+| 30      | Vermelho         | **Amigo dos Fracos**      | —             |
+| 31      | Verde e Amarelo  | **Vingança do Cemitério** | —             |
+| 32      | Azul             | **Cravada do Azarão**     | —             |
+| 33      | Amarelo          | —                         | **Maluco**    |
+| 34      | Vermelho e Verde | —                         | —             |
+| 35      | Verde            | **Amigo dos Fracos**      | —             |
+| 36      | Azul             | —                         | —             |
+| 37      | Amarelo e Verde  | —                         | **Pereba**    |
+| 38      | Vermelho         | **Vingança do Cemitério** | —             |
+| 39      | Verde            | —                         | —             |
+| 40      | Azul e Amarelo   | **Amigo dos Fracos**      | —             |
 
 - **Amigo dos Fracos:** "Quando derrotado, quem compra o item é o jogador com menos itens na mão (empate: todos os empatados compram)." Com Monstros Opostos, vale se qualquer um dos dois monstros tiver o efeito.
 - **Cravada do Azarão:** "Quem cravar tendo a menor mão da mesa (no início da rodada) rouba 4 cartas em vez de 2. Não vale se todos tinham o mesmo número de cartas." Com **Monstros Opostos**, se um dos dois monstros tiver esse efeito, ele vence a regra do Caos: o azarão que acertar em cheio rouba 4 cartas, e não 1.
@@ -481,15 +481,15 @@ O Caos muda o jeito de jogar da mesa em três frentes:
 
 Existem para que quem está perdendo continue com chance de voltar ao jogo.
 
-| Regra | Quando | Efeito |
-| --- | --- | --- |
-| **Limite de 3 itens** | Sempre | Quem está na frente não acumula itens sem fim. |
-| **Vingança do Cemitério** | Monstros com o efeito | Quem tem o maior cemitério compra 1 item (empate: todos os empatados). |
-| **Cravada do Azarão** | Monstros com o efeito | Quem cravar tendo a menor mão da mesa (no início da rodada) rouba 4 cartas em vez de 2. Não vale se todos tinham o mesmo número de cartas. |
-| **Pressa não Compensa** | Fim da rodada | Quem perde tendo jogado 3 goblins ou mais compra 1 item. |
-| **Amigo dos Fracos** | Monstros com o efeito | O item vai para quem tem menos itens. |
-| **Feira dos Goblins** | Caos | Todos compram 1 item no fim da rodada. |
-| **Necromante** | Caos | Todos jogam com o cemitério; quem vence recupera as cartas jogadas. |
+| Regra                     | Quando                | Efeito                                                                                                                                     |
+| ------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Limite de 3 itens**     | Sempre                | Quem está na frente não acumula itens sem fim.                                                                                             |
+| **Vingança do Cemitério** | Monstros com o efeito | Quem tem o maior cemitério compra 1 item (empate: todos os empatados).                                                                     |
+| **Cravada do Azarão**     | Monstros com o efeito | Quem cravar tendo a menor mão da mesa (no início da rodada) rouba 4 cartas em vez de 2. Não vale se todos tinham o mesmo número de cartas. |
+| **Pressa não Compensa**   | Fim da rodada         | Quem perde tendo jogado 3 goblins ou mais compra 1 item.                                                                                   |
+| **Amigo dos Fracos**      | Monstros com o efeito | O item vai para quem tem menos itens.                                                                                                      |
+| **Feira dos Goblins**     | Caos                  | Todos compram 1 item no fim da rodada.                                                                                                     |
+| **Necromante**            | Caos                  | Todos jogam com o cemitério; quem vence recupera as cartas jogadas.                                                                        |
 
 ## 15. Jogo físico: sem sorteio automático
 
@@ -518,13 +518,13 @@ Existem para que quem está perdendo continue com chance de voltar ao jogo.
 Correspondência com o código atual (`src/game/data.ts`, `src/game/rules.ts`, `src/game/engine.ts`). As chaves internas continuam as mesmas; só os textos mudam.
 
 | Bit | Chave | Nome antigo | Nome novo | Ícone (`TICO`) |
-| --- | --- | --- | --- | --- |
-| 1 | `CH` | Chapéu | Chapéu | `hat` |
-| 2 | `BA` | Barba | Cicatriz | `scar` |
-| 4 | `OC` | Óculos | Monóculo | `monocle` |
-| 8 | `CN` | Chinelo | Fedorento | `stink` |
-| 16 | `MA` | Maluco | Maluco | `spiral` |
-| 32 | `VE` | Verruga | Pereba | `sore` |
+| --- | ----- | ----------- | --------- | -------------- |
+| 1   | `CH`  | Chapéu      | Chapéu    | `hat`          |
+| 2   | `BA`  | Barba       | Cicatriz  | `scar`         |
+| 4   | `OC`  | Óculos      | Monóculo  | `monocle`      |
+| 8   | `CN`  | Chinelo     | Fedorento | `stink`        |
+| 16  | `MA`  | Maluco      | Maluco    | `spiral`       |
+| 32  | `VE`  | Verruga     | Pereba    | `sore`         |
 
 **Conferido no código (bate com este documento):** `TNAME`, `TICO`, a tabela `TR` dos goblins, os 4 reis e rainhas (características, grupos e o nome Lente de Vidro), as cópias e os nomes dos 62 itens e dos 50 Caos, os 31 monstros (territórios, efeitos e passivas), a tela de regras e todas as regras das seções 5 a 17.
 
@@ -541,11 +541,11 @@ Correspondência com o código atual (`src/game/data.ts`, `src/game/rules.ts`, `
 
 ## 19. Histórico de versões
 
-| Versão | Resumo |
-| --- | --- |
-| v1–v4 | Jogo com baralho comum (naipes 1–10); evolução das regras de erro, empate e ações. |
-| v5 / v5.1 | Tema goblins, estilo 21 (estouro), cartas de ação dupla face; versão visual com tutorial. |
-| v6 | Monstros 10–40, sem estouro, cravar rouba, reis e rainhas, Itens e Caos separados. |
-| v6.1 | Caos contra o meio, janela de itens livre com NÃO! em cadeia, Monóculo do Rei Azul, bots com personalidade, sem sorteio automático. |
-| v6.2 | Limite de 3 itens, regras de virada, monstros com efeito, Mapa do Tesouro, Profecia do Caos, Mínimo Máximo, Feira dos Goblins e Necromante. |
-| **v7** | Pereba, Monóculo, Chapéu, Maluco, Fedorento e Cicatriz; itens renomeados; habilidade do Rei Azul passa a se chamar Lente de Vidro; tela de regras com abas de Itens e Caos; Vingança do Cemitério vira efeito dos monstros 17, 26, 31 e 38; Maldição sai do Caos (entram +1 Mutante e +1 Mínimo Máximo) e vira passiva de 6 monstros (11 Chapéu, 16 Cicatriz, 22 Monóculo, 27 Fedorento, 33 Maluco, 37 Pereba); Armadilha vira reação (cancelável com NÃO!); item novo Cicatrizes Compartilhadas; itens de característica padronizados (Chapéu até +2, Monóculo +1/goblin, Nariz de Ferro até +3, Pomada até −2, Poção −1/goblin, Machucado até −3); monte de itens com 62 cartas. |
+| Versão    | Resumo                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| v1–v4     | Jogo com baralho comum (naipes 1–10); evolução das regras de erro, empate e ações.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| v5 / v5.1 | Tema goblins, estilo 21 (estouro), cartas de ação dupla face; versão visual com tutorial.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| v6        | Monstros 10–40, sem estouro, cravar rouba, reis e rainhas, Itens e Caos separados.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| v6.1      | Caos contra o meio, janela de itens livre com NÃO! em cadeia, Monóculo do Rei Azul, bots com personalidade, sem sorteio automático.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| v6.2      | Limite de 3 itens, regras de virada, monstros com efeito, Mapa do Tesouro, Profecia do Caos, Mínimo Máximo, Feira dos Goblins e Necromante.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **v7**    | Pereba, Monóculo, Chapéu, Maluco, Fedorento e Cicatriz; itens renomeados; habilidade do Rei Azul passa a se chamar Lente de Vidro; tela de regras com abas de Itens e Caos; Vingança do Cemitério vira efeito dos monstros 17, 26, 31 e 38; Maldição sai do Caos (entram +1 Mutante e +1 Mínimo Máximo) e vira passiva de 6 monstros (11 Chapéu, 16 Cicatriz, 22 Monóculo, 27 Fedorento, 33 Maluco, 37 Pereba); Armadilha vira reação (cancelável com NÃO!); item novo Cicatrizes Compartilhadas; itens de característica padronizados (Chapéu até +2, Monóculo +1/goblin, Nariz de Ferro até +3, Pomada até −2, Poção −1/goblin, Machucado até −3); monte de itens com 62 cartas. |
