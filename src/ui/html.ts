@@ -4,11 +4,12 @@
 import {
   ITEMS,
   TICO,
-  TR,
   TRAITS,
+  cardTraits,
   chaosDesc,
   chaosIc,
   chaosTitle,
+  crownOf,
   gc,
   gv,
   traitNames,
@@ -41,7 +42,7 @@ export const traitIcons = (t: number) =>
     )
     .join('');
 // `sm` esconde valor/traços/selos (voando, ou virada pequena do rival) — igual ao GobCard
-export function gobCard(g: Gob, sm = false, attrs = '', eff?: number, kingLend?: boolean) {
+export function gobCard(g: Gob, sm = false, attrs = '', eff?: number) {
   const v = gv(g),
     clan = gc(g),
     e =
@@ -49,16 +50,16 @@ export function gobCard(g: Gob, sm = false, attrs = '', eff?: number, kingLend?:
         ? `<span class="absolute -top-[7px] -right-[7px] z-[2] rounded-full border border-accent bg-bg px-1.5 font-ui text-xs font-extrabold text-accent">${eff}</span>`
         : '',
     kb =
-      !sm && kingLend
+      !sm && crownOf(g)
         ? `<span class="absolute -top-2 -left-1.5 z-[2] grid size-[18px] place-items-center rounded-full bg-bg text-accent">${ic('crown', '', 'width:12px;height:12px')}</span>`
         : '',
     s = !sm
       ? `<span class="font-ui text-[calc(var(--cw)*0.16)] leading-none font-bold opacity-[0.85]">${v}</span>`
       : '',
     t = !sm
-      ? `<span class="flex justify-center gap-[calc(var(--cw)*0.04)] opacity-90">${traitIcons(TR[v])}</span>`
+      ? `<span class="flex justify-center gap-[calc(var(--cw)*0.04)] opacity-90">${traitIcons(cardTraits(g))}</span>`
       : '';
-  return `<div class="${CARD_BASE} ${CLAN_BG[clan]} ${CLAN_TEXT[clan]} grid grid-rows-[auto_1fr_auto] border border-white/[0.14] p-[calc(var(--cw)*0.1)]" ${attrs} title="${traitNames(TR[v])}">${e}${kb}${s}<span class="place-self-center font-display text-[calc(var(--cw)*0.52)] leading-none font-extrabold tracking-[-1px]">${v}</span>${t}</div>`;
+  return `<div class="${CARD_BASE} ${CLAN_BG[clan]} ${CLAN_TEXT[clan]} grid grid-rows-[auto_1fr_auto] border border-white/[0.14] p-[calc(var(--cw)*0.1)]" ${attrs} title="${traitNames(cardTraits(g))}">${e}${kb}${s}<span class="place-self-center font-display text-[calc(var(--cw)*0.52)] leading-none font-extrabold tracking-[-1px]">${v}</span>${t}</div>`;
 }
 export const backCard = () =>
   `<div class="${CARD_BASE} grid place-items-center border border-[#40444c] bg-surface-3 text-[#6b717c]"><span class="font-display text-[calc(var(--cw)*0.38)] font-extrabold text-[#555a64]">F</span></div>`;

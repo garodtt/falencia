@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { CLAN, ITEMS, KINGS, TNAME, lendTxt } from '../../../game/data.ts';
+import { CLAN, ITEMS, KINGS, TNAME, heirsTxt } from '../../../game/data.ts';
 import { kingActive } from '../../../game/rules.ts';
 import { G, ME, nameOf } from '../../../game/state.ts';
 import type { Player } from '../../../game/types.ts';
@@ -33,8 +33,8 @@ export function MeBox({ me }: { me: Player }) {
       <UsedChips rd={rd} />
       <KingRow me={me} />
       <div className="flex flex-wrap items-center gap-[5px] text-xs text-muted land:hidden">
-        Empresta <TraitIcons t={k.tr} />
-        {` aos ${lendTxt(me.king)}`}
+        <TraitIcons t={k.tr} />
+        {` herdada pelos ${heirsTxt(me.king)}`}
       </div>
       {rd.armed.map((a) => (
         <EffectLine key={a} title={ITEMS[a][0]} text={` preparado · ${ITEMS[a][1]}`} />

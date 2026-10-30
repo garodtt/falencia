@@ -15,6 +15,7 @@ import {
   rawSum,
   scarGraves,
   scarred,
+  spied,
   standing,
   traitsOf,
   val,
@@ -40,18 +41,17 @@ interface WindowPick {
   gain?: number;
 }
 
+// os monstros que ainda podem estar virados na mesa (o monte e os da rodada)
+const unseen = () => G.monsters.concat([G.monster!, G.monster2].filter((m): m is Monster => !!m));
 export function monsterOutcomes(p: Player, info: Hint): Outcome[] {
-  let mons = G.monsters.concat([G.monster!]);
-  if (info.value >= 0) mons = [G.monster!];
+  const sp = spied(p);
+  let mons = unseen();
+  if (sp) mons = [sp];
   else if (info.t1 !== undefined && info.t1 !== null) {
     const f = mons.filter((m) => m.ts[0] === info.t1);
     if (f.length) mons = f;
   }
-  if (chaosIs('OPOSTOS') && info.value < 0) {
-    const lo = mons.filter((m) => m.v <= 24);
-    if (lo.length) mons = lo;
-  }
-  if (info.par && info.value < 0) {
+  if (info.par && !sp) {
     const f = mons.filter((m) => (monOf(m) % 2 === 0 ? 1 : 2) === info.par);
     if (f.length) mons = f;
   }
@@ -98,7 +98,6 @@ export function humanChoose(p: Player, info: Hint): Gob[] {
     E = outs.reduce((a, o) => a + o.M, 0) / outs.length;
   let T = E + P0.bias + gauss() * P0.sd;
   if (p.persona === 'imitador' && G.lastWinSum) T = G.lastWinSum + gauss() * 3;
-  if (chaosIs('OPOSTOS') && Math.random() < 0.5) T = 32 + gauss() * 4;
   if (chaosIs('MENOR')) T = 0;
   if (chaosIs('MAIOR')) T = 99;
   if (chaosIs('INVERSO')) T = E < 25 ? 45 : 0;
@@ -144,11 +143,11 @@ export function botChoose(p: Player, info: Hint): Gob[] {
   if (chaosIs('MAIOR')) return byVal.slice(-kmax).map((i) => pool[i]);
   let outs = monsterOutcomes(p, info);
   if (chaosIs('OPOSTOS')) {
-    const all = G.monsters.concat([G.monster!]),
-      hi = all.filter((m) => m.v >= 26);
-    outs = outs.flatMap((o) =>
-      [0, 1, 2].map(() => ({ m: o.m, M: o.M, m2: hi.length ? pick(hi) : null })),
-    );
+    const all = unseen();
+    outs = outs.flatMap((o) => {
+      const rest = all.filter((m) => m !== o.m);
+      return [0, 1, 2].map(() => ({ m: o.m, M: o.M, m2: rest.length ? pick(rest) : null }));
+    });
   }
   if (chaosIs('MUTANTE'))
     outs = outs.flatMap((o) => [5, -5].map((sh) => ({ m: o.m, M: o.M + sh, m2: o.m2 })));
@@ -188,7 +187,7 @@ export function botChoose(p: Player, info: Hint): Gob[] {
         if (o.m2) d = Math.min(d, Math.max(0, Math.abs(S - monOf(o.m2)) - margin(p, gs, o.m2)));
         if (chaosIs('IMA') && inZone(S)) d += 5;
         if (inv) pw += Math.min(1, Math.abs(S - o.M) / 25);
-        else if (d === 0 && !chaosIs('OPOSTOS')) pe++;
+        else if (d === 0) pe++;
         else if (!leader) pw += Math.pow(1 - q(d), others);
       }
     pe /= outs.length;
@@ -329,7 +328,12 @@ export function botWindowPick(p: Player): WindowPick | null {
       return { k: 'CHINELO', args: {} };
     if (p.items.includes('ISCA') && canUse(p, 'ISCA', 'window') && !noTarget()) {
       const me = cur.F.find((x) => x.p === p);
-      if (me && (me.d >= 4 || me.out)) return { k: 'ISCA', args: {} };
+      // com Monstros Opostos, troca o monstro mais longe da sua soma
+      const far =
+        !!G.monster2 &&
+        me &&
+        Math.abs(me.S - monOf(G.monster2)) > Math.abs(me.S - monOf(G.monster!));
+      if (me && (me.d >= 4 || me.out)) return { k: 'ISCA', args: far ? { m: 1 } : {} };
     }
   }
   return null;

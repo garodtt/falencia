@@ -1,5 +1,5 @@
 import type { ComponentProps } from 'react';
-import { TR, gc, gv } from '../../../game/data.ts';
+import { cardTraits, crownOf, gc, gv } from '../../../game/data.ts';
 import type { Gob } from '../../../game/data.ts';
 import type { Player } from '../../../game/types.ts';
 import { Icon, TraitIcons } from '../Icon.tsx';
@@ -10,8 +10,7 @@ import { CARD_BASE, CLAN_BG, CLAN_TEXT } from './cardBase.ts';
 type Props = Omit<ComponentProps<'div'>, 'title' | 'ref'> & {
   g: Gob;
   eff?: number; // valor efetivo (Maldição etc.); aparece no canto se for diferente do impresso
-  kingLend?: boolean; // ganhou as características do rei
-  owner?: Player; // de quem é (o balão explica o que o rei, o Disfarce e a Maldição mudam)
+  owner?: Player; // de quem é (o balão explica o que o Disfarce e a passiva do monstro mudam)
   sm?: boolean; // versão pequena (voando, ou virada do rival): esconde valor/traços/selos
 };
 
@@ -22,7 +21,7 @@ const traitSize = {
 };
 
 // carta de goblin: cor do território, valor e características (passe o mouse para detalhes)
-export function GobCard({ g, eff, kingLend, owner, sm, className = '', ...rest }: Props) {
+export function GobCard({ g, eff, owner, sm, className = '', ...rest }: Props) {
   const v = gv(g),
     clan = gc(g);
   const tip = useTooltip(() => <GoblinTip g={g} p={owner} />);
@@ -38,7 +37,8 @@ export function GobCard({ g, eff, kingLend, owner, sm, className = '', ...rest }
             {eff}
           </span>
         )}
-        {!sm && kingLend && (
+        {/* coroa: o goblin herda a característica do rei ou rainha da sua cor */}
+        {!sm && !!crownOf(g) && (
           <span className="absolute -top-2 -left-1.5 z-[2] grid size-[18px] place-items-center rounded-full bg-bg text-accent">
             <Icon name="crown" style={{ width: 12, height: 12 }} />
           </span>
@@ -53,7 +53,7 @@ export function GobCard({ g, eff, kingLend, owner, sm, className = '', ...rest }
         </span>
         {!sm && (
           <span className="flex justify-center gap-[calc(var(--cw)*0.04)] opacity-90">
-            <TraitIcons t={TR[v]} style={traitSize} />
+            <TraitIcons t={cardTraits(g)} style={traitSize} />
           </span>
         )}
       </div>

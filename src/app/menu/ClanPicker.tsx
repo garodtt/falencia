@@ -1,4 +1,4 @@
-import { CLAN, KINGS, lendTxt } from '../../game/data.ts';
+import { CLAN, KINGS, heirsTxt } from '../../game/data.ts';
 import { MENU } from '../../game/state.ts';
 import { CCSS } from '../../ui/html.ts';
 import { ColorDot } from '../components/ColorDot.tsx';
@@ -44,8 +44,8 @@ function ClanCard({ clan, on, onPick }: { clan: number; on: boolean; onPick: () 
       </div>
       <p className="m-0 text-[12.5px] text-muted">{king.text}</p>
       <p className="m-0 text-[12.5px] text-muted">
-        Empresta <TraitIcons t={king.tr} />
-        {` aos ${lendTxt(clan)}.`}
+        <TraitIcons t={king.tr} />
+        {` herdada pelos ${heirsTxt(clan)}.`}
       </p>
     </div>
   );

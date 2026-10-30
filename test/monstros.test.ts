@@ -4,7 +4,19 @@ import assert from 'node:assert/strict';
 import * as S from '../src/game/state.ts';
 import { execUse, gameLoop, monsterAwake, newState, rewardItems } from '../src/game/engine.ts';
 import { kingActive, monCurse, monFx, seenCurse, traitsOf, val } from '../src/game/rules.ts';
-import { BA, CH, CHAOS, CN, MA, OC, TR, VE, makeMonsters, mk } from '../src/game/data.ts';
+import {
+  BA,
+  CH,
+  CHAOS,
+  CN,
+  MA,
+  OC,
+  TR,
+  VE,
+  cardTraits,
+  makeMonsters,
+  mk,
+} from '../src/game/data.ts';
 import type { ItemKey } from '../src/game/data.ts';
 
 // mesa com 3 bots já no meio de uma rodada; cada um começa com os 20 goblins da sua cor
@@ -45,6 +57,7 @@ const find0 = (ok: (v: number) => boolean) =>
 void test('monstros com efeito e com passiva', () => {
   const fx = (k: string) => MON.filter((m) => m.fx === k).map((m) => m.v);
   assert.deepEqual(fx('VINGANCA'), [17, 26, 31, 38]);
+  assert.deepEqual(fx('AZARAO'), [13, 18, 21, 32]);
   assert.deepEqual(fx('FRACOS'), [10, 15, 20, 25, 30, 35, 40]);
   assert.deepEqual(
     MON.filter((m) => m.curse).map((m) => [m.v, m.curse]),
@@ -110,10 +123,10 @@ void test('nas partidas, a Vingança só vem logo depois de um monstro com Vinga
 
 void test('a passiva zera os goblins e desliga o rei, só depois que o monstro acorda', () => {
   const G = table();
-  const p = G.players[0]; // Rei Quebra-Crânio: Chapéu e Cicatriz, empresta aos pares
+  const p = G.players[0]; // Rei Quebra-Crânio: Cicatriz, herdada pelos goblins 1 a 5 Vermelhos
   const scar = find0((v) => !!(TR[v] & BA));
-  const lent = find0((v) => v % 2 === 0 && !(TR[v] & BA));
-  const plain = find0((v) => v % 2 === 1 && !(TR[v] & BA));
+  const heir = mk(0, 2); // sem Cicatriz impressa, mas herdada
+  const plain = find0((v) => !(cardTraits(mk(0, v)) & BA));
   G.monster = mon(16); // passiva Cicatriz
   G.revealed = false;
   assert.equal(monCurse(), 0);
@@ -124,28 +137,26 @@ void test('a passiva zera os goblins e desliga o rei, só depois que o monstro a
   assert.equal(val(p, scar), 0);
   assert.equal(val(p, plain), plain & 31);
   assert.equal(kingActive(p), false); // o rei tem Cicatriz: desligado
-  // desligado, o rei não empresta: o par sem Cicatriz impressa não é zerado
-  assert.equal(traitsOf(p, lent) & BA, 0);
-  assert.equal(val(p, lent), lent & 31);
+  // a característica herdada continua no goblin: ele vale 0
+  assert.equal(traitsOf(p, heir) & BA, BA);
+  assert.equal(val(p, heir), 0);
   // a característica do Disfarce conta
   G.rd[0].disg = BA;
   assert.equal(val(p, plain), 0);
 });
 
-void test('a característica emprestada pelo rei conta para a passiva', () => {
+void test('a característica herdada conta para a passiva, em qualquer mão', () => {
   const G = table();
-  const p = G.players[0];
-  p.king = 1; // Rainha Musgo-Podre: Pereba e Maluco, empresta aos goblins de 1 a 10
-  G.monster = { v: 99, ts: [1], fx: null, curse: OC }; // o rei não tem Monóculo: segue ligado
+  const p = G.players[0]; // Vermelho, Rei Quebra-Crânio (Cicatriz)
+  G.monster = mon(22); // passiva Monóculo
   G.revealed = true;
-  const g = find0((v) => v <= 10 && !(TR[v] & OC));
-  assert.equal(kingActive(p), true);
-  assert.equal(val(p, g), g & 31);
-  // passiva Pereba: a rainha desliga, e o goblin baixo sem Pereba impressa não perde valor
-  G.monster.curse = VE;
-  const h = find0((v) => v <= 10 && !(TR[v] & VE));
+  const blue8 = mk(2, 8); // Fedorento · Pereba, herda Monóculo do Rei Olho-de-Vidro
+  assert.equal(kingActive(p), true); // o Quebra-Crânio não tem Monóculo
+  assert.equal(val(p, blue8), 0);
+  assert.equal(val(p, mk(0, 8)), 8); // o 8 Vermelho não tem Monóculo
+  p.king = 2; // com o Rei Olho-de-Vidro, desliga; as características dos goblins não mudam
   assert.equal(kingActive(p), false);
-  assert.equal(val(p, h), h & 31);
+  assert.equal(val(p, mk(0, 8)), 8);
 });
 
 void test('a passiva é surpresa: só quem usou a Luneta sabe antes', async () => {

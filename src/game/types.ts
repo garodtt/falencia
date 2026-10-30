@@ -21,6 +21,7 @@ export interface Hint {
   value: number;
   par: number;
   t1: number | null;
+  m?: number; // Luneta com Monstros Opostos: qual dos dois foi espiado (0 ou 1)
 }
 export interface UsedItem {
   k: ItemKey;
@@ -75,6 +76,7 @@ export interface ItemArgs {
   g2?: Gob; // Cicatrizes Compartilhadas: o goblin pego do cemitério de `target`
   target?: number;
   k?: ItemKey | ChaosKey; // Mapa do Tesouro / Profecia do Caos
+  m?: number; // Luneta e Isca com Monstros Opostos: qual dos dois monstros (0 ou 1)
 }
 export interface Reply {
   play?: Gob[];

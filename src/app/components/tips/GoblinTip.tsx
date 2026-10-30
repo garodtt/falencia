@@ -5,13 +5,14 @@ import {
   TNAME,
   TR,
   TRAITS,
+  crownOf,
   TRAIT_ITEM,
   TICO,
   gc,
   gv,
 } from '../../../game/data.ts';
 import type { Gob } from '../../../game/data.ts';
-import { lendsTo, monCurse, traitsOf } from '../../../game/rules.ts';
+import { monCurse, traitsOf } from '../../../game/rules.ts';
 import { G, ME } from '../../../game/state.ts';
 import type { Player } from '../../../game/types.ts';
 import { CCSS } from '../../../ui/html.ts';
@@ -19,15 +20,15 @@ import { Icon } from '../Icon.tsx';
 import { TipBody, TipNote, TipRow } from '../tooltip/TipBody.tsx';
 
 // O goblin: território, valor nesta rodada e as características. Só explica o que importa agora:
-// com `p` (o dono, numa partida), o que o rei emprestou, o Disfarce, a Maldição e os itens que
-// o dono tem na mão para aproveitar alguma característica.
+// a característica herdada do rei ou rainha da cor do goblin; com `p` (o dono, numa partida), o
+// Disfarce, a passiva do monstro e os itens que o dono tem na mão para aproveitar alguma característica.
 export function GoblinTip({ g, p }: { g: Gob; p?: Player }) {
   const v = gv(g),
     clan = gc(g),
-    printed = TR[v];
-  const live = p && G && G.rd ? p : undefined; // fora de partida (menu): só o que está impresso
-  const traits = live ? traitsOf(live, g) : printed;
-  const fromKing = live && lendsTo(live, g) ? KINGS[live.king].tr & ~printed : 0;
+    printed = TR[v],
+    crown = crownOf(g);
+  const live = p && G && G.rd ? p : undefined; // fora de partida (menu): só o que está na carta
+  const traits = live ? traitsOf(live, g) : printed | crown;
   const cursed = live ? !!(traits & monCurse()) : false;
   return (
     <TipBody accent={CCSS[clan]} title={`Goblin ${v}`} sub={`Território ${CLAN[clan]}`}>
@@ -41,7 +42,7 @@ export function GoblinTip({ g, p }: { g: Gob; p?: Player }) {
           key={t}
           icon={<Icon name={TICO[t]} />}
           name={TNAME[t]}
-          tag={printed & t ? null : fromKing & t ? `de ${KINGS[live!.king].name}` : 'do Disfarce'}
+          tag={printed & t ? null : crown & t ? `herdada de ${KINGS[clan].name}` : 'do Disfarce'}
         >
           {live && live.id === ME ? itemFor(live, t) : null}
         </TipRow>

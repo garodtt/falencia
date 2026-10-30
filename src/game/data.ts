@@ -43,18 +43,19 @@ export const TICO: Record<number, string> = {
   16: 'spiral',
   32: 'sore',
 };
+// características impressas: 2 por goblin (sem a herdada do rei ou rainha)
 export const TR = [
   0,
-  CH | CN | VE,
-  OC | CN | MA,
-  CH | BA | OC,
-  OC | CN | VE,
-  CH | BA | CN,
-  BA | MA | VE,
-  CH | OC | MA,
-  BA | OC | VE,
-  BA | CN | MA,
-  CH | MA | VE,
+  CN | MA,
+  OC | MA,
+  CH | OC,
+  OC | CN,
+  CH | MA,
+  BA | VE,
+  CH | BA,
+  CN | VE,
+  BA | CN,
+  CH | VE,
 ];
 for (let v = 11; v <= 20; v++) TR[v] = TR[21 - v];
 export const gv = (g: Gob) => g & 31,
@@ -65,51 +66,53 @@ export const traitNames = (t: number) =>
   TRAITS.filter((x) => t & x)
     .map((x) => TNAME[x])
     .join(' · ');
-type LendKey = 'par' | 'impar' | 'baixo' | 'alto';
 export interface King {
   name: string;
   short: string;
-  tr: number;
-  lend: LendKey;
+  tr: number; // a característica do rei ou rainha, herdada pelos goblins `heirs` da sua cor
+  heirs: [lo: number, hi: number];
   text: string;
 }
 export const KINGS: King[] = [
   {
     name: 'Rei Quebra-Crânio',
     short: 'Fúria',
-    tr: CH | BA,
-    lend: 'par',
+    tr: BA,
+    heirs: [1, 5],
     text: 'Fúria: ao vencer por aproximação, elimina 2 cartas em vez de 1; ao cravar, além de roubar, elimina 1 carta.',
   },
   {
     name: 'Rainha Musgo-Podre',
     short: 'Brotar',
-    tr: VE | MA,
-    lend: 'baixo',
+    tr: MA,
+    heirs: [11, 15],
     text: 'Brotar: no início da rodada, se você tiver menos cartas que todos os rivais, o jogador à sua direita escolhe 1 carta do seu cemitério e ela volta para a sua mão.',
   },
   {
     name: 'Rei Olho-de-Vidro',
     short: 'Lente de Vidro',
-    tr: OC | CN,
-    lend: 'impar',
-    text: 'Lente de Vidro: quando o monstro for do território Azul, sua margem é ±2, jogando qualquer goblin.',
+    tr: OC,
+    heirs: [6, 10],
+    text: 'Lente de Vidro: sua margem é sempre ±1, com qualquer goblin; quando o monstro for do território Azul, é ±2.',
   },
   {
     name: 'Rainha Dente-de-Ouro',
     short: 'Mercadora',
-    tr: CH | VE,
-    lend: 'alto',
+    tr: VE,
+    heirs: [16, 20],
     text: 'Mercadora: sempre que compra um item, compra 2 e fica com o melhor.',
   },
 ];
-export const LEND: Record<LendKey, [string, (v: number) => boolean]> = {
-  par: ['goblins pares', (v) => v % 2 === 0],
-  impar: ['goblins ímpares', (v) => v % 2 === 1],
-  baixo: ['goblins de 1 a 10', (v) => v <= 10],
-  alto: ['goblins de 11 a 20', (v) => v >= 11],
+export const heirsTxt = (k: number) =>
+  `goblins ${KINGS[k].heirs[0]} a ${KINGS[k].heirs[1]} ${['Vermelhos', 'Verdes', 'Azuis', 'Amarelos'][k]}`;
+// a característica que o goblin herda do rei ou rainha da sua cor (fixa na carta, vale em qualquer mão)
+export const crownOf = (g: Gob) => {
+  const k = KINGS[gc(g)],
+    v = gv(g);
+  return v >= k.heirs[0] && v <= k.heirs[1] ? k.tr : 0;
 };
-export const lendTxt = (k: number) => LEND[KINGS[k].lend][0];
+// tudo o que está na carta: as 2 impressas e a herdada
+export const cardTraits = (g: Gob) => TR[gv(g)] | crownOf(g);
 
 // [nome, texto, quando usa (D = monstro dormindo, A = acordado), cópias no monte]
 type ItemDef = [name: string, text: string, when: 'D' | 'A', copies: number];
@@ -260,7 +263,7 @@ export const CHAOS = {
   ZONA: ['Zona Proibida', 'Somas de 20 a 30 perdem automaticamente.', 2],
   OPOSTOS: [
     'Monstros Opostos',
-    'Dois monstros: um baixo (até 24) e um alto (26 ou mais). Vale o mais perto da sua soma. Acertar um deles conta como aproximação: elimina 1 carta, não rouba.',
+    'Puxe 2 monstros do topo do monte, virados para baixo. Na revelação, vale o mais perto da sua soma. Acertar em cheio rouba 1 carta (em vez de 2) e compra 1 item.',
     3,
   ],
   INVERSO: ['Mundo Invertido', 'Vence quem ficar mais longe do monstro. Ninguém crava.', 2],
@@ -271,7 +274,7 @@ export const CHAOS = {
   ],
   MAIOR: ['Corrida dos Grandes', 'O monstro é ignorado: vence a maior soma. Ninguém crava.', 2],
   GIGANTE: ['Monstro Gigante', 'O monstro vale +10.', 2],
-  ANAO: ['Monstro Anão', 'O monstro vale −6.', 2],
+  ANAO: ['Monstro Anão', 'O monstro vale −6 (mínimo 1).', 2],
   CEGAS: [
     'Às Cegas',
     'Depois que todos jogam, o jogador à sua direita escolhe, às cegas, 1 dos seus goblins jogados e troca por 1 carta da sua mão.',
@@ -284,7 +287,7 @@ export const CHAOS = {
   ],
   MUTANTE: [
     'Monstro Mutante',
-    'Na revelação vira um segundo monstro: se for par, o monstro vale +5; se for ímpar, −5.',
+    'Na revelação, vire a carta do topo do monte de monstros. Se o número dela for par, o monstro da rodada vale +5; se for ímpar, vale −5. O efeito, a passiva e o território dela não valem. No fim da rodada, ela volta ao monte, que é embaralhado.',
     3,
   ],
   TROCA: [
@@ -352,12 +355,20 @@ export const MFX = {
     'Vingança do Cemitério',
     'Quando acorda, quem tem o maior cemitério compra 1 item (empate: todos os empatados compram).',
   ],
+  AZARAO: [
+    'Cravada do Azarão',
+    'Quem cravar tendo a menor mão da mesa (no início da rodada) rouba 4 cartas em vez de 2. Não vale se todos tinham o mesmo número de cartas.',
+  ],
 } satisfies Record<string, [name: string, text: string]>;
 export type MonsterFx = keyof typeof MFX;
 // o Necromante tem ícone próprio; o resto do Caos usa o raio
 export const chaosIc = (k: string) => (k === 'NECRO' ? 'skull' : 'bolt');
 // efeito e passiva impressos em cada monstro (o Amigo dos Fracos é dos múltiplos de 5)
 export const MON_FX: Partial<Record<number, MonsterFx>> = {
+  13: 'AZARAO',
+  18: 'AZARAO',
+  21: 'AZARAO',
+  32: 'AZARAO',
   17: 'VINGANCA',
   26: 'VINGANCA',
   31: 'VINGANCA',
@@ -372,7 +383,7 @@ export const MON_CURSE: Partial<Record<number, number>> = {
   37: VE,
 };
 export const curseTxt = (t: number) =>
-  `Goblins com ${TNAME[t]} valem 0. Reis e rainhas com ${TNAME[t]} ficam desligados (sem habilidade e sem empréstimo).`;
+  `Goblins com ${TNAME[t]} valem 0. Reis e rainhas com ${TNAME[t]} ficam desligados (sem habilidade).`;
 export function makeMonsters() {
   const out: Monster[] = [];
   for (let v = 10; v <= 40; v++) {

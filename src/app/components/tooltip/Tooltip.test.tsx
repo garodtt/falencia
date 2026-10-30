@@ -12,14 +12,14 @@ async function openTip(el: Element) {
   return screen.findByRole('tooltip');
 }
 
-// partida de 2: eu sou o Vermelho, com o Rei Quebra-Crânio (empresta Chapéu e Cicatriz aos pares)
+// partida de 2: eu sou o Vermelho, com o Rei Quebra-Crânio (os goblins 1 a 5 Vermelhos herdam Cicatriz)
 beforeEach(() => {
   setG(newState(2, [{ color: 0 }, { color: 1, bot: true }]));
 });
 
 describe('balões de informação', () => {
   it('a carta de goblin mostra território e características, sem lista de itens', async () => {
-    render(<GobCard g={mk(2, 3)} tabIndex={0} />); // 3 azul, fora de partida: Chapéu, Cicatriz, Monóculo
+    render(<GobCard g={mk(2, 3)} tabIndex={0} />); // 3 azul, fora de partida: Chapéu, Monóculo
     const tip = await openTip(document.querySelector('[data-card]')!);
     expect(tip.textContent).toContain('Goblin 3');
     expect(tip.textContent).toContain('Território Azul');
@@ -30,7 +30,7 @@ describe('balões de informação', () => {
   it('explica o item que você tem para aproveitar a característica', async () => {
     const me = G.players[0];
     me.items = ['CHAPEU'];
-    render(<GobCard g={mk(0, 1)} owner={me} tabIndex={0} />); // o 1 tem Chapéu
+    render(<GobCard g={mk(0, 3)} owner={me} tabIndex={0} />); // o 3 tem Chapéu
     const tip = await openTip(document.querySelector('[data-card]')!);
     expect(tip.textContent).toContain('Você tem Chapéu Pontudo');
   });
@@ -43,11 +43,11 @@ describe('balões de informação', () => {
     expect(tip.textContent).not.toContain('Chapéu Pontudo');
   });
 
-  it('mostra as características que o rei emprestou', async () => {
-    // o 2 tem Monóculo, Fedorento e Maluco impressos; por ser par, ganha Chapéu e Cicatriz do rei
-    render(<GobCard g={mk(0, 2)} owner={G.players[0]} tabIndex={0} />);
+  it('mostra a característica herdada do rei ou rainha da cor do goblin', async () => {
+    // o 2 tem Monóculo e Maluco impressos; por ser um dos 1 a 5 Vermelhos, herda Cicatriz
+    render(<GobCard g={mk(0, 2)} owner={G.players[1]} tabIndex={0} />); // vale em qualquer mão
     const tip = await openTip(document.querySelector('[data-card]')!);
-    expect(within(tip).getAllByText('de Rei Quebra-Crânio')).toHaveLength(2);
+    expect(within(tip).getAllByText('herdada de Rei Quebra-Crânio')).toHaveLength(1);
   });
 
   it('avisa quando a passiva do monstro zera o goblin', async () => {

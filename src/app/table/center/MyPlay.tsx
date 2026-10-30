@@ -1,4 +1,4 @@
-import { monocle, rawSum, standing, val } from '../../../game/rules.ts';
+import { rawSum, standing, val } from '../../../game/rules.ts';
 import { G, ME } from '../../../game/state.ts';
 import type { Player } from '../../../game/types.ts';
 import { GobCard } from '../../components/cards/GobCard.tsx';
@@ -21,7 +21,7 @@ export function MyPlay({ me }: { me: Player }) {
         {`= ${x ? x.S : rawSum(me)}`}
         {x && x.mg ? (
           <small className="ml-1.5 font-ui text-[13px] font-medium text-good">
-            {monocle(me, rd.gs) ? 'Monóculo: a 1 conta como cravada' : `±${x.mg} território`}
+            {`±${x.mg} território`}
           </small>
         ) : null}
         {x && x.add ? (

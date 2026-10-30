@@ -2,7 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { gc, gv } from '../../../game/data.ts';
 import type { Gob } from '../../../game/data.ts';
-import { lendsTo, val } from '../../../game/rules.ts';
+import { val } from '../../../game/rules.ts';
 import { G, LOCAL, ME } from '../../../game/state.ts';
 import type { Player } from '../../../game/types.ts';
 import { GobCard } from '../../components/cards/GobCard.tsx';
@@ -111,7 +111,6 @@ function HandCard({
       tabIndex={can ? 0 : undefined}
       eff={val(me, g)}
       owner={me}
-      kingLend={lendsTo(me, g)}
       onClick={can ? () => toggleCard(g) : undefined}
       onKeyDown={
         can

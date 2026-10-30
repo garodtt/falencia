@@ -6,12 +6,11 @@ import {
   CN,
   ITEMS,
   KINGS,
-  LEND,
   MA,
   OC,
   REACT,
-  TR,
   VE,
+  cardTraits,
   gc,
   gv,
   shuffle,
@@ -38,30 +37,29 @@ export interface Standing {
 
 // passivas dos monstros acordados (com Monstros Opostos, as dos dois). Antes de acordar: nenhuma
 export const monCurse = () => (G.revealed ? (G.monster?.curse || 0) | (G.monster2?.curse || 0) : 0);
+// o monstro que `p` espiou com a Luneta (com Monstros Opostos, um dos dois)
+export const spied = (p: Player) => {
+  const h = G.rd?.[p.id]?.hint;
+  return h && h.value >= 0 ? (h.m ? G.monster2 : G.monster) : null;
+};
 // a passiva que `p` conhece: a de verdade depois que acorda; antes, só a que a Luneta mostrou
-export const seenCurse = (p: Player) =>
-  G.revealed ? monCurse() : G.rd?.[p.id]?.hint.value >= 0 ? G.monster?.curse || 0 : 0;
+export const seenCurse = (p: Player) => (G.revealed ? monCurse() : spied(p)?.curse || 0);
 // `cu` = passiva considerada (o padrão é a que vale de fato agora)
 export function kingActive(p: Player, cu = monCurse()) {
   return !(KINGS[p.king].tr & cu);
 }
 export const hasKing = (p: Player, k: number) => p.king === k && kingActive(p);
-export const lendsTo = (p: Player, g: Gob, cu = monCurse()) =>
-  kingActive(p, cu) && LEND[KINGS[p.king].lend][1](gv(g));
-export function traitsOf(p: Player, g: Gob, cu = monCurse()) {
-  let t = TR[gv(g)];
-  if (lendsTo(p, g, cu)) t |= KINGS[p.king].tr;
-  const d = G.rd[p.id].disg;
-  if (d) t |= d;
-  return t;
+// as características do goblin jogado por `p`: as da carta (impressas e herdada) e a do Disfarce
+export function traitsOf(p: Player, g: Gob) {
+  return cardTraits(g) | G.rd[p.id].disg;
 }
-// Cicatriz impressa na carta (sem rei nem Disfarce, que só valem para goblins jogados)
-export const scarred = (g: Gob) => !!(TR[gv(g)] & BA);
+// Cicatriz da carta, inclusive a herdada (o Disfarce vale só para goblins jogados)
+export const scarred = (g: Gob) => !!(cardTraits(g) & BA);
 // goblins com Cicatriz que dá para pegar com Cicatrizes Compartilhadas: [dono do cemitério, goblin]
 export const scarGraves = () =>
   G.players.flatMap((o) => G.grave[o.id].filter(scarred).map((g) => [o.id, g] as const));
 export function val(p: Player, g: Gob, cu = monCurse()) {
-  if (cu && traitsOf(p, g, cu) & cu) return 0;
+  if (cu && traitsOf(p, g) & cu) return 0;
   return chaosIs('MINMAX') ? 21 - gv(g) : gv(g);
 }
 export const monOf = (m: Monster) =>
@@ -81,10 +79,10 @@ export function terrOf(p: Player, m: Monster) {
 export function margin(p: Player, gs: Gob[], m?: Monster | null) {
   if (noTarget()) return 0;
   const ts = terrOf(p, m || G.monster!);
-  if (hasKing(p, 2) && ts.includes(2)) return 2;
+  // Lente de Vidro: ±1 sempre, ±2 com monstro Azul
+  if (hasKing(p, 2)) return ts.includes(2) ? 2 : 1;
   return gs.some((g) => ts.includes(gc(g))) ? 1 : 0;
 }
-export const monocle = (_p?: Player, _gs?: Gob[]) => false; // habilidade antiga, desligada
 export const playable = (p: Player) => p.hand;
 // [mínimo, máximo] de goblins que o jogador pode jogar
 export function playLimit(p: Player): [number, number] {
@@ -201,7 +199,7 @@ export function standing(): Standing {
     const m = Math.max(...E.map((x) => x.S));
     return { w: E.filter((x) => x.S === m).map((x) => x.p), kind: 'closest', F, M };
   }
-  const ex = chaosIs('OPOSTOS') ? [] : E.filter((x) => x.d === 0);
+  const ex = E.filter((x) => x.d === 0);
   if (ex.length) return { w: ex.map((x) => x.p), kind: 'exact', F, M };
   const pool = chaosIs('CACA') ? E.filter((x) => !(G.leaders || []).includes(x.p.id)) : E;
   if (!pool.length) return { w: [], kind: 'none', F, M };
@@ -293,23 +291,22 @@ export function canUse(p: Player | null | undefined, k: ItemKey, phase: string) 
   }
   return false;
 }
-export function drawMonster(pred: (m: Monster) => boolean) {
-  let i = G.monsters.findIndex(pred);
-  if (i < 0) {
-    const j = G.mused.findIndex((m) => pred(m) && m !== G.monster);
-    if (j >= 0) {
-      const m = G.mused.splice(j, 1)[0];
-      G.mused.push(m);
-      return m;
-    }
-    i = G.monsters.length - 1;
-  }
-  if (!G.monsters.length) {
-    G.monsters = shuffle(G.mused.filter((m) => m !== G.monster));
-    G.mused = G.monster ? [G.monster] : [];
-    i = Math.max(0, G.monsters.findIndex(pred));
-  }
-  const m = G.monsters.splice(i, 1)[0];
+// monte de monstros vazio: embaralha os usados, menos os que estão na mesa
+function refillMonsters() {
+  if (G.monsters.length) return;
+  const table = (m: Monster) => m === G.monster || m === G.monster2;
+  G.monsters = shuffle(G.mused.filter((m) => !table(m)));
+  G.mused = G.mused.filter(table);
+}
+// puxa o monstro do topo do monte
+export function drawMonster() {
+  refillMonsters();
+  const m = G.monsters.pop()!;
   G.mused.push(m);
   return m;
+}
+// a carta do topo do monte, sem tirar (Monstro Mutante)
+export function topMonster() {
+  refillMonsters();
+  return G.monsters[G.monsters.length - 1];
 }

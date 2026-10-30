@@ -126,17 +126,19 @@ void test('a Poção Maluca não tem mais dobro nem metade', () => {
   assert.deepEqual(itemOptions(G.players[0], 'POCAO'), [{ d: -1, label: '−1' }]);
 });
 
-void test('característica emprestada pelo rei vale (Machucado com par do Quebra-Crânio)', () => {
-  const G = table([['MACHUCADO'], [], []]);
-  const p = G.players[0];
-  assert.equal(p.king, 0); // empresta Chapéu e Cicatriz aos pares
-  const g = p.hand.find((x) => (x & 31) % 2 === 0 && !(TR[x & 31] & BA))!;
-  play(0, [g]);
+void test('característica herdada vale em qualquer mão (Machucado com o 2 Vermelho)', () => {
+  const G = table([[], ['MACHUCADO'], []]);
+  const p = G.players[1]; // Verde, com a Rainha Musgo-Podre
+  assert.equal(TR[2] & BA, 0); // o 2 não tem Cicatriz impressa
+  play(1, [mk(1, 2)]); // o 2 Verde não herda Cicatriz
+  assert.deepEqual(itemOptions(p, 'MACHUCADO'), []);
+  play(1, [mk(0, 2)]); // o 2 Vermelho herda Cicatriz do Rei Quebra-Crânio
   assert.deepEqual(
     itemOptions(p, 'MACHUCADO').map((o) => o.d),
     [-1, -2, -3],
   );
-  p.king = 1; // sem o empréstimo, o mesmo goblin não serve
+  p.king = 0; // a Coroa Trocada não muda as características herdadas
+  play(1, [mk(1, 2)]);
   assert.deepEqual(itemOptions(p, 'MACHUCADO'), []);
 });
 

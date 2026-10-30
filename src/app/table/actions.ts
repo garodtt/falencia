@@ -2,7 +2,7 @@
 import { CLAN, ITEMS, KINGS, NUMERIC, TNAME, TRAITS, chaosTitle, gc, gv } from '../../game/data.ts';
 import type { Gob, ItemKey } from '../../game/data.ts';
 import { botTakeover } from '../../game/engine.ts';
-import { canUse, itemOptions, playLimit, scarGraves, scarred } from '../../game/rules.ts';
+import { canUse, itemOptions, monOf, playLimit, scarGraves, scarred } from '../../game/rules.ts';
 import { G, LOCAL, ME, MODE, NET, alivePl, gobTxt, nameOf } from '../../game/state.ts';
 import type { AskValue, ItemArgs, PromptKind } from '../../game/types.ts';
 import { leaveGame, leaveTable, respond } from '../../net/online.ts';
@@ -254,6 +254,23 @@ export async function gatherArgs(k: ItemKey): Promise<ItemArgs | null> {
         [...new Set(pool)].map((x) => ({ label: chaosTitle(x), value: x })),
       );
       return k2 === null ? null : { k: k2 };
+    }
+    // Monstros Opostos: a Luneta espia um dos dois (virados) e a Isca troca um dos dois (acordados)
+    case 'LUNETA': {
+      if (!G.monster2) return {};
+      const m = await choose('Luneta', 'Qual dos dois monstros você espia?', [
+        { label: '1º monstro', value: 0 },
+        { label: '2º monstro', value: 1 },
+      ]);
+      return m === null ? null : { m };
+    }
+    case 'ISCA': {
+      if (!G.monster2) return {};
+      const m = await choose('Isca de Monstro', 'Qual dos dois monstros vai embora?', [
+        { label: `Monstro ${monOf(G.monster!)}`, value: 0 },
+        { label: `Monstro ${monOf(G.monster2)}`, value: 1 },
+      ]);
+      return m === null ? null : { m };
     }
     case 'GRITO': {
       const d = await choose('Grito de Guerra', 'O monstro vale, para todos:', [

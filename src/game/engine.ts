@@ -42,6 +42,7 @@ import {
   itemOptions,
   lastUse,
   monFx,
+  monOf,
   monVal,
   playLimit,
   playable,
@@ -49,6 +50,7 @@ import {
   standing,
   targetsFor,
   toGrave,
+  topMonster,
   traitsOf,
   spendItem,
 } from './rules.ts';
@@ -350,20 +352,25 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
     return o && o !== p ? o : null;
   };
   switch (k) {
-    case 'LUNETA':
+    case 'LUNETA': {
+      // com Monstros Opostos, espia só um dos dois, à escolha de quem usa
+      const m2 = !!a.m && !!G.monster2,
+        m = m2 ? G.monster2! : G.monster!;
       spendItem(p, k);
-      rd.hint.value = G.monster!.v;
+      rd.hint.value = m.v;
+      rd.hint.m = m2 ? 1 : 0;
       log(`${nm(p)} espiou o monstro com a Luneta.`, 'it');
       void fx(
         {
           type: 'toast',
           to: p.id,
-          text: `Luneta: o monstro é ${G.monster!.v}!${G.monster!.curse ? ` Passiva: ${TNAME[G.monster!.curse]} — ${curseTxt(G.monster!.curse)}` : ''}`,
+          text: `Luneta: o ${G.monster2 ? (m2 ? 'segundo monstro' : 'primeiro monstro') : 'monstro'} é ${m.v}!${m.curse ? ` Passiva: ${TNAME[m.curse]} — ${curseTxt(m.curse)}` : ''}`,
         },
         false,
       );
       void fx({ type: 'pop', pid: p.id, text: 'Luneta', good: true }, false);
       break;
+    }
     case 'SACRIFICIO': {
       const o = okTarget(a.target);
       if (!o || !o.hand.length || !p.hand.includes(a.g!)) return;
@@ -495,28 +502,30 @@ export async function execUse(p: Player, k: ItemKey, a: ItemArgs) {
     case 'ISCA': {
       if (G.monsters.length + G.mused.length <= 2) return;
       spendItem(p, k);
-      const old = G.monster!,
+      // com Monstros Opostos, troca um dos dois, à escolha de quem usa
+      const second = !!a.m && !!G.monster2,
+        old = second ? G.monster2! : G.monster!,
         oi = G.mused.indexOf(old);
       if (oi >= 0) G.mused.splice(oi, 1);
-      G.monster = chaosIs('OPOSTOS')
-        ? drawMonster((m) => m.v <= 24 && m !== old)
-        : drawMonster((m) => m !== old && m !== G.monster2);
+      const nu = drawMonster();
+      if (second) G.monster2 = nu;
+      else G.monster = nu;
       G.monsters.unshift(old);
       shuffle(G.monsters);
       for (const q of G.players) G.rd[q.id].hint.value = -1;
       log(
-        `${nm(p)} usou Isca de Monstro: o ${old.v} foi embora e chegou o ${G.monster.v}${monVal() !== G.monster.v ? ` (vale ${monVal()})` : ''}.`,
+        `${nm(p)} usou Isca de Monstro: o ${old.v} foi embora e chegou o ${nu.v}${monOf(nu) !== nu.v ? ` (vale ${monOf(nu)})` : ''}.`,
         'it',
       );
       void fx({ type: 'pop', pid: p.id, text: 'Isca de Monstro', good: true }, false);
       void fx(
         {
           type: 'toast',
-          text: `Isca de Monstro: o monstro ${old.v} trocou pelo ${G.monster.v}. O Caos continua valendo.`,
+          text: `Isca de Monstro: o monstro ${old.v} trocou pelo ${nu.v}. O Caos continua valendo.`,
         },
         false,
       );
-      await monsterAwake([G.monster]);
+      await monsterAwake([nu]);
       break;
     }
     case 'BANDEIRA': {
@@ -1097,12 +1106,9 @@ export async function playRound() {
     G.mused = [];
     log('O monte de monstros acabou: os usados foram embaralhados de volta.', 'rh');
   }
-  if (chaosIs('OPOSTOS')) {
-    G.monster = drawMonster((m) => m.v <= 24);
-  } else {
-    G.monster = G.monsters.pop()!;
-    G.mused.push(G.monster);
-  }
+  // Monstros Opostos: 2 monstros do topo do monte, os dois virados para baixo
+  G.monster = drawMonster();
+  if (chaosIs('OPOSTOS')) G.monster2 = drawMonster();
   await fx({ type: 'fly', from: 'monsterDeck', to2: 'monsterSlot', card: { t: 'mon' }, dur: 460 });
   sync();
   if (chaosIs('PEDAGIO')) await pedagio();
@@ -1213,9 +1219,9 @@ export async function playRound() {
   await wait(350);
   // Monstro Acordado
   G.phase = 'acordado';
-  if (chaosIs('OPOSTOS')) G.monster2 = drawMonster((m) => m.v >= 26);
+  // Monstro Mutante: vira a carta do topo do monte; só o número dela importa
   if (chaosIs('MUTANTE')) {
-    const m2 = drawMonster(() => true);
+    const m2 = topMonster();
     G.mutantCard = m2.v;
     G.mutant = m2.v % 2 === 0 ? 5 : -5;
   }
@@ -1400,12 +1406,23 @@ export async function playRound() {
     for (const p of ord()) {
       if (!winners.has(p) || !p.alive) continue;
       const exact = R.kind === 'exact';
-      const azarao = exact && (G.underdog || []).includes(p.id);
+      // Cravada do Azarão (efeito do monstro): vence até a regra dos Monstros Opostos
+      const azarao = exact && monFx().includes('AZARAO') && (G.underdog || []).includes(p.id);
       if (azarao) {
-        log(`Cravada do Azarão: ${nm(p)} tinha a menor mão da mesa e rouba 3 cartas.`, 'it');
-        void fx({ type: 'toast', text: `Cravada do Azarão: ${nm(p)} rouba 3 cartas!` }, false);
+        log(`Cravada do Azarão: ${nm(p)} tinha a menor mão da mesa e rouba 4 cartas.`, 'it');
+        void fx({ type: 'toast', text: `Cravada do Azarão: ${nm(p)} rouba 4 cartas!` }, false);
       }
-      const n = exact ? (azarao ? 3 : 2) : G.lastStand ? 0 : hasKing(p, 0) ? 2 : 1;
+      const n = exact
+        ? azarao
+          ? 4
+          : chaosIs('OPOSTOS')
+            ? 1
+            : 2
+        : G.lastStand
+          ? 0
+          : hasKing(p, 0)
+            ? 2
+            : 1;
       const mode = exact ? 'steal' : 'elim';
       if (!exact && n === 0) log(`${nm(p)} venceu na última carta: só compra o item.`);
       for (let i = 0; i < n; i++) {
@@ -1450,6 +1467,8 @@ export async function playRound() {
     void fx({ type: 'toast', text: 'Feira dos Goblins: todos compram 1 item.' }, false);
     for (const p of ord()) if (p.alive && p.hand.length) await drawItems(p, 1);
   }
+  // Monstro Mutante: a carta virada volta ao monte, que é embaralhado
+  if (G.mutantCard) shuffle(G.monsters);
   checkOuts();
   G.chief = (G.chief + 1) % G.n;
   sync();

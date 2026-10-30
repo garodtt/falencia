@@ -1,7 +1,7 @@
 // Tela de regras (aberta pelo botão "Regras" da barra do topo).
 import { Fragment, useState } from 'react';
 import type { ReactNode } from 'react';
-import { CHAOS, CLAN, ITEMS, KINGS, REACT, lendTxt, traitNames } from '../../game/data.ts';
+import { CHAOS, CLAN, ITEMS, KINGS, REACT, heirsTxt, traitNames } from '../../game/data.ts';
 import type { ItemKey } from '../../game/data.ts';
 import { Icon } from '../components/Icon.tsx';
 
@@ -149,20 +149,24 @@ function RulesText() {
           característica usada por itens (Chapéu Pontudo, Disfarce) e pela passiva do monstro 11.
         </L>
         <L i={<Icon name="scar" />} t="Cicatriz">
-          característica usada pelos itens Machucado e Cicatrizes Compartilhadas; o Rei
-          Quebra-Crânio empresta Cicatriz aos goblins pares.
+          característica usada pelos itens Machucado e Cicatrizes Compartilhadas e pela passiva do
+          monstro 16. Herdada pelos goblins 1 a 5 Vermelhos (Rei Quebra-Crânio).
         </L>
         <L i={<Icon name="monocle" />} t="Monóculo">
-          característica usada pelo item Monóculo Polido.
+          característica usada pelo item Monóculo Polido e pela passiva do monstro 22. Herdada pelos
+          goblins 6 a 10 Azuis (Rei Olho-de-Vidro).
         </L>
         <L i={<Icon name="stink" />} t="Fedorento">
-          característica usada pelos itens Fuga Fedorenta e Nariz de Ferro.
+          característica usada pelos itens Fuga Fedorenta e Nariz de Ferro e pela passiva do monstro
+          27.
         </L>
         <L i={<Icon name="spiral" />} t="Maluco">
-          característica usada pela Poção Maluca.
+          característica usada pela Poção Maluca e pela passiva do monstro 33. Herdada pelos goblins
+          11 a 15 Verdes (Rainha Musgo-Podre).
         </L>
         <L i={<Icon name="sore" />} t="Pereba">
-          característica usada pela Pomada de Pereba.
+          característica usada pela Pomada de Pereba e pela passiva do monstro 37. Herdada pelos
+          goblins 16 a 20 Amarelos (Rainha Dente-de-Ouro).
         </L>
         <Section>Mesa e jogadores</Section>
         <L
@@ -176,7 +180,8 @@ function RulesText() {
           esse jogador é o Chefe da Toca: começa a janela de itens e escolhe o Duelo.
         </L>
         <L i={<Icon name="crown" />} t="Coroa na carta">
-          o goblin recebe as características do seu rei ou rainha nesta jogada.
+          o goblin herda a característica do rei ou rainha da sua cor. Ela fica no goblin em
+          qualquer mão, mesmo roubado.
         </L>
         <L i={<Icon name="crown" />} t="Botão do rei">
           na sua área; toque para ver a habilidade. Apagado = desligado nesta rodada.
@@ -261,10 +266,8 @@ function RulesText() {
         Machucado até −3 (Cicatriz).
       </p>
       <p>
-        <b className="text-text">Viradas:</b> <b className="text-text">Cravada do Azarão</b> — quem
-        crava tendo a menor mão da mesa rouba 3 cartas em vez de 2.{' '}
-        <b className="text-text">Pressa não Compensa</b> — quem perde tendo jogado 3 goblins ou mais
-        compra 1 item.
+        <b className="text-text">Viradas:</b> <b className="text-text">Pressa não Compensa</b> —
+        quem perde tendo jogado 3 goblins ou mais compra 1 item.
       </p>
       <p>
         <b className="text-text">Monstros com efeito:</b> alguns monstros têm um efeito, revelado
@@ -272,25 +275,27 @@ function RulesText() {
         quando alguém vence a rodada, quem compra o item é o jogador com menos itens na mão (empate:
         todos os empatados). <b className="text-text">Vingança do Cemitério</b> (17, 26, 31 e 38):
         quando o monstro acorda, quem tem o maior cemitério compra 1 item (empate: todos os
-        empatados).
+        empatados). <b className="text-text">Cravada do Azarão</b> (13, 18, 21 e 32): quem crava
+        tendo a menor mão da mesa (no início da rodada) rouba 4 cartas em vez de 2; não vale se
+        todos tinham o mesmo número de cartas. Com Monstros Opostos, o azarão também rouba 4.
       </p>
       <p>
         <b className="text-text">Monstros com passiva:</b> 11 Chapéu, 16 Cicatriz, 22 Monóculo, 27
         Fedorento, 33 Maluco e 37 Pereba. Quando o monstro acorda, goblins com essa característica
-        valem 0 (contando a do rei ou rainha e a do Disfarce), e reis e rainhas com ela ficam
-        desligados, sem habilidade e sem empréstimo. É surpresa: só a Luneta mostra a passiva antes.
-        Com Monstros Opostos valem os efeitos e as passivas dos dois.
+        valem 0 (contando a herdada e a do Disfarce), e reis e rainhas com ela ficam desligados, sem
+        habilidade. É surpresa: só a Luneta mostra a passiva antes. Com Monstros Opostos valem os
+        efeitos e as passivas dos dois.
       </p>
       <p>
         <b className="text-text">Território:</b> se algum goblin jogado for de um território do
-        monstro, você tem margem de ±1.
+        monstro, você tem margem de ±1, uma vez só. Com Mundo Invertido e as Corridas não há margem.
       </p>
       <p>
         <b className="text-text">Reis e rainhas:</b>
         {KINGS.map((k, i) => (
           <Fragment key={i}>
             <br />
-            {`${CLAN[i]} — ${k.name} (${traitNames(k.tr)}, empresta aos ${lendTxt(i)}): ${k.text}`}
+            {`${CLAN[i]} — ${k.name} (${traitNames(k.tr)}, herdada pelos ${heirsTxt(i)}): ${k.text}`}
           </Fragment>
         ))}
         <br />A passiva do monstro desliga o rei ou rainha que tiver a característica.

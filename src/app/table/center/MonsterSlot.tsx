@@ -1,5 +1,5 @@
 import { TICO, TNAME } from '../../../game/data.ts';
-import { monOf, monVal } from '../../../game/rules.ts';
+import { monOf, monVal, spied } from '../../../game/rules.ts';
 import { G, ME } from '../../../game/state.ts';
 import { CCSS } from '../../../ui/html.ts';
 import { CARD_BASE } from '../../components/cards/cardBase.ts';
@@ -53,10 +53,11 @@ function Monster() {
       </div>
     );
   const h = (G.rd[ME] || {}).hint || {},
-    mod = monVal() - G.monster.v;
+    mod = monVal() - G.monster.v,
+    seen = G.players[ME] ? spied(G.players[ME]) : null;
   const hint =
     h.value >= 0
-      ? `Luneta: ${h.value}`
+      ? `Luneta: ${h.value}${G.monster2 ? (h.m ? ' (2º monstro)' : ' (1º monstro)') : ''}`
       : h.par
         ? `Faro: ${h.par === 2 ? 'ímpar' : 'par'}`
         : 'vale de 10 a 40';
@@ -71,10 +72,10 @@ function Monster() {
             />
           </span>
         ) : null}
-        {h.value >= 0 && G.monster.curse ? (
+        {seen && seen.curse ? (
           <span className="absolute bottom-[21%] right-0 left-0 flex items-center justify-center gap-1 text-[calc(var(--cw)*0.09)] font-bold text-bad">
-            <Icon name={TICO[G.monster.curse]} />
-            {`${TNAME[G.monster.curse]} = 0`}
+            <Icon name={TICO[seen.curse]} />
+            {`${TNAME[seen.curse]} = 0`}
           </span>
         ) : null}
         <span className="absolute bottom-[9%] right-0 left-0 text-center text-[calc(var(--cw)*0.1)] text-muted">
