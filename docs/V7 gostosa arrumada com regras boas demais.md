@@ -55,6 +55,25 @@ Uso por cópia, por partida (4 jogadores, bots lógicos):
   - **Perdeu:** as cartas jogadas vão para o cemitério.
 - Todo fim de rodada uma carta de **Caos** é revelada e muda a regra da rodada seguinte para todos.
 
+### Conceitos-chave
+
+Quase toda regra do jogo usa estes seis conceitos. Vale entender bem antes de jogar.
+
+| Conceito | O que é |
+| --- | --- |
+| **Soma** | O valor dos goblins jogados, mais os itens de soma (Porrete, Pé de Cabra etc.). É o seu palpite. |
+| **Alvo** | O valor do monstro, ajustado pelo Caos (Gigante, Anão, Mutante) e pelo Grito de Guerra. |
+| **Distância** | Quanto a sua soma ficou longe do alvo, para cima ou para baixo. Ex.: soma 27 e alvo 30 dão distância 3. |
+| **Margem (±)** | Um desconto na distância, ganho pelo território (seção 8). **Nunca muda a soma.** |
+| **Cravar** | Terminar com distância 0, já contando a margem. Rouba cartas. |
+| **Aproximação** | Ninguém cravou: vence a menor distância, já contando a margem. Elimina 1 carta. |
+
+**Regra de ouro:**
+
+- Regras que olham a **distância** usam a margem: cravar, aproximação, Monstros Opostos, Caça ao Líder, Ímã (os +5 entram depois da margem).
+- Regras que olham a **soma** ignoram a margem: Corrida dos Pequenos, Corrida dos Grandes, Zona Proibida, Somas Iguais se Anulam, Soma do Vizinho.
+- O **Mundo Invertido** olha a distância, mas sem margem.
+
 ## 2. Componentes
 
 | Componente | Quantidade | Descrição |
@@ -228,7 +247,7 @@ Nenhum goblin herda uma característica que já tem impressa, então os 5 de cad
    - **Mínimo Máximo:** cada goblin vale 21 − número impresso.
    - **Soma do Vizinho:** soma metade da soma do jogador à esquerda, arredondando para baixo.
 2. **Alvo:** o valor do monstro, ajustado pelo Caos (Gigante +10, Anão −6, Mutante ±5) e pelo Grito de Guerra.
-3. **Distância** = |soma − alvo| − margem de território (seção 8), nunca abaixo de 0.
+3. **Distância** = |soma − alvo| − margem de território (seção 8), nunca abaixo de 0. A margem só desconta a distância: a soma não muda.
    - **Monstros Opostos:** vale o monstro mais perto da sua soma.
    - **Ímã:** somas de 20 a 30 contam 5 mais longe.
 4. **Quem sai antes de comparar:**
@@ -259,13 +278,23 @@ Nenhum goblin herda uma característica que já tem impressa, então os 5 de cad
 - **Armadilha:** para cada carta que alguém tira da sua mão, você pode revelar uma Armadilha e o atacante perde 1 carta (seção 11).
 - **Amigo dos Fracos** (efeito do monstro): o item de quem venceu vai para quem tem **menos itens na mão** (empate: todos os empatados). O roubo e a eliminação continuam iguais.
 
-## 8. Território
+## 8. Território (margem ±)
 
-- Se pelo menos um goblin jogado for de um território do monstro, você tem margem de **±1, uma vez só**.
+- Se pelo menos um goblin jogado for de um território do monstro, você ganha margem de **±1, uma vez só**.
+- **A margem só diminui a sua distância até o monstro. Ela não muda a sua soma.**
+  - **Para cravar:** se a sua soma ficar a 1 do monstro, a distância vira 0 e você crava.
+  - **Para a aproximação:** a sua distância conta 1 a menos na comparação com os outros jogadores. Ex.: monstro 30; você soma 27 com margem (distância 2) e o rival soma 28 sem margem (distância 2). Empatam, e os dois vencem.
+- **Onde a margem não vale**, porque a regra olha a soma e não a distância:
+  - **Corrida dos Pequenos e Corrida dos Grandes:** vence a menor ou a maior soma.
+  - **Mundo Invertido:** vence quem ficar mais longe, sem margem.
+  - **Zona Proibida:** quem soma de 20 a 30 perde, mesmo que a margem o deixasse a 0 do monstro.
+  - **Ímã:** quem soma de 20 a 30 ganha +5 de distância, calculado em cima da distância já com a margem.
+  - **Somas Iguais se Anulam:** a comparação é entre as somas.
+  - **Soma do Vizinho:** você ganha metade da soma do vizinho, e a margem dele não entra.
 - A cor que conta é a do **goblin**, então goblins roubados de outras cores ajudam com outros monstros.
 - **Bandeira:** para você, o monstro também é do território escolhido.
-- **Lente de Vidro** (Rei Azul): margem **±2** quando o monstro for do território Azul, com qualquer goblin. Vale também quando a Bandeira escolhida é Azul.
-- Com Mundo Invertido e as Corridas não há margem.
+- **Lente de Vidro (Rei Azul):** margem de **±1 sempre**, com qualquer goblin, e de **±2** quando o monstro for do território Azul (inclusive pela Bandeira). Ela substitui a margem normal: as duas não somam.
+- **Monstros Opostos:** a margem vale separadamente para cada monstro, conforme o território de cada um.
 
 ## 9. Cemitério
 

@@ -137,9 +137,141 @@ function ChaosTable() {
   );
 }
 
+// os seis conceitos que quase toda regra usa: [nome, o que é]
+const CONCEPTS = [
+  [
+    'Soma',
+    'o valor dos goblins jogados, mais os itens de soma (Porrete, Pé de Cabra etc.). É o seu palpite.',
+  ],
+  [
+    'Alvo',
+    'o valor do monstro, ajustado pelo Caos (Gigante, Anão, Mutante) e pelo Grito de Guerra.',
+  ],
+  [
+    'Distância',
+    'quanto a sua soma ficou longe do alvo, para cima ou para baixo. Ex.: soma 27 e alvo 30 dão distância 3.',
+  ],
+  ['Margem (±)', 'um desconto na distância, ganho pelo território. Nunca muda a soma.'],
+  ['Cravar', 'terminar com distância 0, já contando a margem. Rouba cartas.'],
+  [
+    'Aproximação',
+    'ninguém cravou: vence a menor distância, já contando a margem. Elimina 1 carta.',
+  ],
+] as const;
+
+// um bloco em destaque no topo da aba, para não ficar escondido depois da legenda de ícones
+function Highlight({ children }: { children: ReactNode }) {
+  return (
+    <div className="grid gap-[5px] rounded-[10px] border border-accent px-3 py-2.5">{children}</div>
+  );
+}
+
+function KeyConcepts() {
+  return (
+    <>
+      <p className="m-0">
+        <b className="text-text">Conceitos-chave</b>
+      </p>
+      <Highlight>
+        {CONCEPTS.map(([t, d]) => (
+          <div key={t}>
+            <b className="text-text">{t}</b>
+            {` — ${d}`}
+          </div>
+        ))}
+        <Section>Regra de ouro</Section>
+        <div>
+          Regras que olham a <b className="text-text">distância</b> usam a margem: cravar,
+          aproximação, Monstros Opostos, Caça ao Líder, Ímã (os +5 entram depois da margem).
+        </div>
+        <div>
+          Regras que olham a <b className="text-text">soma</b> ignoram a margem: Corrida dos
+          Pequenos, Corrida dos Grandes, Zona Proibida, Somas Iguais se Anulam, Soma do Vizinho.
+        </div>
+        <div>
+          O <b className="text-text">Mundo Invertido</b> olha a distância, mas sem margem.
+        </div>
+      </Highlight>
+    </>
+  );
+}
+
+function Territory() {
+  return (
+    <>
+      <p className="m-0">
+        <b className="text-text">Território (margem ±)</b>
+      </p>
+      <Highlight>
+        <div>
+          Se pelo menos um goblin jogado for de um território do monstro, você ganha margem de{' '}
+          <b className="text-text">±1, uma vez só</b>.
+        </div>
+        <div>
+          <b className="text-text">
+            A margem só diminui a sua distância até o monstro. Ela não muda a sua soma.
+          </b>
+        </div>
+        <div>
+          <b className="text-text">Para cravar:</b> se a sua soma ficar a 1 do monstro, a distância
+          vira 0 e você crava.
+        </div>
+        <div>
+          <b className="text-text">Para a aproximação:</b> a sua distância conta 1 a menos na
+          comparação com os outros jogadores. Ex.: monstro 30; você soma 27 com margem (distância 2)
+          e o rival soma 28 sem margem (distância 2). Empatam, e os dois vencem.
+        </div>
+        <Section>Onde a margem não vale</Section>
+        <div>
+          <b className="text-text">Corrida dos Pequenos e Corrida dos Grandes:</b> vence a menor ou
+          a maior soma.
+        </div>
+        <div>
+          <b className="text-text">Mundo Invertido:</b> vence quem ficar mais longe, sem margem.
+        </div>
+        <div>
+          <b className="text-text">Zona Proibida:</b> quem soma de 20 a 30 perde, mesmo que a margem
+          o deixasse a 0 do monstro.
+        </div>
+        <div>
+          <b className="text-text">Ímã:</b> quem soma de 20 a 30 ganha +5 de distância, calculado em
+          cima da distância já com a margem.
+        </div>
+        <div>
+          <b className="text-text">Somas Iguais se Anulam:</b> a comparação é entre as somas.
+        </div>
+        <div>
+          <b className="text-text">Soma do Vizinho:</b> você ganha metade da soma do vizinho, e a
+          margem dele não entra.
+        </div>
+        <Section>Casos especiais</Section>
+        <div>
+          A cor que conta é a do <b className="text-text">goblin</b>, então goblins roubados de
+          outras cores ajudam com outros monstros.
+        </div>
+        <div>
+          <b className="text-text">Bandeira:</b> para você, o monstro também é do território
+          escolhido.
+        </div>
+        <div>
+          <b className="text-text">Lente de Vidro (Rei Azul):</b> margem de ±1 sempre, com qualquer
+          goblin, e de ±2 quando o monstro for do território Azul (inclusive pela Bandeira). Ela
+          substitui a margem normal: as duas não somam.
+        </div>
+        <div>
+          <b className="text-text">Monstros Opostos:</b> a margem vale separadamente para cada
+          monstro, conforme o território de cada um.
+        </div>
+      </Highlight>
+    </>
+  );
+}
+
 function RulesText() {
   return (
     <div className="grid w-full gap-2 text-left text-[13px] text-muted max-h-[60vh] overflow-auto">
+      <KeyConcepts />
+      <Territory />
       <p className="m-0">
         <b className="text-text">O que cada ícone significa</b>
       </p>
@@ -244,11 +376,11 @@ function RulesText() {
         → monstro acordado (revela; itens de sol; resultado) → revela o Caos da próxima rodada.
       </p>
       <p>
-        <b className="text-text">Cravou</b> (diferença 0): rouba 2 cartas às cegas e compra 1 item.
-        Se alguém cravar, só quem cravou ganha.
+        <b className="text-text">Cravou</b> (distância 0, já contando a margem): rouba 2 cartas às
+        cegas e compra 1 item. Se alguém cravar, só quem cravou ganha.
         <br />
-        <b className="text-text">Aproximação</b> (ninguém cravou): quem chegou mais perto, para cima
-        ou para baixo, elimina 1 carta às cegas de um rival e compra 1 item.
+        <b className="text-text">Aproximação</b> (ninguém cravou): quem ficou com a menor distância,
+        já contando a margem, elimina 1 carta às cegas de um rival e compra 1 item.
         <br />
         <b className="text-text">Perdeu:</b> descarta as cartas jogadas no próprio cemitério.
         Vencedores pegam as cartas de volta.
@@ -285,10 +417,6 @@ function RulesText() {
         valem 0 (contando a herdada e a do Disfarce), e reis e rainhas com ela ficam desligados, sem
         habilidade. É surpresa: só a Luneta mostra a passiva antes. Com Monstros Opostos valem os
         efeitos e as passivas dos dois.
-      </p>
-      <p>
-        <b className="text-text">Território:</b> se algum goblin jogado for de um território do
-        monstro, você tem margem de ±1, uma vez só. Com Mundo Invertido e as Corridas não há margem.
       </p>
       <p>
         <b className="text-text">Reis e rainhas:</b>
