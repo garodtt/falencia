@@ -86,7 +86,7 @@ export function Animacoes() {
         </div>
         <div className="flex items-center gap-4">
           <div ref={alvo} className={`${caixa} mt-8`}>
-            assento
+            Asset
           </div>
           <button className={GHOST} onClick={() => popAt(alvo.current, '+1 item', true)}>
             balãozinho bom
