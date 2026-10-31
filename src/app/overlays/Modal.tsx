@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { GHOST, RED } from '../components/buttonVariants.ts';
+import { DIALOG, GHOST, RED, SCRIM } from '../components/variants.ts';
 import { useUi } from '../store.ts';
 import { answerModal } from './modal.ts';
 
@@ -16,9 +16,9 @@ export function Modal() {
   }, [m]);
   if (!m) return null;
   return (
-    <div className="fixed inset-0 z-[45] grid place-items-center bg-[rgba(10,11,14,0.72)] p-4">
-      <div className="grid w-[min(500px,100%)] max-h-[92vh] gap-3 overflow-auto rounded-2xl border border-line bg-surface p-5 shadow-[0_30px_60px_rgba(0,0,0,0.6)] animate-rise">
-        <h3 className="m-0 font-display text-[22px] font-semibold">{m.title}</h3>
+    <div className={`${SCRIM} z-modal`}>
+      <div className={`${DIALOG} max-h-[92vh] w-[min(500px,100%)] overflow-auto p-5`}>
+        <h3 className="m-0 font-display text-title font-semibold">{m.title}</h3>
         {m.showcard ? (
           <div className="flex flex-wrap justify-center gap-2.5 [--cw:150px] max-sm:[--cw:min(120px,28vw)]">
             {m.showcard}

@@ -33,13 +33,13 @@ export function GobCard({ g, eff, owner, sm, className = '', ...rest }: Props) {
         {...tip.anchor(rest)}
       >
         {!sm && eff !== undefined && eff !== v && (
-          <span className="absolute -top-[7px] -right-[7px] z-[2] rounded-full border border-accent bg-bg px-1.5 font-ui text-xs font-extrabold text-accent">
+          <span className="absolute -top-[7px] -right-[7px] z-2 rounded-full border border-accent bg-bg px-1.5 font-ui text-xs font-extrabold text-accent">
             {eff}
           </span>
         )}
         {/* coroa: o goblin herda a característica do rei ou rainha da sua cor */}
         {!sm && !!crownOf(g) && (
-          <span className="absolute -top-2 -left-1.5 z-[2] grid size-[18px] place-items-center rounded-full bg-bg text-accent">
+          <span className="absolute -top-2 -left-1.5 z-2 grid size-[18px] place-items-center rounded-full bg-bg text-accent">
             <Icon name="crown" style={{ width: 12, height: 12 }} />
           </span>
         )}

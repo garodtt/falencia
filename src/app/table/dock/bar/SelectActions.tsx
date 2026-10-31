@@ -2,7 +2,7 @@ import type { Gob } from '../../../../game/data.ts';
 import { inZone, playLimit, val } from '../../../../game/rules.ts';
 import { chaosIs } from '../../../../game/state.ts';
 import type { Player } from '../../../../game/types.ts';
-import { GHOST } from '../../../components/buttonVariants.ts';
+import { GHOST } from '../../../components/variants.ts';
 import { Warn } from '../../../components/Warn.tsx';
 import { clearCards, playCards } from '../../actions.ts';
 
@@ -12,7 +12,7 @@ export function SelectActions({ me, sel }: { me: Player; sel: Gob[] }) {
     [kmin, kmax] = playLimit(me);
   return (
     <>
-      <span data-sum className="font-display text-[32px] leading-none text-accent">
+      <span data-sum className="font-display text-sum-lg leading-none text-accent">
         {sel.length ? sum : '—'}
       </span>
       {sel.length && chaosIs('ZONA') && inZone(sum) ? (

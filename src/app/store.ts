@@ -1,12 +1,42 @@
 // Ponte entre o motor (que muta G, MENU, NET... no lugar) e o React, mais o estado que é só desta tela.
-// Quem muda o estado do jogo chama render()/renderMenu(), que sobem `v`.
+// Quem muda o estado do jogo chama render() (mesa, app/render.ts) ou bump() (menu), que sobem `v`.
 // Componentes leem o estado mutável direto e assinam `v` (useTick) para re-renderizar.
 import type { ReactNode } from 'react';
 import { create } from 'zustand';
 import type { Gob } from '../game/data.ts';
 import { MENU } from '../game/state.ts';
 import type { AskValue } from '../game/types.ts';
-import { TIPS } from '../ui/tips.ts';
+import { TIPS } from './tips.ts';
+
+export type Screen = 'menu' | 'lobby' | 'game';
+
+// carta voando de um lugar a outro da tela (fx.tsx); `done` libera quem esperava a animação
+export interface Flight {
+  id: number;
+  card: ReactNode;
+  from: DOMRect;
+  to: DOMRect;
+  dur: number;
+  rot: number;
+  delay: number;
+  done: () => void;
+}
+// balãozinho que sobe de um assento ("+1 item", "−2 cartas")
+export interface Pop {
+  id: number;
+  x: number;
+  y: number;
+  text: string;
+  good?: boolean;
+}
+// um papelzinho do confete (sorteado fora do render)
+export interface Confetto {
+  id: number;
+  left: number;
+  color: string;
+  dur: number;
+  delay: number;
+}
 
 export interface Opt<T> {
   label: string;
@@ -33,6 +63,12 @@ interface UiStore {
   banner: { id: number; text: string; sub: string; kind: string } | null;
   toast: { id: number; msg: string } | null;
   tip: number; // sobe a cada tipPlace(): a dica se reposiciona
+  screen: Screen; // menu, sala de espera online ou mesa
+  logOpen: boolean; // gaveta do histórico aberta
+  shake: boolean; // a mesa treme (você perdeu a rodada)
+  flights: Flight[];
+  pops: Pop[];
+  confetti: Confetto[];
 }
 
 export const useUi = create<UiStore>()((set) => ({
@@ -47,6 +83,12 @@ export const useUi = create<UiStore>()((set) => ({
   banner: null,
   toast: null,
   tip: 0,
+  screen: 'menu',
+  logOpen: false,
+  shake: false,
+  flights: [],
+  pops: [],
+  confetti: [],
 }));
 
 export const useTick = () => useUi((s) => s.v);

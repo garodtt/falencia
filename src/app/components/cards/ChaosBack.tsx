@@ -6,7 +6,7 @@ export function ChaosBack({ className = '' }: { className?: string }) {
   return (
     <div
       data-card
-      className={`${CARD_BASE} grid place-items-center border border-[#40444c] bg-surface-3 text-chaos ${className}`}
+      className={`${CARD_BASE} grid place-items-center border border-card-edge bg-surface-3 text-chaos ${className}`}
     >
       <Icon name="bolt" />
     </div>

@@ -107,6 +107,8 @@ export function nameOf(pid: number) {
   if (p.bot) return MODE === 'local' ? CLAN[p.color] : `Bot ${CLAN[p.color]}`;
   return NET.names[p.uid!] || `Jogador ${CLAN[p.color]}`;
 }
+// troca os [[pN]] dos textos do motor pelo nome do jogador, do ponto de vista desta tela
+export const fmt = (s: unknown) => String(s).replace(/\[\[p(\d)\]\]/g, (_, i) => nameOf(+i));
 export function log(msg: string, cls?: LogLine['cls']) {
   G.log.push({ msg, cls });
   if (G.log.length > 120) G.log.splice(0, G.log.length - 120);

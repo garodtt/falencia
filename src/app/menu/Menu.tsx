@@ -11,7 +11,7 @@ export function Menu() {
   return (
     <div className="grid w-[min(960px,100%)] gap-[18px]">
       <Hero />
-      <div className="grid gap-3 rounded-[14px] border border-line bg-surface p-4">
+      <div className="grid gap-3 rounded-panel border border-line bg-surface p-4">
         <PlayerCountPicker />
         <div className="text-muted">Escolha seu território (e seu rei ou rainha)</div>
         <ClanPicker />

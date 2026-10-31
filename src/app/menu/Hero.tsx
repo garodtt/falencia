@@ -13,7 +13,7 @@ export function Hero() {
         <h1 className="m-0 font-display text-[clamp(40px,7vw,72px)] leading-[0.95] font-extrabold tracking-[-1.5px] [text-wrap:balance]">
           Falência: <span className="text-accent">Goblins</span>
         </h1>
-        <p className="mt-2.5 mb-0 max-w-[52ch] text-[15px] text-muted">
+        <p className="mt-2.5 mb-0 max-w-[52ch] text-md text-muted">
           Chegue o mais perto do monstro, para cima ou para baixo. Crave o valor para roubar cartas.
           A cada rodada uma carta de Caos muda a regra. O último goblin em pé vence.
         </p>

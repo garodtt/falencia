@@ -8,7 +8,7 @@ export function PlayerCountPicker() {
   return (
     <div className="flex flex-wrap items-center gap-2.5">
       <span className="text-muted">Jogadores</span>
-      <div className="inline-flex rounded-[10px] bg-surface-2 p-[3px]" id="segN">
+      <div className="inline-flex rounded-box bg-surface-2 p-[3px]" id="segN">
         {PLAYER_COUNTS.map((n) => (
           <button
             key={n}

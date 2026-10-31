@@ -15,7 +15,7 @@ import type { Gob } from '../../../game/data.ts';
 import { monCurse, traitsOf } from '../../../game/rules.ts';
 import { G, ME } from '../../../game/state.ts';
 import type { Player } from '../../../game/types.ts';
-import { CCSS } from '../../../ui/html.ts';
+import { CLAN_COLOR } from '../cards/cardBase.ts';
 import { Icon } from '../Icon.tsx';
 import { TipBody, TipNote, TipRow } from '../tooltip/TipBody.tsx';
 
@@ -31,7 +31,7 @@ export function GoblinTip({ g, p }: { g: Gob; p?: Player }) {
   const traits = live ? traitsOf(live, g) : printed | crown;
   const cursed = live ? !!(traits & monCurse()) : false;
   return (
-    <TipBody accent={CCSS[clan]} title={`Goblin ${v}`} sub={`Território ${CLAN[clan]}`}>
+    <TipBody accent={CLAN_COLOR[clan]} title={`Goblin ${v}`} sub={`Território ${CLAN[clan]}`}>
       {cursed ? (
         <TipNote
           warn

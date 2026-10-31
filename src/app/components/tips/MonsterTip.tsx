@@ -2,7 +2,7 @@ import { CLAN, MFX, TNAME, curseTxt } from '../../../game/data.ts';
 import type { Monster } from '../../../game/data.ts';
 import { monOf } from '../../../game/rules.ts';
 import { G, chaosIs } from '../../../game/state.ts';
-import { CCSS } from '../../../ui/html.ts';
+import { CLAN_COLOR } from '../cards/cardBase.ts';
 import { ColorDot } from '../ColorDot.tsx';
 import { TipBody, TipNote, TipRow } from '../tooltip/TipBody.tsx';
 
@@ -11,7 +11,7 @@ export function MonsterTip({ m }: { m: Monster }) {
   const worth = monOf(m);
   return (
     <TipBody
-      accent={CCSS[m.ts[0]]}
+      accent={CLAN_COLOR[m.ts[0]]}
       title={`Monstro ${worth}`}
       sub={worth !== m.v ? `Impresso: ${m.v}` : undefined}
     >

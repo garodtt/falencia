@@ -9,14 +9,13 @@ import { useTooltip } from '../../components/tooltip/useTooltip.tsx';
 import { drawItem, revealChaos } from '../actions.ts';
 
 // o brilho de quem pode ser comprado agora (o monte de monstros nunca é clicável)
-const GLOW =
-  'shadow-[0_0_0_2px_var(--color-accent),0_0_18px_color-mix(in_srgb,var(--color-accent)_50%,transparent)]';
+const GLOW = 'ring-2 ring-accent shadow-glow-strong';
 
 // os três montes: monstros, itens e Caos
 export function Decks({ pe }: { pe: Pending | null }) {
   const ph = pe && pe.kind;
   return (
-    <div className="flex items-end gap-3.5 max-[960px]:order-2 max-sm:col-start-2 max-sm:row-start-1 max-sm:flex-col max-sm:items-center max-sm:gap-2.5 land:order-none land:gap-2.5 max-[720px]:land:gap-1.5">
+    <div className="flex items-end gap-3.5 narrow:order-2 max-sm:col-start-2 max-sm:row-start-1 max-sm:flex-col max-sm:items-center max-sm:gap-2.5 land:order-none land:gap-2.5 max-[720px]:land:gap-1.5">
       <Pile
         id="monsterDeck"
         countId="mCount"
@@ -108,7 +107,7 @@ function Pile({
       <div className="relative h-[72px] w-[52px] [--cw:52px]">
         {children}
         {need !== undefined ? (
-          <span className="absolute -top-2 -right-2 z-[3] grid h-[22px] min-w-[22px] place-items-center rounded-full bg-accent font-ui text-xs font-extrabold text-[#1d1600]">
+          <span className="absolute -top-2 -right-2 z-3 grid h-[22px] min-w-[22px] place-items-center rounded-full bg-accent font-ui text-xs font-extrabold text-on-accent">
             {need}
           </span>
         ) : null}

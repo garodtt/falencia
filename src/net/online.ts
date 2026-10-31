@@ -2,11 +2,10 @@
 import { rnd, shuffle } from '../game/data.ts';
 import { gameLoop, newState, resolvePrompt } from '../game/engine.ts';
 import { G, LOCAL, ME, MENU, MODE, NET, log, setG, setME, setMODE, sync } from '../game/state.ts';
-import { playFx, toast } from '../ui/effects.ts';
-import { $ } from '../ui/html.ts';
-import { renderMenu } from '../ui/menu.ts';
-import { askLocal, render, showGame, showLobby } from '../ui/render.ts';
-import { TIPS, tipFor } from '../ui/tips.ts';
+import { playFx, toast } from '../app/fx.tsx';
+import { bump, useUi } from '../app/store.ts';
+import { askLocal, render, show } from '../app/render.ts';
+import { TIPS, tipFor } from '../app/tips.ts';
 import { fb } from './firebase.ts';
 import type { GameState, Reply } from '../game/types.ts';
 
@@ -95,17 +94,12 @@ export async function initNet() {
     NET.db = db;
     NET.user = user;
     NET.uid = uid;
-    {
-      const n0 = fb.getName();
-      if (n0) {
-        NET.names[uid] = fb.setName(n0);
-      }
-      const ni = $<HTMLInputElement>('nameIn');
-      if (ni) ni.value = n0;
-    }
+    // o campo "Seu nome" (NameField) começa com este nome
+    const n0 = fb.getName();
+    if (n0) NET.names[uid] = fb.setName(n0);
     const can = await user.can('data.write');
     NET.canWrite = can !== false;
-    renderMenu();
+    bump();
     NET.unLobby = db
       .collection('games')
       .where('status', '==', 'lobby')
@@ -117,7 +111,7 @@ export async function initNet() {
           void resolveNames(
             NET.lobbies.flatMap((l) => (l.seats || []).map((x) => x.uid).filter(Boolean)),
           );
-          renderMenu();
+          bump();
         },
         () => {},
       );
@@ -129,7 +123,7 @@ export async function initNet() {
           NET.mine = s.docs
             .map((d) => d.data())
             .filter((d) => d.status !== 'over' && Date.now() - (d.updatedAt || 0) < 48 * 3600e3);
-          renderMenu();
+          bump();
         },
         () => {},
       );
@@ -147,7 +141,7 @@ export async function resolveNames(ids: (string | null | undefined)[]) {
     }
   if (changed) {
     if (G) render();
-    renderMenu();
+    bump();
   }
 }
 export function newCode() {
@@ -181,7 +175,7 @@ export async function createTable() {
     return;
   }
   listenActs();
-  showLobby();
+  show('lobby');
 }
 export async function joinTable(code: string) {
   if (!NET.db) return;
@@ -209,14 +203,14 @@ export function subscribeGame() {
       const S: GameState = JSON.parse(JSON.stringify(s.data()));
       setG(S);
       if (S.status === 'lobby') {
-        showLobby();
+        show('lobby');
         return;
       }
       setME(S.players.findIndex((p) => p.uid === NET.uid));
       LOCAL.spec = ME < 0;
       if (ME < 0) setME(0);
-      if ($('game').classList.contains('!hidden')) {
-        showGame();
+      if (useUi.getState().screen !== 'game') {
+        show('game');
         first = true;
       }
       void resolveNames(S.players.map((p) => p.uid).filter(Boolean));
@@ -272,12 +266,12 @@ export function handleAct(uid: string, a: Act) {
       G.seats!.push({ uid, color: c! });
       void resolveNames([uid]);
       sync();
-      showLobby();
+      show('lobby');
     }
     if (a.kind === 'leave') {
       G.seats = G.seats!.filter((s) => s.uid !== uid || s.uid === G.hostUid);
       sync();
-      showLobby();
+      show('lobby');
     }
     if (
       a.kind === 'color' &&
@@ -286,7 +280,7 @@ export function handleAct(uid: string, a: Act) {
     ) {
       G.seats!.find((s) => s.uid === uid)!.color = a.color;
       sync();
-      showLobby();
+      show('lobby');
     }
     return;
   }
@@ -309,7 +303,7 @@ export async function startOnline() {
   setG(Object.assign(newState(G.n, seats), { code, hostUid: host }));
   setME(G.players.findIndex((p) => p.uid === NET.uid));
   log('A partida começou!', 'rh');
-  showGame();
+  show('game');
   render(true);
   sync();
   tipFor('start');
@@ -321,13 +315,13 @@ export function resumeHost(S: GameState) {
   if (S.status === 'lobby') {
     setG(S);
     listenActs();
-    showLobby();
+    show('lobby');
     return;
   }
   if (!S.ckpt) {
     setG(S);
     setME(S.players.findIndex((p) => p.uid === NET.uid));
-    showGame();
+    show('game');
     render();
     return;
   }
@@ -343,7 +337,7 @@ export function resumeHost(S: GameState) {
   log('O anfitrião voltou: a rodada recomeça.', 'rh');
   setME(G.players.findIndex((p) => p.uid === NET.uid));
   listenActs();
-  showGame();
+  show('game');
   render(true);
   sync();
   void gameLoop();
@@ -388,11 +382,6 @@ export function leaveTable() {
   setME(0);
   LOCAL.spec = false;
   LOCAL.answered = {};
-  $('lobby').classList.add('!hidden');
-  $('game').classList.add('!hidden');
-  $('menu').classList.remove('!hidden');
-  $('tut').classList.add('!hidden');
   TIPS.cur = null;
-  $('barInfo').innerHTML = '';
-  renderMenu();
+  show('menu');
 }

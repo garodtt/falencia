@@ -2,15 +2,15 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { MENU, NET } from '../../game/state.ts';
 import { joinTable } from '../../net/online.ts';
-import { startLocal } from '../../ui/menu.ts';
-import { TIPS } from '../../ui/tips.ts';
+import { startLocal } from './startLocal.ts';
+import { TIPS } from '../tips.ts';
 import { useUi } from '../store.ts';
 import { Menu } from './Menu.tsx';
 
 // nada de banco nem de partida de verdade nos testes de tela
 vi.mock('../../net/firebase.ts', () => ({ fb: null }));
 vi.mock('../../net/online.ts', () => ({ createTable: vi.fn(), joinTable: vi.fn() }));
-vi.mock('../../ui/menu.ts', () => ({ startLocal: vi.fn() }));
+vi.mock('./startLocal.ts', () => ({ startLocal: vi.fn() }));
 
 beforeEach(() => {
   Object.assign(MENU, { n: 4, color: 0 });
@@ -54,7 +54,7 @@ describe('Menu', () => {
   it('sem Firebase, avisa que o online está desligado', () => {
     render(<Menu />);
     expect(screen.getByText(/mesas online estão desligadas/)).toBeTruthy();
-    expect(document.getElementById('nameRow')!.classList.contains('!hidden')).toBe(true);
+    expect(document.getElementById('nameRow')).toBeNull();
   });
 
   it('com Firebase, entra numa mesa pelo código digitado', () => {

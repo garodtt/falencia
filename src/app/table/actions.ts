@@ -6,9 +6,8 @@ import { canUse, itemOptions, monOf, playLimit, scarGraves, scarred } from '../.
 import { G, LOCAL, ME, MODE, NET, alivePl, gobTxt, nameOf } from '../../game/state.ts';
 import type { AskValue, ItemArgs, PromptKind } from '../../game/types.ts';
 import { leaveGame, leaveTable, respond } from '../../net/online.ts';
-import { fly, toast } from '../../ui/effects.ts';
-import { $, gobCard } from '../../ui/html.ts';
-import { render } from '../../ui/render.ts';
+import { fly, fxCard, toast } from '../fx.tsx';
+import { render } from '../render.ts';
 import { askLocal } from '../overlays/modal.ts';
 import { useUi } from '../store.ts';
 import type { Opt } from '../store.ts';
@@ -55,7 +54,7 @@ export async function playCards() {
   await Promise.all(
     gs.map((g, i) =>
       rects[i]
-        ? fly(rects[i], $('myPlay'), gobCard(g), { dur: 440, delay: i * 80 })
+        ? fly(rects[i], '#myPlay', fxCard({ g, pub: 1 }), { dur: 440, delay: i * 80 })
         : Promise.resolve(),
     ),
   );

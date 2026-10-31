@@ -1,5 +1,5 @@
-import { G } from '../../game/state.ts';
-import { fmt } from '../../ui/html.ts';
+import { G, fmt } from '../../game/state.ts';
+
 import { useTick } from '../store.ts';
 
 const CLS: Record<string, string> = {
@@ -16,7 +16,7 @@ export function LogList() {
   return [...G.log].reverse().map((l, i) => (
     <div
       key={n - i}
-      className={`border-b border-line py-[5px] text-[12.5px] text-muted ${l.cls ? CLS[l.cls] || '' : ''}`}
+      className={`border-b border-line py-[5px] text-small text-muted ${l.cls ? CLS[l.cls] || '' : ''}`}
     >
       {fmt(l.msg)}
     </div>

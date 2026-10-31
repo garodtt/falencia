@@ -1,6 +1,6 @@
 import { P, nameOf } from '../../../../game/state.ts';
 import type { Pending } from '../../../../game/types.ts';
-import { RED } from '../../../components/buttonVariants.ts';
+import { RED } from '../../../components/variants.ts';
 import { pickTarget } from '../../actions.ts';
 import { Say } from './Say.tsx';
 

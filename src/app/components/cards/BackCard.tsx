@@ -5,9 +5,9 @@ export function BackCard({ className = '' }: { className?: string }) {
   return (
     <div
       data-card
-      className={`${CARD_BASE} grid place-items-center border border-[#40444c] bg-surface-3 text-[#6b717c] ${className}`}
+      className={`${CARD_BASE} grid place-items-center border border-card-edge bg-surface-3 ${className}`}
     >
-      <span className="font-display text-[calc(var(--cw)*0.38)] font-extrabold text-[#555a64]">
+      <span className="font-display text-[calc(var(--cw)*0.38)] font-extrabold text-card-mark">
         F
       </span>
     </div>

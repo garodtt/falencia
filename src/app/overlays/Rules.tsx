@@ -1,9 +1,10 @@
 // Tela de regras (aberta pelo botão "Regras" da barra do topo).
 import { Fragment, useState } from 'react';
 import type { ReactNode } from 'react';
-import { CHAOS, CLAN, ITEMS, KINGS, REACT, heirsTxt, traitNames } from '../../game/data.ts';
+import { CHAOS, CLAN, ITEMS, KINGS, heirsTxt, traitNames } from '../../game/data.ts';
 import type { ItemKey } from '../../game/data.ts';
 import { Icon } from '../components/Icon.tsx';
+import { KIND, itemKind } from '../components/itemKind.ts';
 
 // uma linha da legenda: ícone, nome e o que significa. O " — " fica no mesmo nó de texto da
 // descrição (como no HTML original): separados, o navegador posiciona as letras com diferença
@@ -22,9 +23,7 @@ function L({ i, t, children }: { i: ReactNode; t: string; children: ReactNode })
 
 function Section({ first, children }: { first?: boolean; children: ReactNode }) {
   return (
-    <div className={`text-[11px] tracking-[0.06em] uppercase ${first ? '' : 'mt-1'}`}>
-      {children}
-    </div>
+    <div className={`text-note tracking-[0.06em] uppercase ${first ? '' : 'mt-1'}`}>{children}</div>
   );
 }
 
@@ -50,7 +49,7 @@ export function Rules() {
             role="tab"
             aria-selected={tab === k}
             onClick={() => setTab(k)}
-            className={`-mb-px cursor-pointer border-b-2 bg-transparent px-3 py-1.5 font-ui text-[13px] font-bold ${tab === k ? 'border-accent text-text' : 'border-transparent text-muted'}`}
+            className={`-mb-px cursor-pointer border-b-2 bg-transparent px-3 py-1.5 font-ui text-small font-bold ${tab === k ? 'border-accent text-text' : 'border-transparent text-muted'}`}
           >
             {t}
           </button>
@@ -77,38 +76,33 @@ function CardRow({
     <div className="grid gap-0.5 border-b border-line py-1.5 last:border-b-0">
       <div className="flex items-center gap-2">
         <b className="text-text">{name}</b>
-        {when ? <span className="inline-flex items-center gap-1 text-[11px]">{when}</span> : null}
-        <span className="ml-auto flex-none text-[11px] font-bold text-accent">{`×${copies}`}</span>
+        {when ? <span className="inline-flex items-center gap-1 text-note">{when}</span> : null}
+        <span className="ml-auto flex-none text-note font-bold text-accent">{`×${copies}`}</span>
       </div>
       <span>{text}</span>
     </div>
   );
 }
 
-const WHEN_ORDER = (k: ItemKey) =>
-  k === 'SACO' ? 1 : REACT.includes(k) ? 3 : ITEMS[k][2] === 'D' ? 0 : 2;
+const WHEN_ORDER = { dormindo: 0, nahora: 1, acordado: 2, reacao: 3 };
 function whenOf(k: ItemKey) {
-  if (k === 'SACO') return 'Na hora';
-  if (REACT.includes(k)) return 'Reação';
-  return ITEMS[k][2] === 'D' ? (
+  const kind = KIND[itemKind(k)];
+  return (
     <>
-      <Icon name="moon" />
-      Dormindo
-    </>
-  ) : (
-    <>
-      <Icon name="sun" />
-      Acordado
+      <Icon name={kind.icon} />
+      {kind.short}
     </>
   );
 }
 
 function ItemTable() {
   const keys = (Object.keys(ITEMS) as ItemKey[]).sort(
-    (a, b) => WHEN_ORDER(a) - WHEN_ORDER(b) || ITEMS[a][0].localeCompare(ITEMS[b][0], 'pt'),
+    (a, b) =>
+      WHEN_ORDER[itemKind(a)] - WHEN_ORDER[itemKind(b)] ||
+      ITEMS[a][0].localeCompare(ITEMS[b][0], 'pt'),
   );
   return (
-    <div className="max-h-[60vh] overflow-auto text-[13px] text-muted">
+    <div className="max-h-[60vh] overflow-auto text-small text-muted">
       <p className="m-0 mb-1">{`${total(Object.values(ITEMS), 3)} cartas no monte de itens. No máximo 3 na mão.`}</p>
       {keys.map((k) => (
         <CardRow
@@ -126,7 +120,7 @@ function ItemTable() {
 function ChaosTable() {
   const keys = Object.keys(CHAOS) as (keyof typeof CHAOS)[];
   return (
-    <div className="max-h-[60vh] overflow-auto text-[13px] text-muted">
+    <div className="max-h-[60vh] overflow-auto text-small text-muted">
       <p className="m-0 mb-1">{`${total(Object.values(CHAOS), 2)} cartas no monte de Caos. A carta revelada vale na rodada seguinte, para todos.`}</p>
       {keys
         .sort((a, b) => CHAOS[a][0].localeCompare(CHAOS[b][0], 'pt'))
@@ -162,7 +156,7 @@ const CONCEPTS = [
 // um bloco em destaque no topo da aba, para não ficar escondido depois da legenda de ícones
 function Highlight({ children }: { children: ReactNode }) {
   return (
-    <div className="grid gap-[5px] rounded-[10px] border border-accent px-3 py-2.5">{children}</div>
+    <div className="grid gap-[5px] rounded-box border border-accent px-3 py-2.5">{children}</div>
   );
 }
 
@@ -269,13 +263,13 @@ function Territory() {
 
 function RulesText() {
   return (
-    <div className="grid w-full gap-2 text-left text-[13px] text-muted max-h-[60vh] overflow-auto">
+    <div className="grid w-full gap-2 text-left text-small text-muted max-h-[60vh] overflow-auto">
       <KeyConcepts />
       <Territory />
       <p className="m-0">
         <b className="text-text">O que cada ícone significa</b>
       </p>
-      <div className="grid gap-[5px] rounded-[10px] border border-line px-3 py-2.5">
+      <div className="grid gap-[5px] rounded-box border border-line px-3 py-2.5">
         <Section first>Características dos goblins (canto da carta)</Section>
         <L i={<Icon name="hat" />} t="Chapéu">
           característica usada por itens (Chapéu Pontudo, Disfarce) e pela passiva do monstro 11.

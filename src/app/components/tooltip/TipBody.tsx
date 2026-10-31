@@ -18,7 +18,7 @@ export function TipBody({
 }) {
   return (
     <div className={body} style={{ '--tip-accent': accent } as CSSProperties}>
-      <div className="font-display text-[15px] leading-[1.2] font-semibold">{title}</div>
+      <div className="font-display text-md leading-[1.2] font-semibold">{title}</div>
       {sub ? <div className="-mt-1 text-xs text-muted">{sub}</div> : null}
       {children}
     </div>
@@ -42,7 +42,7 @@ export function TipRow({
       <span className="inline-flex justify-center gap-0.5 pt-px">{icon}</span>
       <div>
         <b className="font-bold">{name}</b>
-        {tag ? <span className="ml-1.5 text-[11px] font-bold text-accent">{tag}</span> : null}
+        {tag ? <span className="ml-1.5 text-note font-bold text-accent">{tag}</span> : null}
         {children ? <span className="block text-xs text-muted">{children}</span> : null}
       </div>
     </div>

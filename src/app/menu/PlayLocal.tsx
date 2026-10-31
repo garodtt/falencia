@@ -1,4 +1,4 @@
-import { startLocal } from '../../ui/menu.ts';
+import { startLocal } from './startLocal.ts';
 import { Icon } from '../components/Icon.tsx';
 import { resetTips, useUi } from '../store.ts';
 

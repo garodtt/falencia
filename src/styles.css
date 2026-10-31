@@ -1,5 +1,6 @@
 /* Design tokens, resets e o que não cabe em classe utilitária (keyframes, --cw dinâmico). O
-   resto do visual virou Tailwind direto no className dos componentes. */
+   resto do visual é Tailwind direto no className dos componentes, usando SÓ os tokens daqui:
+   cor nova, sombra nova, tamanho de letra novo... entra primeiro neste @theme. */
 @import 'tailwindcss';
 
 @theme {
@@ -20,8 +21,48 @@
   --color-sun: #f0a43a;
   --color-good: #3dd68c;
   --color-bad: #ff6369;
+  --color-on-accent: #1d1600; /* texto em cima do amarelo de destaque */
+  --color-on-yellow: #2a1f00; /* texto da carta amarela */
+  --color-scrim: #0a0b0e; /* fundo escuro atrás de janelas (use com /NN de opacidade) */
+  --color-card-edge: #40444c; /* borda dos versos de carta */
+  --color-card-mark: #555a64; /* o "F" do verso do goblin */
+  --color-mon-edge: #45425e; /* borda do verso do monstro */
+  --color-mon-edge-lit: #5a5490; /* borda do monstro revelado */
   --font-display: 'Bricolage Grotesque', 'Arial Black', system-ui, sans-serif;
   --font-ui: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* tamanhos de letra fora da escala padrão do Tailwind (xs 12, sm 14, base 16, lg 18...) */
+  --text-note: 11px; /* etiquetas, selos */
+  --text-body: 14px; /* texto corrido (o do <body>) */
+  --text-small: 13px; /* texto secundário, botões da barra */
+  --text-md: 15px; /* campos de texto */
+  --text-title: 22px; /* título de janela */
+  --text-sum: 26px; /* soma de uma jogada na mesa */
+  --text-sum-lg: 32px; /* soma da sua escolha na barra de ação */
+
+  --radius-box: 10px; /* botão, campo, balão, linha de lista */
+  --radius-panel: 14px; /* caixa de conteúdo, bolha de dica */
+
+  --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.4); /* recado (toast) */
+  --shadow-pop: 0 16px 40px rgba(0, 0, 0, 0.5); /* balão, bolha de dica */
+  --shadow-dialog: 0 30px 60px rgba(0, 0, 0, 0.6); /* modal, aviso grande */
+  --shadow-dock: 0 -8px 24px rgba(0, 0, 0, 0.35); /* rodapé preso no celular */
+  --shadow-spotlight: 0 0 0 9999px rgba(10, 11, 14, 0.55); /* escurece tudo em volta da dica */
+  --shadow-glow: 0 0 22px color-mix(in srgb, var(--color-accent) 25%, transparent); /* quem está agindo */
+  --shadow-glow-strong: 0 0 18px color-mix(in srgb, var(--color-accent) 50%, transparent);
+
+  /* camadas da tela, de baixo para cima (z-dock, z-fly...). Dentro de uma carta use z-1..z-5 */
+  --z-index-dock: 30;
+  --z-index-fly: 32;
+  --z-index-drawer: 35;
+  --z-index-banner: 40;
+  --z-index-tip: 42;
+  --z-index-toast: 44;
+  --z-index-modal: 45;
+  --z-index-rotate: 50;
+  --z-index-confetti: 55;
+  --z-index-tooltip: 60;
 
   --animate-blink: blink 1.1s ease-in-out infinite;
   --animate-shake: shake 0.35s;
@@ -32,10 +73,25 @@
   --animate-fade-up: fadeUp 2.2s forwards;
 }
 
+/* telas até 960px (celular e tablet); pin = em pé, land = deitado */
+@custom-variant narrow (@media (max-width: 960px));
 /* celular/tablet em pé: a mão e a barra de ação ficam presas no rodapé da tela */
 @custom-variant pin (@media (max-width: 960px) and (orientation: portrait));
 /* celular deitado: a mesa larga do desktop, espremida para caber na altura (~360-430px) */
 @custom-variant land (@media (max-width: 960px) and (orientation: landscape));
+
+/* margem lateral das telas, respeitando o entalhe do celular */
+@utility px-safe {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+/* fundo dos monstros (verso e frente) */
+@utility bg-mon-back {
+  background-image: linear-gradient(170deg, #2b2a3a, #1c1b26);
+}
+@utility bg-mon-face {
+  background-image: linear-gradient(170deg, #2e2b45, #1b1a26);
+}
 
 :root {
   --cw: clamp(52px, min(5.2vw, 8vh), 78px);
@@ -52,17 +108,17 @@ html {
 @layer base {
   body {
     @apply m-0 bg-bg text-text;
-    font: 500 14px/1.45 var(--font-ui);
+    font: 500 var(--text-body)/1.45 var(--font-ui);
   }
-  /* visual padrão de todo <button>; variantes (ghost/red/green) viram className no próprio uso */
+  /* visual padrão de todo <button>; as outras variantes estão em app/components/variants.ts */
   button {
-    font: 700 14px var(--font-ui);
+    font: 700 var(--text-body) var(--font-ui);
     cursor: pointer;
     border: 0;
-    border-radius: 10px;
+    border-radius: var(--radius-box);
     padding: 10px 18px;
     background: var(--color-accent);
-    color: #1d1600;
+    color: var(--color-on-accent);
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -86,46 +142,10 @@ html {
     outline-offset: 2px;
   }
 }
-
 /* Daqui para baixo é CSS "de verdade" (sem @layer, de propósito): tem que vencer qualquer classe
-   utilitária que também esteja no elemento (posição do flip, abrir/fechar a gaveta) ou um
-   transform que o React já pôs inline (a carta escolhida na mão) — dentro de uma @layer, uma
-   classe do Tailwind sempre ganharia, não importa a especificidade. */
-
-/* a gaveta do histórico abre/fecha via classList (events.ts), não por estado do React */
-#logDrawer {
-  transform: translateX(100%);
-  transition: transform 0.25s;
-}
-#logDrawer:not(.open) {
-  visibility: hidden;
-  transition:
-    transform 0.25s,
-    visibility 0s 0.25s;
-}
-#logDrawer.open {
-  transform: none;
-}
-
-/* no celular, durante a partida, a rodada e o chefe tomam o lugar do título na barra do topo */
-@media (max-width: 639px) {
-  #bar:has(#barInfo:not(:empty)) #brand {
-    display: none;
-  }
-}
-
-/* celular deitado: cartas menores e a escolhida sobe menos (a mão tem pouca folga em cima) */
-@media (max-width: 960px) and (orientation: landscape) {
-  :root {
-    --cw: 46px;
-  }
-  #hand [data-selected] {
-    transform: var(--base) translateY(-16px) !important;
-  }
-  #hand [data-pick]:hover:not([data-selected]) {
-    transform: var(--base) translateY(-6px) !important;
-  }
-}
+   utilitária que também esteja no elemento (posição do flip) ou um transform que o React já pôs
+   inline (a carta escolhida na mão) — dentro de uma @layer, uma classe do Tailwind sempre
+   ganharia, não importa a especificidade. */
 
 /* a carta vira com a classe "open" posta à mão (Flip.tsx), para a transição sempre partir
    do verso — ver o comentário lá */
@@ -163,6 +183,20 @@ html {
   transform: var(--base) translateY(-26px) !important;
   outline: 3px solid var(--color-accent);
   outline-offset: 2px;
+}
+
+/* celular deitado: cartas menores e a escolhida sobe menos (a mão tem pouca folga em cima).
+   Fica depois das regras do leque: mesma especificidade, então o último vence. */
+@media (max-width: 960px) and (orientation: landscape) {
+  :root {
+    --cw: 46px;
+  }
+  #hand [data-selected] {
+    transform: var(--base) translateY(-16px) !important;
+  }
+  #hand [data-pick]:hover:not([data-selected]) {
+    transform: var(--base) translateY(-6px) !important;
+  }
 }
 
 @keyframes blink {

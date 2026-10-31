@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createTable } from '../../../net/online.ts';
-import { GHOST } from '../../components/buttonVariants.ts';
+import { GHOST } from '../../components/variants.ts';
 import { resetTips } from '../../store.ts';
 import { joinWithTips } from './join.ts';
 
@@ -21,7 +21,7 @@ export function JoinByCode() {
       <span className="text-muted">ou entre com um código</span>
       <input
         id="codeIn"
-        className="w-[130px] rounded-[10px] border border-line bg-surface-2 px-3 py-[9px] text-center font-ui text-base font-bold tracking-[3px] text-text uppercase"
+        className="w-[130px] rounded-box border border-line bg-surface-2 px-3 py-[9px] text-center font-ui text-base font-bold tracking-[3px] text-text uppercase"
         maxLength={5}
         placeholder="CÓDIGO"
         aria-label="Código da mesa"

@@ -6,7 +6,7 @@ export function Toast() {
   return t ? (
     <div
       key={t.id}
-      className="animate-rise rounded-[10px] bg-text px-4 py-[9px] text-center font-bold text-bg shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+      className="animate-rise rounded-box bg-text px-4 py-[9px] text-center font-bold text-bg shadow-float"
     >
       {t.msg}
     </div>

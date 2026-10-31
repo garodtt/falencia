@@ -1,6 +1,6 @@
 import { MFX, TICO, TNAME } from '../../../game/data.ts';
 import type { Monster } from '../../../game/data.ts';
-import { CCSS } from '../../../ui/html.ts';
+import { CLAN_COLOR } from './cardBase.ts';
 import { Icon } from '../Icon.tsx';
 import { CARD_BASE } from './cardBase.ts';
 
@@ -18,14 +18,14 @@ export function MonsterCard({
   return (
     <div
       data-card
-      className={`${CARD_BASE} grid place-items-center border border-[#5a5490] bg-[linear-gradient(170deg,#2e2b45,#1b1a26)] ${className}`}
+      className={`${CARD_BASE} grid place-items-center border border-mon-edge-lit bg-mon-face ${className}`}
     >
       <span className="absolute top-[8%] right-0 left-0 flex justify-center gap-[5px]">
         {m.ts.map((c, i) => (
           <i
             key={i}
             className="block h-[calc(var(--cw)*0.1)] w-[calc(var(--cw)*0.1)] min-h-[9px] min-w-[9px] rounded-full"
-            style={{ background: CCSS[c] }}
+            style={{ background: CLAN_COLOR[c] }}
           />
         ))}
       </span>

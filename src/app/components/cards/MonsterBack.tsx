@@ -13,7 +13,7 @@ export function MonsterBack({
   return (
     <div
       data-card
-      className={`${CARD_BASE} grid place-items-center border border-[#45425e] bg-[linear-gradient(170deg,#2b2a3a,#1c1b26)] text-moon ${className}`}
+      className={`${CARD_BASE} grid place-items-center border border-mon-edge bg-mon-back text-moon ${className}`}
     >
       <Icon
         name="moon"

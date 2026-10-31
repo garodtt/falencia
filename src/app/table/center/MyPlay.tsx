@@ -17,15 +17,15 @@ export function MyPlay({ me }: { me: Player }) {
       {rd.gs.map((g) => (
         <GobCard key={g} g={g} eff={val(me, g)} owner={me} />
       ))}
-      <span className="ml-2 font-display text-[26px] font-extrabold leading-none">
+      <span className="ml-2 font-display text-sum font-extrabold leading-none">
         {`= ${x ? x.S : rawSum(me)}`}
         {x && x.mg ? (
-          <small className="ml-1.5 font-ui text-[13px] font-medium text-good">
+          <small className="ml-1.5 font-ui text-small font-medium text-good">
             {`±${x.mg} território`}
           </small>
         ) : null}
         {x && x.add ? (
-          <small className="ml-1.5 font-ui text-[13px] font-medium text-good">{`+${x.add} do vizinho`}</small>
+          <small className="ml-1.5 font-ui text-small font-medium text-good">{`+${x.add} do vizinho`}</small>
         ) : null}
       </span>
     </>

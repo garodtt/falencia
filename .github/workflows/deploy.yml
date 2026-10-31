@@ -27,6 +27,9 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      # formatação, lint, tipos e testes (inclusive o guarda-corpo do padrão): falhou, não publica
+      - run: npm run check
+      - run: npm test
       - run: npm run build
         env:
           VITE_FIREBASE_API_KEY: ${{ vars.VITE_FIREBASE_API_KEY }}

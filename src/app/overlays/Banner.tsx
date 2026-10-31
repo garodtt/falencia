@@ -14,7 +14,7 @@ export function Banner() {
   return (
     <div
       key={b.id}
-      className="max-w-[calc(100vw-32px)] animate-pop rounded-2xl border border-line bg-[color-mix(in_srgb,var(--color-surface)_94%,transparent)] px-7 py-[18px] text-center shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+      className="max-w-[calc(100vw-32px)] animate-pop rounded-2xl border border-line bg-surface/94 px-7 py-[18px] text-center shadow-dialog"
     >
       <b
         className={`block font-display text-[clamp(28px,4vw,44px)] leading-none ${KIND_TEXT[b.kind] || 'text-accent'}`}

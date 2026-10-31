@@ -1,7 +1,7 @@
 import { TICO, TNAME } from '../../../game/data.ts';
 import { monOf, monVal, spied } from '../../../game/rules.ts';
 import { G, ME } from '../../../game/state.ts';
-import { CCSS } from '../../../ui/html.ts';
+import { CLAN_COLOR } from '../../components/cards/cardBase.ts';
 import { CARD_BASE } from '../../components/cards/cardBase.ts';
 import { MonsterBack } from '../../components/cards/MonsterBack.tsx';
 import { MonsterCard } from '../../components/cards/MonsterCard.tsx';
@@ -47,7 +47,7 @@ function Monster() {
     return (
       <div
         data-card
-        className={`${CARD_BASE} grid place-items-center border border-[#45425e] bg-[linear-gradient(170deg,#2b2a3a,#1c1b26)] text-moon opacity-25`}
+        className={`${CARD_BASE} grid place-items-center border border-mon-edge bg-mon-back text-moon opacity-25`}
       >
         <Icon name="moon" />
       </div>
@@ -68,7 +68,7 @@ function Monster() {
           <span className="absolute top-[8%] right-0 left-0 flex justify-center gap-[5px]">
             <i
               className="block h-[calc(var(--cw)*0.1)] w-[calc(var(--cw)*0.1)] min-h-[9px] min-w-[9px] rounded-full"
-              style={{ background: CCSS[h.t1] }}
+              style={{ background: CLAN_COLOR[h.t1] }}
             />
           </span>
         ) : null}

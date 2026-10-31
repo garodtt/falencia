@@ -1,5 +1,6 @@
 import { useState, useSyncExternalStore } from 'react';
 import { Icon } from '../components/Icon.tsx';
+import { DIALOG, GHOST, SCRIM } from '../components/variants.ts';
 
 // celular ou tablet (tela de toque) em pé: a mesa cabe melhor deitada
 const PORTRAIT = '(orientation: portrait) and (pointer: coarse) and (max-width: 1100px)';
@@ -20,40 +21,40 @@ function dismissed() {
   }
 }
 
-// aviso para girar a tela; some sozinho quando o aparelho deita
-export function RotateHint() {
+// aviso para girar a tela; some sozinho quando o aparelho deita. Com `onClose` aparece sempre e
+// quem chamou decide quando fechar (o sandbox usa assim)
+export function RotateHint({ onClose }: { onClose?: () => void }) {
   const portrait = useSyncExternalStore(watch, () => matchMedia(PORTRAIT).matches);
   const [off, setOff] = useState(dismissed);
-  if (!portrait || off) return null;
-  const close = () => {
-    try {
-      sessionStorage.setItem(KEY, '1');
-    } catch {
-      // sem storage: some só até recarregar
-    }
-    setOff(true);
-  };
+  if (!onClose && (!portrait || off)) return null;
+  const close =
+    onClose ||
+    (() => {
+      try {
+        sessionStorage.setItem(KEY, '1');
+      } catch {
+        // sem storage: some só até recarregar
+      }
+      setOff(true);
+    });
   return (
-    <div className="fixed inset-0 z-[50] grid place-items-center bg-[rgba(10,11,14,0.78)] p-4">
+    <div className={`${SCRIM} z-rotate`}>
       <div
-        className="grid w-[min(340px,100%)] justify-items-center gap-3 rounded-2xl border border-line bg-surface p-6 text-center shadow-[0_30px_60px_rgba(0,0,0,0.6)] animate-rise"
+        className={`${DIALOG} w-[min(340px,100%)] justify-items-center p-6 text-center`}
         role="dialog"
         aria-labelledby="rotateTitle"
       >
-        <span className="grid size-16 place-items-center rounded-2xl bg-[color-mix(in_srgb,var(--color-accent)_16%,transparent)] text-accent">
+        <span className="grid size-16 place-items-center rounded-2xl bg-accent/16 text-accent">
           <Icon name="rotate" style={{ width: 36, height: 36, strokeWidth: 1.6 }} />
         </span>
-        <h3 className="m-0 font-display text-[22px] font-semibold" id="rotateTitle">
+        <h3 className="m-0 font-display text-title font-semibold" id="rotateTitle">
           Gire a tela
         </h3>
         <p className="m-0 text-muted">
           A mesa fica melhor com o aparelho deitado: rivais, monstro e sua mão cabem de uma vez na
           tela.
         </p>
-        <button
-          className="bg-transparent text-text shadow-[inset_0_0_0_1px_var(--color-line)] hover:enabled:bg-surface-2"
-          onClick={close}
-        >
+        <button className={GHOST} onClick={close}>
           Continuar assim
         </button>
       </div>

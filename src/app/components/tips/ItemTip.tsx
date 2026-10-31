@@ -1,24 +1,16 @@
 import { CLAN, ITEMS, TNAME } from '../../../game/data.ts';
 import type { ItemKey } from '../../../game/data.ts';
 import type { UsedItem } from '../../../game/types.ts';
+import { KIND, itemKind } from '../itemKind.ts';
 import { TipBody, TipNote } from '../tooltip/TipBody.tsx';
 
 // O item: quando se usa e o que faz. Com `used`, também o que foi escolhido e se levou NÃO!.
 export function ItemTip({ k, used }: { k: ItemKey; used?: UsedItem }) {
-  const [name, text, when] = ITEMS[k];
+  const [name, text] = ITEMS[k],
+    kind = KIND[itemKind(k)];
   const choice = used && usedChoice(used);
   return (
-    <TipBody
-      accent={when === 'D' ? 'var(--color-moon)' : 'var(--color-sun)'}
-      title={name}
-      sub={
-        k === 'ARMADILHA'
-          ? 'Reação: o jogo pergunta quando tiram uma carta sua'
-          : when === 'D'
-            ? 'Monstro dormindo: use antes de o monstro acordar'
-            : 'Monstro acordado: use na janela de itens'
-      }
-    >
+    <TipBody accent={kind.accent} title={name} sub={kind.sub}>
       <TipNote>{text}</TipNote>
       {k === 'NAO' ? (
         <TipNote>

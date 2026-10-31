@@ -68,12 +68,12 @@ export function useTooltip(content: (() => ReactNode) | null, placement: Placeme
         <FloatingPortal>
           <div
             ref={setFloating}
-            className="z-[60] pointer-events-none"
+            className="z-tooltip pointer-events-none"
             style={floatingStyles}
             {...getFloatingProps()}
           >
             <div style={styles}>
-              <div className="w-max max-w-[264px] overflow-hidden rounded-[10px] border border-line bg-surface-2 text-left font-ui text-[13px] leading-[1.45] font-medium text-text shadow-[0_14px_34px_rgba(0,0,0,0.5)]">
+              <div className="w-max max-w-[264px] overflow-hidden rounded-box border border-line bg-surface-2 text-left font-ui text-small leading-[1.45] font-medium text-text shadow-pop">
                 {content()}
               </div>
               <FloatingArrow

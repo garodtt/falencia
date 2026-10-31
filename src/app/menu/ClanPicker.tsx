@@ -1,6 +1,6 @@
 import { CLAN, KINGS, heirsTxt } from '../../game/data.ts';
 import { MENU } from '../../game/state.ts';
-import { CCSS } from '../../ui/html.ts';
+import { CLAN_COLOR } from '../components/cards/cardBase.ts';
 import { ColorDot } from '../components/ColorDot.tsx';
 import { Icon, TraitIcons } from '../components/Icon.tsx';
 import { setMenu } from '../store.ts';
@@ -37,13 +37,13 @@ function ClanCard({ clan, on, onPick }: { clan: number; on: boolean; onPick: () 
         {CLAN[clan]}
       </div>
       <div className="flex items-center gap-1.5 font-bold text-text">
-        <span style={{ color: CCSS[clan] }}>
+        <span style={{ color: CLAN_COLOR[clan] }}>
           <Icon name="crown" />
         </span>
         {king.name}
       </div>
-      <p className="m-0 text-[12.5px] text-muted">{king.text}</p>
-      <p className="m-0 text-[12.5px] text-muted">
+      <p className="m-0 text-small text-muted">{king.text}</p>
+      <p className="m-0 text-small text-muted">
         <TraitIcons t={king.tr} />
         {` herdada pelos ${heirsTxt(clan)}.`}
       </p>

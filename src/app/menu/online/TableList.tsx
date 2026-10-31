@@ -1,5 +1,5 @@
 import type { GameState } from '../../../game/types.ts';
-import { GHOST } from '../../components/buttonVariants.ts';
+import { GHOST } from '../../components/variants.ts';
 import { joinWithTips } from './join.ts';
 
 // uma linha de botões de mesa (nada, se a lista estiver vazia)

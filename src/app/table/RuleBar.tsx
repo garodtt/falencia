@@ -3,8 +3,8 @@ import { G } from '../../game/state.ts';
 import { Icon } from '../components/Icon.tsx';
 
 const base =
-  'flex min-h-[42px] flex-wrap items-center gap-2.5 rounded-[10px] px-3.5 py-[9px] max-sm:gap-x-2 max-sm:gap-y-1 max-sm:px-3 max-sm:py-2 max-sm:text-[13px] land:min-h-0 land:gap-x-2 land:gap-y-0 land:px-3 land:py-1 land:text-xs';
-const tg = 'font-ui text-[11px] font-bold tracking-[0.08em] uppercase';
+  'flex min-h-[42px] flex-wrap items-center gap-2.5 rounded-box px-3.5 py-[9px] max-sm:gap-x-2 max-sm:gap-y-1 max-sm:px-3 max-sm:py-2 max-sm:text-small land:min-h-0 land:gap-x-2 land:gap-y-0 land:px-3 land:py-1 land:text-xs';
+const tg = 'font-ui text-note font-bold tracking-[0.08em] uppercase';
 
 // faixa do topo: o Caos desta rodada (ou o da próxima, entre rodadas)
 export function RuleBar() {
@@ -22,7 +22,7 @@ export function RuleBar() {
   const k = shown === 'now' ? G.chaos! : G.nextChaos!;
   return (
     <div
-      className={`${base} border border-[color-mix(in_srgb,var(--color-chaos)_45%,transparent)] bg-[color-mix(in_srgb,var(--color-chaos)_13%,var(--color-surface))]`}
+      className={`${base} border border-chaos/45 bg-[color-mix(in_srgb,var(--color-chaos)_13%,var(--color-surface))]`}
       id="chaosSlot"
     >
       <span className="text-chaos">

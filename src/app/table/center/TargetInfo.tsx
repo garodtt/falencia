@@ -23,8 +23,8 @@ export function TargetInfo() {
 function Goal({ title, sub }: { title: string; sub: string }) {
   return (
     <>
-      <b className="block font-display text-[22px] font-extrabold">{title}</b>
-      <span className="text-[13px] text-muted">{sub}</span>
+      <b className="block font-display text-title font-extrabold">{title}</b>
+      <span className="text-small text-muted">{sub}</span>
     </>
   );
 }

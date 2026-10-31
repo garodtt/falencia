@@ -3,9 +3,9 @@ import { KINGS } from '../../../game/data.ts';
 import { kingActive } from '../../../game/rules.ts';
 import { G, LOCAL, ME, nameOf } from '../../../game/state.ts';
 import type { Player } from '../../../game/types.ts';
-import { CCSS } from '../../../ui/html.ts';
+import { CLAN_FG } from '../../components/cards/cardBase.ts';
 import { Badge } from '../../components/Badge.tsx';
-import { GHOST } from '../../components/buttonVariants.ts';
+import { GHOST } from '../../components/variants.ts';
 import { ChiefCrown } from '../../components/ChiefCrown.tsx';
 import { ColorDot } from '../../components/ColorDot.tsx';
 import { Icon } from '../../components/Icon.tsx';
@@ -28,18 +28,15 @@ function seatSkin(
 ) {
   let border = 'border-line',
     shadow = '';
-  if (chief) border = 'border-[color-mix(in_srgb,var(--color-accent)_55%,transparent)]';
+  if (chief) border = 'border-accent/55';
   if (isTarget) {
     border = steal ? 'border-accent' : 'border-bad';
-    shadow = steal
-      ? 'shadow-[0_0_0_2px_color-mix(in_srgb,var(--color-accent)_40%,transparent)]'
-      : 'shadow-[0_0_0_2px_color-mix(in_srgb,var(--color-bad)_40%,transparent)]';
+    shadow = steal ? 'ring-2 ring-accent/40' : 'ring-2 ring-bad/40';
   }
   if (winner) border = 'border-good';
   if (acting) {
     border = 'border-accent';
-    shadow =
-      'shadow-[0_0_0_2px_color-mix(in_srgb,var(--color-accent)_35%,transparent),0_0_22px_color-mix(in_srgb,var(--color-accent)_25%,transparent)]';
+    shadow = 'ring-2 ring-accent/35 shadow-glow';
   }
   return `${border} ${shadow}`;
 }
@@ -140,7 +137,7 @@ function KingStat({ p }: { p: Player }) {
   return (
     <Tooltip content={() => <KingTip king={p.king} on={on} />}>
       {(anchor) => (
-        <span style={{ color: CCSS[p.king] }} {...anchor()}>
+        <span className={CLAN_FG[p.king]} {...anchor()}>
           <Icon name="crown" />
           <span className="text-muted land:hidden">{KINGS[p.king].short}</span>
         </span>

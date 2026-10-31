@@ -38,13 +38,10 @@ const handCard = (v: number) =>
   document.querySelector<HTMLElement>(`#hand [data-g="${mk(0, v)}"]`)!;
 
 beforeEach(() => {
-  // os pedaços do index.html que o render() usa fora do React
-  document.body.innerHTML =
-    '<section id="game"></section><div id="barInfo"></div><div id="tut" class="hidden"></div>';
   setSPEED(0); // sem animações
   LOCAL.answered = {};
   LOCAL.hide = new Set();
-  useUi.setState({ sel: [], modal: null, toast: null });
+  useUi.setState({ screen: 'game', sel: [], modal: null, toast: null });
   vi.clearAllMocks();
 });
 
@@ -136,7 +133,7 @@ describe('modal de escolha', () => {
   });
 
   it('abre a pergunta que chegou enquanto as Regras estavam abertas, ao fechá-las', async () => {
-    await import('../../ui/render.ts'); // registra o "tentar de novo" ao fechar modal
+    await import('../render.ts'); // registra o "tentar de novo" ao fechar modal
     game();
     render(<Modal />);
     void askLocal('Regras', '', [{ label: 'Fechar', value: 1 }]);

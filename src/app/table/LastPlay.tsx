@@ -22,7 +22,7 @@ export function LastPlay({
         <GobCard key={g} g={g} sm={small} eff={val(p, g)} owner={p} />
       ))}
       <span
-        className={`font-display font-extrabold leading-none ${small ? 'ml-1 text-lg' : 'ml-2 text-[26px]'}`}
+        className={`font-display font-extrabold leading-none ${small ? 'ml-1 text-lg' : 'ml-2 text-sum'}`}
       >
         {sum}
       </span>
