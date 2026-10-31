@@ -136,12 +136,10 @@ function KingStat({ p }: { p: Player }) {
   const on = kingActive(p);
   return (
     <Tooltip content={() => <KingTip king={p.king} on={on} />}>
-      {(anchor) => (
-        <span className={CLAN_FG[p.king]} {...anchor()}>
-          <Icon name="crown" />
-          <span className="text-muted land:hidden">{KINGS[p.king].short}</span>
-        </span>
-      )}
+      <span className={CLAN_FG[p.king]}>
+        <Icon name="crown" />
+        <span className="text-muted land:hidden">{KINGS[p.king].short}</span>
+      </span>
     </Tooltip>
   );
 }

@@ -1,6 +1,6 @@
 import { P, nameOf } from '../../../../game/state.ts';
 import type { Pending } from '../../../../game/types.ts';
-import { RED } from '../../../components/variants.ts';
+import { RED, PRIMARY } from '../../../components/variants.ts';
 import { pickTarget } from '../../actions.ts';
 import { Say } from './Say.tsx';
 
@@ -11,7 +11,12 @@ export function TargetActions({ pe }: { pe: Pending }) {
     <>
       <Say>{`${steal ? 'Roube' : 'Elimine'} uma carta (faltam ${pe.data.left}):`}</Say>
       {pe.data.T!.map((t) => (
-        <button key={t} className={steal ? '' : RED} data-tgt={t} onClick={() => pickTarget(t)}>
+        <button
+          key={t}
+          className={steal ? PRIMARY : RED}
+          data-tgt={t}
+          onClick={() => pickTarget(t)}
+        >
           {`${nameOf(t)} · ${P(t).hand.length}`}
         </button>
       ))}

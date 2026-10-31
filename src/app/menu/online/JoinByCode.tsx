@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { createTable } from '../../../net/online.ts';
-import { GHOST } from '../../components/variants.ts';
+import { GHOST, PRIMARY } from '../../components/variants.ts';
 import { resetTips } from '../../store.ts';
 import { joinWithTips } from './join.ts';
 
@@ -10,6 +10,7 @@ export function JoinByCode() {
   return (
     <div className="flex flex-wrap items-center gap-2.5">
       <button
+        className={PRIMARY}
         id="btnCreate"
         onClick={() => {
           resetTips();

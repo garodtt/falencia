@@ -6,6 +6,7 @@ import { newState } from '../game/engine.ts';
 import { G, setG } from '../game/state.ts';
 import { Sprites } from '../app/components/Sprites.tsx';
 import { Overlays } from '../app/overlays/Overlays.tsx';
+import { SeletorTema } from './SeletorTema.tsx';
 import { Animacoes } from './sections/Animacoes.tsx';
 import { Cartas } from './sections/Cartas.tsx';
 import { Janelas } from './sections/Janelas.tsx';
@@ -60,6 +61,9 @@ export default function Sandbox() {
         <a className="ml-auto text-small text-muted hover:text-text" href="#/">
           ← Voltar ao jogo
         </a>
+        <div className="basis-full">
+          <SeletorTema />
+        </div>
       </header>
       <main className="mx-auto grid max-w-[1100px] gap-4 py-5 px-safe">
         <h2 className="m-0 font-display text-title font-semibold">{titulo}</h2>

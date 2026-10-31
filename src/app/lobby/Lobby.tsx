@@ -3,7 +3,7 @@ import { CLAN, KINGS } from '../../game/data.ts';
 import { G, NET } from '../../game/state.ts';
 import { leaveTable, resolveNames, sendAct, startOnline } from '../../net/online.ts';
 import { ColorDot } from '../components/ColorDot.tsx';
-import { GHOST } from '../components/variants.ts';
+import { GHOST, PRIMARY } from '../components/variants.ts';
 import { useTick } from '../store.ts';
 
 const CODE = 'font-display text-lg font-extrabold tracking-[2px] text-accent';
@@ -73,7 +73,9 @@ export function Lobby() {
       )}
       <div className="flex flex-wrap items-center gap-2.5">
         {NET.isHost ? (
-          <button onClick={() => void startOnline()}>Começar partida</button>
+          <button className={PRIMARY} onClick={() => void startOnline()}>
+            Começar partida
+          </button>
         ) : (
           <span className="text-muted">
             {mine ? 'Aguardando o anfitrião começar…' : 'Entrando na mesa…'}

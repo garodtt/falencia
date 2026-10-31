@@ -25,12 +25,10 @@ export function Stat({
         </TipBody>
       )}
     >
-      {(anchor) => (
-        <span className="inline-flex items-center gap-1" {...anchor()}>
-          <Icon name={icon} />
-          <b className="font-bold text-text">{n}</b>
-        </span>
-      )}
+      <span className="inline-flex items-center gap-1">
+        <Icon name={icon} />
+        <b className="font-bold text-text">{n}</b>
+      </span>
     </Tooltip>
   );
 }

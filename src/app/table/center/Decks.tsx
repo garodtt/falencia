@@ -5,7 +5,7 @@ import { ChaosBack } from '../../components/cards/ChaosBack.tsx';
 import { ItemBack } from '../../components/cards/ItemBack.tsx';
 import { MonsterBack } from '../../components/cards/MonsterBack.tsx';
 import { TipBody, TipNote } from '../../components/tooltip/TipBody.tsx';
-import { useTooltip } from '../../components/tooltip/useTooltip.tsx';
+import { Tooltip } from '../../components/tooltip/Tooltip.tsx';
 import { drawItem, revealChaos } from '../actions.ts';
 
 // o brilho de quem pode ser comprado agora (o monte de monstros nunca é clicável)
@@ -82,43 +82,45 @@ function Pile({
   onClick?: () => void;
   children: ReactNode;
 }) {
-  const tip = useTooltip(() => (
-    <TipBody title={`${label}: ${count}`}>
-      <TipNote>{hint}</TipNote>
-    </TipBody>
-  ));
   const act = need !== undefined && onClick;
   return (
-    <div
-      className={`relative grid justify-items-center gap-[5px] text-xs text-muted ${need !== undefined ? 'cursor-pointer' : ''}`}
-      id={id}
-      {...(act ? { role: 'button', tabIndex: 0 } : {})}
-      {...tip.anchor({
-        onClick,
-        onKeyDown: act
-          ? (e) => {
-              if (e.key !== 'Enter' && e.key !== ' ') return;
-              e.preventDefault();
-              onClick();
-            }
-          : undefined,
-      })}
+    <Tooltip
+      content={() => (
+        <TipBody title={`${label}: ${count}`}>
+          <TipNote>{hint}</TipNote>
+        </TipBody>
+      )}
     >
-      <div className="relative h-[72px] w-[52px] [--cw:52px]">
-        {children}
-        {need !== undefined ? (
-          <span className="absolute -top-2 -right-2 z-3 grid h-[22px] min-w-[22px] place-items-center rounded-full bg-accent font-ui text-xs font-extrabold text-on-accent">
-            {need}
-          </span>
-        ) : null}
+      <div
+        className={`relative grid justify-items-center gap-[5px] text-xs text-muted ${need !== undefined ? 'cursor-pointer' : ''}`}
+        id={id}
+        {...(act ? { role: 'button', tabIndex: 0 } : {})}
+        onClick={onClick}
+        onKeyDown={
+          act
+            ? (e) => {
+                if (e.key !== 'Enter' && e.key !== ' ') return;
+                e.preventDefault();
+                onClick();
+              }
+            : undefined
+        }
+      >
+        <div className="relative h-[72px] w-[52px] [--cw:52px]">
+          {children}
+          {need !== undefined ? (
+            <span className="absolute -top-2 -right-2 z-3 grid h-[22px] min-w-[22px] place-items-center rounded-full bg-accent font-ui text-xs font-extrabold text-on-accent">
+              {need}
+            </span>
+          ) : null}
+        </div>
+        <span className="whitespace-nowrap">
+          {`${label} `}
+          <b className="text-text" id={countId}>
+            {count}
+          </b>
+        </span>
       </div>
-      <span className="whitespace-nowrap">
-        {`${label} `}
-        <b className="text-text" id={countId}>
-          {count}
-        </b>
-      </span>
-      {tip.tooltip}
-    </div>
+    </Tooltip>
   );
 }

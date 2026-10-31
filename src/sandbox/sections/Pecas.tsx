@@ -7,7 +7,7 @@ import { Icon } from '../../app/components/Icon.tsx';
 import { PlayerStats } from '../../app/components/PlayerStats.tsx';
 import { ICONS } from '../../app/components/Sprites.tsx';
 import { Chip } from '../../app/components/UsedChips.tsx';
-import { DIALOG, GHOST, INPUT, PANEL, RED } from '../../app/components/variants.ts';
+import { DIALOG, GHOST, INPUT, PANEL, PRIMARY, RED } from '../../app/components/variants.ts';
 import { Warn } from '../../app/components/Warn.tsx';
 import { Amostra, Bloco, LINHA } from '../layout.tsx';
 
@@ -28,11 +28,11 @@ export function Pecas() {
       </Bloco>
       <Bloco
         titulo="Botões"
-        desc="O <button> sem classe já é o de destaque. As outras variantes estão em variants.ts."
+        desc="Variantes de variants.ts. O tamanho se ajusta com classes no uso (px-3, text-small...)."
       >
         <div className={LINHA}>
-          <Amostra nome="<button>">
-            <button>Jogar</button>
+          <Amostra nome="PRIMARY">
+            <button className={PRIMARY}>Jogar</button>
           </Amostra>
           <Amostra nome="GHOST">
             <button className={GHOST}>Limpar</button>
@@ -41,7 +41,9 @@ export function Pecas() {
             <button className={RED}>Sair</button>
           </Amostra>
           <Amostra nome="disabled">
-            <button disabled>Jogar</button>
+            <button className={PRIMARY} disabled>
+              Jogar
+            </button>
           </Amostra>
           <Amostra nome="com ícone">
             <button className={GHOST}>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import type { ChaosKey } from '../game/data.ts';
 import { App } from '../app/App.tsx';
+import './tema.ts'; // a cena usa o tema escolhido no sandbox
 import { CENAS, montar, mostrar } from './scenes.ts';
 
 export function lerCena(hash: string) {

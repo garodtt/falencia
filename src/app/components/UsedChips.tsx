@@ -10,17 +10,14 @@ export function Chip({ u }: { u: UsedItem }) {
   const detail = `${u.d ? ` ${u.d > 0 ? '+' : ''}${u.d}` : ''}${u.c !== undefined ? ` ${CLAN[u.c]}` : ''}${u.t ? ` ${TNAME[u.t]}` : ''}${u.x ? ' · cancelado' : ''}`;
   return (
     <Tooltip content={() => <ItemTip k={u.k} used={u} />}>
-      {(anchor) => (
-        <span
-          data-chip
-          className={`rounded-full px-2 py-0.5 text-note font-bold ${KIND[itemKind(u.k)].tint} ${
-            u.x ? 'line-through opacity-60' : ''
-          }`}
-          {...anchor()}
-        >
-          {name + detail}
-        </span>
-      )}
+      <span
+        data-chip
+        className={`rounded-full px-2 py-0.5 text-note font-bold ${KIND[itemKind(u.k)].tint} ${
+          u.x ? 'line-through opacity-60' : ''
+        }`}
+      >
+        {name + detail}
+      </span>
     </Tooltip>
   );
 }

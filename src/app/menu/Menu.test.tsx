@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '../../test-utils.tsx';
 import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { MENU, NET } from '../../game/state.ts';
 import { joinTable } from '../../net/online.ts';
@@ -22,23 +22,27 @@ beforeEach(() => {
 const clans = () => [...document.querySelectorAll<HTMLElement>('[data-clan-pick]')];
 
 describe('Menu', () => {
-  it('escolhe o território com clique e com Enter', () => {
+  // os seletores são ToggleGroup do Radix: cada opção é um <button> (Enter e Espaço funcionam
+  // sozinhos), marcado com role="radio" e aria-checked, e as setas andam entre as opções
+  it('escolhe o território clicando, e anda entre eles pelas setas', async () => {
     render(<Menu />);
     fireEvent.click(clans()[1]);
     expect(MENU.color).toBe(1);
-    expect(clans()[1].getAttribute('aria-pressed')).toBe('true');
+    expect(clans()[1].getAttribute('aria-checked')).toBe('true');
+    expect(clans()[0].getAttribute('aria-checked')).toBe('false');
+    expect(clans()[1].tagName).toBe('BUTTON');
 
-    fireEvent.keyDown(clans()[3], { key: 'Enter' });
-    expect(MENU.color).toBe(3);
-    expect(clans()[1].getAttribute('aria-pressed')).toBe('false');
+    clans()[1].focus();
+    fireEvent.keyDown(clans()[1], { key: 'ArrowRight' });
+    await waitFor(() => expect(document.activeElement).toBe(clans()[2]));
   });
 
   it('escolhe o número de jogadores', () => {
     render(<Menu />);
-    fireEvent.click(screen.getByRole('button', { name: '2' }));
+    fireEvent.click(screen.getByRole('radio', { name: '2' }));
     expect(MENU.n).toBe(2);
-    expect(screen.getByRole('button', { name: '2' }).getAttribute('aria-pressed')).toBe('true');
-    expect(screen.getByRole('button', { name: '4' }).getAttribute('aria-pressed')).toBe('false');
+    expect(screen.getByRole('radio', { name: '2' }).getAttribute('aria-checked')).toBe('true');
+    expect(screen.getByRole('radio', { name: '4' }).getAttribute('aria-checked')).toBe('false');
   });
 
   it('começa a partida contra bots com as dicas como marcado', () => {

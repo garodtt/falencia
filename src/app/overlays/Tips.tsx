@@ -1,7 +1,7 @@
 // Dicas de como jogar: uma bolha que aponta para a parte da tela que importa agora.
 import { useLayoutEffect, useRef } from 'react';
 import { TIPS, tipClose } from '../tips.ts';
-import { GHOST } from '../components/variants.ts';
+import { GHOST, PRIMARY } from '../components/variants.ts';
 import { useTick, useUi } from '../store.ts';
 import { TIP } from './tipContent.tsx';
 
@@ -42,7 +42,7 @@ export function Tips() {
           >
             Desligar dicas
           </button>
-          <button id="tipOk" onClick={tipClose}>
+          <button className={PRIMARY} id="tipOk" onClick={tipClose}>
             Entendi
           </button>
         </div>

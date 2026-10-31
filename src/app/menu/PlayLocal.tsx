@@ -1,6 +1,7 @@
 import { startLocal } from './startLocal.ts';
 import { Icon } from '../components/Icon.tsx';
 import { resetTips, useUi } from '../store.ts';
+import { PRIMARY } from '../components/variants.ts';
 
 // "Jogar contra bots" e a opção de mostrar as dicas
 export function PlayLocal() {
@@ -9,6 +10,7 @@ export function PlayLocal() {
   return (
     <div className="flex flex-wrap items-center gap-2.5">
       <button
+        className={PRIMARY}
         id="btnPlay"
         onClick={() => {
           resetTips();

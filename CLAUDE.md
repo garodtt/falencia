@@ -72,12 +72,31 @@ src/sandbox/ a página #/sandbox (vitrine de tudo que é visual). O jogo não im
 - Ícone: `<Icon name="..." />`. Ícone novo = uma entrada em `ICONS`
   (`app/components/Sprites.tsx`); ele aparece sozinho no sandbox.
 
+### Componentes base: Radix
+
+Comportamento de componente (foco, teclado, acessibilidade, posicionamento, abrir/fechar) vem do
+**Radix Primitives** (`import { Dialog } from 'radix-ui'`). Ele não tem visual: o visual é
+Tailwind com os nossos tokens. **Não reimplemente** essas lógicas na mão.
+
+| Precisa de...                            | Use                                                                         |
+| ---------------------------------------- | --------------------------------------------------------------------------- |
+| Pergunta ao jogador                      | `askLocal()` (vira o `Modal`, um `AlertDialog`)                             |
+| Janela/painel que fecha (aviso, gaveta)  | `Dialog` (`modal={false}` se a mesa continua clicável)                      |
+| Balão ao passar o mouse                  | `<Tooltip content={() => ...}>{elemento}</Tooltip>` (`components/tooltip/`) |
+| Abas                                     | `Tabs` (troca no mousedown; nos testes, `fireEvent.mouseDown`)              |
+| Escolher uma opção de várias             | `ToggleGroup type="single"` (botões com setas e `aria-checked`)             |
+| Outra coisa (menu, popover, checkbox...) | procure em radix-ui.com/primitives antes de escrever                        |
+
+- Estado do Radix vira atributo: estilize com `data-[state=open]:`, `data-[state=on]:`,
+  `data-[state=active]:`, não com classe posta à mão.
+- Conteúdo dentro de `<button>` (opções, gatilhos) só com elementos de texto (`<span>`), não `<p>`/`<div>`.
+
 ### Onde cada coisa mora
 
 | O quê                                       | Onde                                            |
 | ------------------------------------------- | ----------------------------------------------- |
 | Peça usada em mais de um lugar              | `app/components/` (cartas em `cards/`)          |
-| Conteúdo de balão (tooltip)                 | `app/components/tips/` + `useTooltip`           |
+| Conteúdo de balão (tooltip)                 | `app/components/tips/` + `Tooltip`              |
 | Parte da mesa                               | `app/table/` (`opponents/`, `center/`, `dock/`) |
 | Menu / sala de espera                       | `app/menu/`, `app/lobby/`                       |
 | Coisa por cima da tela (modal, aviso, dica) | `app/overlays/`, montada em `App.tsx`           |
@@ -92,7 +111,10 @@ src/sandbox/ a página #/sandbox (vitrine de tudo que é visual). O jogo não im
 
 ## Estilo: Tailwind só com os tokens
 
-Os tokens ficam no `@theme` de `src/styles.css`. Use **só** eles:
+Os tokens ficam no `@theme` de `src/styles.css`. As cores apontam para as escalas do **Radix
+Colors** (12 tons por cor): o cinza do tema é `--g-*`, o destaque `--a-*`. Trocar o tema do jogo =
+trocar o nome da escala no `:root` do `styles.css` (experimente antes no seletor de tema do
+sandbox). Cor nova vem de uma escala do Radix, nunca de um hex inventado. Use **só** os tokens:
 
 | Tipo           | Use                                                                                                                                                                                     |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -111,8 +133,11 @@ Os tokens ficam no `@theme` de `src/styles.css`. Use **só** eles:
   comentário dizendo para que serve, e depois use a classe.
 - Valor arbitrário (`w-[...]`) só para medida única de layout ou proporcional à carta
   (`text-[calc(var(--cw)*0.16)]`). As cartas escalam com `--cw`/`--ch`.
-- Classes que se repetem entre componentes vão para `app/components/variants.ts`: `GHOST`, `RED`,
-  `INPUT`, `PANEL`, `SCRIM`, `DIALOG`. O `<button>` sem classe já é o botão amarelo de destaque.
+- Classes que se repetem entre componentes vão para `app/components/variants.ts`: `PRIMARY`,
+  `GHOST`, `RED` (botões), `INPUT`, `PANEL`, `SCRIM`, `DIALOG`.
+- Botão: `<button>` puro não tem visual (abas e opções do Radix também são `<button>`). Botão com
+  cara de botão usa `PRIMARY`, `GHOST` ou `RED`; o tamanho se ajusta no uso
+  (`` `${PRIMARY} px-3 py-1.5 text-small` ``), porque a forma (`.btn`) perde para as utilidades.
 - Cor do território: `CLAN_BG`, `CLAN_TEXT`, `CLAN_FG`, `CLAN_TINT` (`cards/cardBase.ts`).
   `CLAN_COLOR` (a variável CSS crua) só para `style`, quando a cor é dinâmica e não cabe numa classe.
 - `styles.css` fora do `@theme` é só para o que classe não resolve (keyframes, a virada da
@@ -121,8 +146,9 @@ Os tokens ficam no `@theme` de `src/styles.css`. Use **só** eles:
 ## Testes
 
 - `test/*.test.ts` (node:test): motor, regras e gabarito. Regra nova = teste novo aqui.
-- `src/**/*.test.tsx` (Vitest + Testing Library): telas. Encontre elementos por papel/rótulo ou
-  `data-*`.
+- `src/**/*.test.tsx` (Vitest + Testing Library): telas. Importe de `src/test-utils.tsx` (não de
+  `@testing-library/react`): o `render` de lá já põe o `TooltipProvider`. Encontre elementos por
+  papel/rótulo ou `data-*`.
 - `test/padrao.test.ts`: o guarda-corpo deste arquivo. Se ele falhar, ajuste o código ao padrão;
   não afrouxe a regra sem combinar com o time.
 

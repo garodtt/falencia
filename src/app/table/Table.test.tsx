@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '../../test-utils.tsx';
 import { beforeEach, describe, expect, it, vi } from 'vite-plus/test';
 import { mk } from '../../game/data.ts';
 import { newState } from '../../game/engine.ts';

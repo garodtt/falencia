@@ -5,7 +5,7 @@ import { makeMonsters, mk } from '../../game/data.ts';
 import type { FxCard } from '../../game/types.ts';
 import { MonsterBack } from '../../app/components/cards/MonsterBack.tsx';
 import { MonsterCard } from '../../app/components/cards/MonsterCard.tsx';
-import { GHOST } from '../../app/components/variants.ts';
+import { GHOST, PRIMARY } from '../../app/components/variants.ts';
 import { banner, confetti, fly, fxCard, popAt, toast } from '../../app/fx.tsx';
 import { Flip } from '../../app/table/center/Flip.tsx';
 import { Amostra, Bloco, LINHA } from '../layout.tsx';
@@ -67,7 +67,9 @@ export function Animacoes() {
             <MonsterBack />
             <MonsterCard m={MONSTRO} mod={0} className="front" />
           </Flip>
-          <button onClick={() => setAberto(!aberto)}>{aberto ? 'Fechar' : 'Acordar'}</button>
+          <button className={PRIMARY} onClick={() => setAberto(!aberto)}>
+            {aberto ? 'Fechar' : 'Acordar'}
+          </button>
         </div>
       </Bloco>
       <Bloco titulo="Avisos">

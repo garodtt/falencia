@@ -23,7 +23,7 @@ export function Cartas() {
     [eff, setEff] = useState(false);
   return (
     <div className="grid gap-4" style={{ '--cw': `${cw}px` } as CSSProperties}>
-      <div className="sticky top-14 z-2 flex flex-wrap items-center gap-4 rounded-panel border border-line bg-surface p-3 text-small">
+      <div className="sticky top-24 z-2 flex flex-wrap items-center gap-4 rounded-panel border border-line bg-surface p-3 text-small">
         <label className="flex items-center gap-2">
           Tamanho (--cw)
           <input

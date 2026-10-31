@@ -4,7 +4,7 @@ import { Sprites } from './components/Sprites.tsx';
 import { Header } from './Header.tsx';
 import { Lobby } from './lobby/Lobby.tsx';
 import { Menu } from './menu/Menu.tsx';
-import { LogList } from './overlays/LogList.tsx';
+import { LogDrawer } from './overlays/LogDrawer.tsx';
 import { Overlays } from './overlays/Overlays.tsx';
 import { useUi } from './store.ts';
 import { Table } from './table/Table.tsx';
@@ -13,7 +13,6 @@ const SCREEN = 'grid min-h-[calc(100vh-53px)] px-safe';
 
 export function App() {
   const screen = useUi((s) => s.screen),
-    logOpen = useUi((s) => s.logOpen),
     shake = useUi((s) => s.shake);
   return (
     <>
@@ -37,14 +36,8 @@ export function App() {
           <Table />
         </section>
       )}
-      {/* invisible só depois de fechar: a transição de visibility espera o deslize acabar */}
-      <aside
-        id="logDrawer"
-        className={`fixed top-13.25 right-0 bottom-0 z-drawer w-[min(340px,100vw)] overflow-auto border-l border-line bg-surface p-3.5 transition-[translate,visibility] duration-250 land:top-[41px] ${logOpen ? '' : 'invisible translate-x-full'}`}
-      >
-        <h3 className="m-0 mb-2 font-display text-lg font-semibold">Histórico</h3>
-        <LogList />
-      </aside>
+      <LogDrawer />
+
       <Overlays />
     </>
   );

@@ -4,6 +4,7 @@ import type { Player } from '../../../../game/types.ts';
 import { pass } from '../../actions.ts';
 import { outLabel } from '../../view.ts';
 import { Say } from './Say.tsx';
+import { PRIMARY } from '../../../components/variants.ts';
 
 // janela de itens: a que distância do alvo você está, se está ganhando, e "Passar"
 export function WindowStatus({ me }: { me: Player }) {
@@ -22,7 +23,7 @@ export function WindowStatus({ me }: { me: Player }) {
         )}
         .
       </Say>
-      <button id="btnPass" onClick={pass}>
+      <button className={PRIMARY} id="btnPass" onClick={pass}>
         Passar
       </button>
     </>

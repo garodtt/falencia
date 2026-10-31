@@ -1,8 +1,9 @@
-// Classes de visual reaproveitado. O <button> sem classe já é o botão de destaque (amarelo,
-// ver `button` em styles.css); estas são as outras variantes e as caixas que se repetem.
+// Classes de visual reaproveitado. Botão: todo <button> com cara de botão usa uma destas (a forma
+// é a classe .btn de styles.css; o tamanho dá para ajustar com px-3, text-small... no uso).
+export const PRIMARY = 'btn bg-accent text-on-accent';
 export const GHOST =
-  'bg-transparent text-text inset-ring inset-ring-line hover:enabled:bg-surface-2';
-export const RED = 'bg-red text-white';
+  'btn bg-transparent text-text inset-ring inset-ring-line hover:enabled:bg-surface-2';
+export const RED = 'btn bg-red text-white';
 // campo de texto (nome, código da mesa); quem usa põe a largura e o tamanho da letra
 export const INPUT =
   'rounded-box border border-line bg-surface-2 px-3 py-2 font-ui font-semibold text-text';

@@ -3,31 +3,60 @@
    cor nova, sombra nova, tamanho de letra novo... entra primeiro neste @theme. */
 @import 'tailwindcss';
 
+/* Cores: escalas do Radix Colors (12 tons cada, versão escura; a classe "dark" está no <html>).
+   Em cada escala: 1-2 fundo, 3-5 fundo de componente, 6-8 borda, 9-10 cor cheia, 11-12 texto.
+   Ver https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale */
+@import '@radix-ui/colors/slate-dark.css';
+@import '@radix-ui/colors/amber-dark.css';
+@import '@radix-ui/colors/red-dark.css';
+@import '@radix-ui/colors/green-dark.css';
+@import '@radix-ui/colors/indigo-dark.css';
+@import '@radix-ui/colors/pink-dark.css';
+@import '@radix-ui/colors/violet-dark.css';
+@import '@radix-ui/colors/orange-dark.css';
+
+/* O tema: qual escala é o cinza (--g-*) e qual é o destaque (--a-*). O sandbox troca os dois ao
+   vivo (no topo do sandbox); escolhido o tema, é só trocar o nome da escala aqui. */
+:root {
+  --g-1: var(--slate-1);
+  --g-2: var(--slate-2);
+  --g-3: var(--slate-3);
+  --g-4: var(--slate-4);
+  --g-6: var(--slate-6);
+  --g-7: var(--slate-7);
+  --g-8: var(--slate-8);
+  --g-11: var(--slate-11);
+  --g-12: var(--slate-12);
+  --a-9: var(--amber-9);
+  --a-contrast: var(--slate-1); /* texto em cima do destaque: escuro (amarelos) ou branco */
+}
+
 @theme {
-  --color-bg: #17181c;
-  --color-surface: #1f2126;
-  --color-surface-2: #272a30;
-  --color-surface-3: #30333a;
-  --color-line: #33363d;
-  --color-text: #eceef2;
-  --color-muted: #9aa0ab;
-  --color-red: #e5484d;
-  --color-green: #30a46c;
-  --color-blue: #3e63dd;
-  --color-yellow: #f5b300;
-  --color-accent: #f5b300;
-  --color-chaos: #d6409f;
-  --color-moon: #8e7cf0;
-  --color-sun: #f0a43a;
-  --color-good: #3dd68c;
-  --color-bad: #ff6369;
-  --color-on-accent: #1d1600; /* texto em cima do amarelo de destaque */
-  --color-on-yellow: #2a1f00; /* texto da carta amarela */
-  --color-scrim: #0a0b0e; /* fundo escuro atrás de janelas (use com /NN de opacidade) */
-  --color-card-edge: #40444c; /* borda dos versos de carta */
-  --color-card-mark: #555a64; /* o "F" do verso do goblin */
-  --color-mon-edge: #45425e; /* borda do verso do monstro */
-  --color-mon-edge-lit: #5a5490; /* borda do monstro revelado */
+  --color-bg: var(--g-1);
+  --color-surface: var(--g-2);
+  --color-surface-2: var(--g-3);
+  --color-surface-3: var(--g-4);
+  --color-line: var(--g-6);
+  --color-card-edge: var(--g-7); /* borda dos versos de carta */
+  --color-card-mark: var(--g-8); /* o "F" do verso do goblin */
+  --color-muted: var(--g-11);
+  --color-text: var(--g-12);
+  --color-scrim: var(--g-1); /* fundo escuro atrás de janelas (use com /NN de opacidade) */
+  --color-accent: var(--a-9);
+  --color-on-accent: var(--a-contrast);
+  /* territórios: fixos, não mudam com o tema */
+  --color-red: var(--red-9);
+  --color-green: var(--green-9);
+  --color-blue: var(--indigo-9);
+  --color-yellow: var(--amber-9);
+  --color-on-yellow: var(--amber-1); /* texto da carta amarela */
+  --color-chaos: var(--pink-9);
+  --color-moon: var(--violet-11); /* itens de monstro dormindo */
+  --color-sun: var(--orange-11); /* itens de monstro acordado */
+  --color-good: var(--green-11);
+  --color-bad: var(--red-10);
+  --color-mon-edge: var(--violet-6); /* borda do verso do monstro */
+  --color-mon-edge-lit: var(--violet-7); /* borda do monstro revelado */
   --font-display: 'Bricolage Grotesque', 'Arial Black', system-ui, sans-serif;
   --font-ui: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
@@ -87,10 +116,14 @@
 }
 /* fundo dos monstros (verso e frente) */
 @utility bg-mon-back {
-  background-image: linear-gradient(170deg, #2b2a3a, #1c1b26);
+  background-image: linear-gradient(
+    170deg,
+    color-mix(in oklab, var(--violet-3) 50%, var(--g-3)),
+    color-mix(in oklab, var(--violet-2) 50%, var(--g-2))
+  );
 }
 @utility bg-mon-face {
-  background-image: linear-gradient(170deg, #2e2b45, #1b1a26);
+  background-image: linear-gradient(170deg, var(--violet-3), var(--violet-2));
 }
 
 :root {
@@ -110,36 +143,41 @@ html {
     @apply m-0 bg-bg text-text;
     font: 500 var(--text-body)/1.45 var(--font-ui);
   }
-  /* visual padrão de todo <button>; as outras variantes estão em app/components/variants.ts */
-  button {
-    font: 700 var(--text-body) var(--font-ui);
+  /* <button> puro não tem visual (abas, opções e gatilhos do Radix também são <button>); o visual
+     de botão é a classe .btn, que vem pronta nas variantes de app/components/variants.ts */
+  button:not(:disabled) {
     cursor: pointer;
-    border: 0;
-    border-radius: var(--radius-box);
-    padding: 10px 18px;
-    background: var(--color-accent);
-    color: var(--color-on-accent);
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition:
-      transform 0.08s,
-      filter 0.15s;
-  }
-  button:hover:not(:disabled) {
-    filter: brightness(1.08);
-  }
-  button:active:not(:disabled) {
-    transform: translateY(1px);
-  }
-  button:disabled {
-    opacity: 0.45;
-    cursor: not-allowed;
   }
   button:focus-visible,
   [tabindex]:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
+  }
+}
+
+/* forma de botão. Fica na camada components de propósito: as classes utilitárias (px-3,
+   text-small...) sempre vencem, então dá para ajustar o tamanho onde o botão é usado */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: var(--radius-box);
+    padding: 10px 18px;
+    font: 700 var(--text-body) var(--font-ui);
+    transition:
+      transform 0.08s,
+      filter 0.15s;
+  }
+  .btn:hover:not(:disabled) {
+    filter: brightness(1.08);
+  }
+  .btn:active:not(:disabled) {
+    transform: translateY(1px);
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
   }
 }
 /* Daqui para baixo é CSS "de verdade" (sem @layer, de propósito): tem que vencer qualquer classe

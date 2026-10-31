@@ -1,3 +1,4 @@
+import { Dialog } from 'radix-ui';
 import { useState, useSyncExternalStore } from 'react';
 import { Icon } from '../components/Icon.tsx';
 import { DIALOG, GHOST, SCRIM } from '../components/variants.ts';
@@ -38,26 +39,26 @@ export function RotateHint({ onClose }: { onClose?: () => void }) {
       setOff(true);
     });
   return (
-    <div className={`${SCRIM} z-rotate`}>
-      <div
-        className={`${DIALOG} w-[min(340px,100%)] justify-items-center p-6 text-center`}
-        role="dialog"
-        aria-labelledby="rotateTitle"
-      >
-        <span className="grid size-16 place-items-center rounded-2xl bg-accent/16 text-accent">
-          <Icon name="rotate" style={{ width: 36, height: 36, strokeWidth: 1.6 }} />
-        </span>
-        <h3 className="m-0 font-display text-title font-semibold" id="rotateTitle">
-          Gire a tela
-        </h3>
-        <p className="m-0 text-muted">
-          A mesa fica melhor com o aparelho deitado: rivais, monstro e sua mão cabem de uma vez na
-          tela.
-        </p>
-        <button className={GHOST} onClick={close}>
-          Continuar assim
-        </button>
-      </div>
-    </div>
+    <Dialog.Root open onOpenChange={(o) => !o && close()}>
+      <Dialog.Portal>
+        <Dialog.Overlay className={`${SCRIM} z-rotate`}>
+          <Dialog.Content
+            className={`${DIALOG} w-[min(340px,100%)] justify-items-center p-6 text-center`}
+          >
+            <span className="grid size-16 place-items-center rounded-2xl bg-accent/16 text-accent">
+              <Icon name="rotate" style={{ width: 36, height: 36, strokeWidth: 1.6 }} />
+            </span>
+            <Dialog.Title className="m-0 font-display text-title font-semibold">
+              Gire a tela
+            </Dialog.Title>
+            <Dialog.Description className="m-0 text-muted">
+              A mesa fica melhor com o aparelho deitado: rivais, monstro e sua mão cabem de uma vez
+              na tela.
+            </Dialog.Description>
+            <Dialog.Close className={GHOST}>Continuar assim</Dialog.Close>
+          </Dialog.Content>
+        </Dialog.Overlay>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

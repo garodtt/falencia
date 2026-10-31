@@ -4,7 +4,7 @@ import type { Gob } from '../../../game/data.ts';
 import type { Player } from '../../../game/types.ts';
 import { Icon, TraitIcons } from '../Icon.tsx';
 import { GoblinTip } from '../tips/GoblinTip.tsx';
-import { useTooltip } from '../tooltip/useTooltip.tsx';
+import { Tooltip } from '../tooltip/Tooltip.tsx';
 import { CARD_BASE, CLAN_BG, CLAN_TEXT } from './cardBase.ts';
 
 type Props = Omit<ComponentProps<'div'>, 'title' | 'ref'> & {
@@ -24,13 +24,12 @@ const traitSize = {
 export function GobCard({ g, eff, owner, sm, className = '', ...rest }: Props) {
   const v = gv(g),
     clan = gc(g);
-  const tip = useTooltip(() => <GoblinTip g={g} p={owner} />);
   return (
-    <>
+    <Tooltip content={() => <GoblinTip g={g} p={owner} />}>
       <div
         data-card
         className={`${CARD_BASE} ${CLAN_BG[clan]} ${CLAN_TEXT[clan]} grid grid-rows-[auto_1fr_auto] border border-white/[0.14] p-[calc(var(--cw)*0.1)] ${className}`}
-        {...tip.anchor(rest)}
+        {...rest}
       >
         {!sm && eff !== undefined && eff !== v && (
           <span className="absolute -top-[7px] -right-[7px] z-2 rounded-full border border-accent bg-bg px-1.5 font-ui text-xs font-extrabold text-accent">
@@ -57,7 +56,6 @@ export function GobCard({ g, eff, owner, sm, className = '', ...rest }: Props) {
           </span>
         )}
       </div>
-      {tip.tooltip}
-    </>
+    </Tooltip>
   );
 }

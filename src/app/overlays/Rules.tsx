@@ -1,5 +1,6 @@
 // Tela de regras (aberta pelo botão "Regras" da barra do topo).
-import { Fragment, useState } from 'react';
+import { Tabs } from 'radix-ui';
+import { Fragment } from 'react';
 import type { ReactNode } from 'react';
 import { CHAOS, CLAN, ITEMS, KINGS, heirsTxt, traitNames } from '../../game/data.ts';
 import type { ItemKey } from '../../game/data.ts';
@@ -27,36 +28,36 @@ function Section({ first, children }: { first?: boolean; children: ReactNode }) 
   );
 }
 
-const TABS = [
-  ['rules', 'Regras'],
-  ['items', 'Itens'],
-  ['chaos', 'Caos'],
-] as const;
-type Tab = (typeof TABS)[number][0];
+const TABS: [string, string, () => ReactNode][] = [
+  ['rules', 'Regras', RulesText],
+  ['items', 'Itens', ItemTable],
+  ['chaos', 'Caos', ChaosTable],
+];
 
 const total = (defs: readonly (readonly unknown[])[], i: number) =>
   defs.reduce((a, d) => a + (d[i] as number), 0);
 
-// tela de regras com abas: regras, tabela de itens e tabela de Caos
+// tela de regras com abas (Radix Tabs): regras, tabela de itens e tabela de Caos
 export function Rules() {
-  const [tab, setTab] = useState<Tab>('rules');
   return (
-    <div className="grid w-full gap-2 text-left">
-      <div role="tablist" className="flex gap-1 border-b border-line">
+    <Tabs.Root defaultValue="rules" className="grid w-full gap-2 text-left">
+      <Tabs.List className="flex gap-1 border-b border-line">
         {TABS.map(([k, t]) => (
-          <button
+          <Tabs.Trigger
             key={k}
-            role="tab"
-            aria-selected={tab === k}
-            onClick={() => setTab(k)}
-            className={`-mb-px cursor-pointer border-b-2 bg-transparent px-3 py-1.5 font-ui text-small font-bold ${tab === k ? 'border-accent text-text' : 'border-transparent text-muted'}`}
+            value={k}
+            className="-mb-px border-b-2 border-transparent px-3 py-1.5 text-small font-bold text-muted data-[state=active]:border-accent data-[state=active]:text-text"
           >
             {t}
-          </button>
+          </Tabs.Trigger>
         ))}
-      </div>
-      {tab === 'rules' ? <RulesText /> : tab === 'items' ? <ItemTable /> : <ChaosTable />}
-    </div>
+      </Tabs.List>
+      {TABS.map(([k, , Content]) => (
+        <Tabs.Content key={k} value={k}>
+          <Content />
+        </Tabs.Content>
+      ))}
+    </Tabs.Root>
   );
 }
 

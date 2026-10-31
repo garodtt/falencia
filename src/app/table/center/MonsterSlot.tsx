@@ -7,36 +7,34 @@ import { MonsterBack } from '../../components/cards/MonsterBack.tsx';
 import { MonsterCard } from '../../components/cards/MonsterCard.tsx';
 import { Icon } from '../../components/Icon.tsx';
 import { MonsterTip, SleepingMonsterTip } from '../../components/tips/MonsterTip.tsx';
-import { useTooltip } from '../../components/tooltip/useTooltip.tsx';
+import { Tooltip } from '../../components/tooltip/Tooltip.tsx';
 import { Flip } from './Flip.tsx';
+
+const SLOT = '[--cw:clamp(92px,min(9vw,15vh),140px)] land:[--cw:60px]';
 
 // o monstro da rodada e, com Monstros Opostos, o segundo monstro
 export function MonsterSlot() {
   const first = G.monster,
     second = G.monster2 && G.revealed ? G.monster2 : null;
-  const tip1 = useTooltip(
-    first ? () => (G.revealed ? <MonsterTip m={first} /> : <SleepingMonsterTip />) : null,
-    'right',
-  );
-  const tip2 = useTooltip(second ? () => <MonsterTip m={second} /> : null, 'right');
   return (
     <div className="flex items-center gap-3.5 land:col-start-1 land:row-span-3 land:row-start-1">
-      <div
-        id="monsterSlot"
-        className="[--cw:clamp(92px,min(9vw,15vh),140px)] land:[--cw:60px]"
-        {...tip1.anchor()}
+      <Tooltip
+        side="right"
+        content={
+          first ? () => (G.revealed ? <MonsterTip m={first} /> : <SleepingMonsterTip />) : null
+        }
       >
-        <Monster />
-      </div>
-      <div
-        id="monsterSlot2"
-        className={`[--cw:clamp(92px,min(9vw,15vh),140px)] land:[--cw:60px] ${second ? '' : '!hidden'}`}
-        {...tip2.anchor()}
-      >
-        {second ? <MonsterCard m={second} mod={monOf(second) - second.v} /> : null}
-      </div>
-      {tip1.tooltip}
-      {tip2.tooltip}
+        <div id="monsterSlot" className={SLOT}>
+          <Monster />
+        </div>
+      </Tooltip>
+      {second && (
+        <Tooltip side="right" content={() => <MonsterTip m={second} />}>
+          <div id="monsterSlot2" className={SLOT}>
+            <MonsterCard m={second} mod={monOf(second) - second.v} />
+          </div>
+        </Tooltip>
+      )}
     </div>
   );
 }

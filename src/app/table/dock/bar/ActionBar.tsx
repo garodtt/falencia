@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import type { Gob } from '../../../../game/data.ts';
 import { G, LOCAL, ME, MODE, nameOf } from '../../../../game/state.ts';
 import type { Pending, Player } from '../../../../game/types.ts';
-import { GHOST } from '../../../components/variants.ts';
+import { GHOST, PRIMARY } from '../../../components/variants.ts';
 import { leaveAfterBust, nextRound } from '../../actions.ts';
 import { GameOver } from './GameOver.tsx';
 import { Say } from './Say.tsx';
@@ -61,7 +61,7 @@ export function ActionBar({
       return (
         <>
           <Say>{me.alive ? 'Rodada encerrada.' : 'Você faliu.'}</Say>
-          <button id="btnNext" onClick={nextRound}>
+          <button className={PRIMARY} id="btnNext" onClick={nextRound}>
             {MODE === 'online' ? 'Pronto' : 'Próxima rodada'}
           </button>
         </>

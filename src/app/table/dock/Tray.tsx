@@ -5,6 +5,7 @@ import type { Pending, Player } from '../../../game/types.ts';
 import { Icon } from '../../components/Icon.tsx';
 import { KIND, itemKind } from '../../components/itemKind.ts';
 import { activateItem } from '../actions.ts';
+import { PRIMARY } from '../../components/variants.ts';
 
 // os seus itens (com "Usar" nos que valem agora)
 export function Tray({ me, pe }: { me: Player; pe: Pending | null }) {
@@ -53,7 +54,7 @@ function TrayItem({ k, usable }: { k: ItemKey; usable: boolean }) {
       </div>
       {usable && kind !== 'reacao' ? (
         <button
-          className="px-3 py-1.5 text-small"
+          className={`${PRIMARY} px-3 py-1.5 text-small`}
           data-use={k}
           onClick={() => void activateItem(k)}
         >

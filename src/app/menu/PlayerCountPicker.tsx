@@ -1,3 +1,4 @@
+import { ToggleGroup } from 'radix-ui';
 import { MENU } from '../../game/state.ts';
 import { setMenu } from '../store.ts';
 
@@ -8,18 +9,24 @@ export function PlayerCountPicker() {
   return (
     <div className="flex flex-wrap items-center gap-2.5">
       <span className="text-muted">Jogadores</span>
-      <div className="inline-flex rounded-box bg-surface-2 p-[3px]" id="segN">
+      <ToggleGroup.Root
+        type="single"
+        id="segN"
+        aria-label="Jogadores"
+        className="inline-flex rounded-box bg-surface-2 p-[3px]"
+        value={String(MENU.n)}
+        onValueChange={(v) => v && setMenu({ n: +v })}
+      >
         {PLAYER_COUNTS.map((n) => (
-          <button
+          <ToggleGroup.Item
             key={n}
-            className={`bg-transparent px-3.5 py-1.5 text-muted ${MENU.n === n ? 'bg-surface-3 text-text' : ''}`}
-            aria-pressed={MENU.n === n}
-            onClick={() => setMenu({ n })}
+            value={String(n)}
+            className="rounded-box px-3.5 py-1.5 font-bold text-muted data-[state=on]:bg-surface-3 data-[state=on]:text-text"
           >
             {n}
-          </button>
+          </ToggleGroup.Item>
         ))}
-      </div>
+      </ToggleGroup.Root>
     </div>
   );
 }

@@ -59,7 +59,7 @@ function KingRow({ me }: { me: Player }) {
     on = kingActive(me);
   return (
     <button
-      className="grid w-full grid-cols-[auto_1fr] items-center gap-2.5 rounded-box bg-surface-2 p-[9px] text-left land:grid-cols-[auto_minmax(0,1fr)] land:gap-2 land:p-1.5 text-text shadow-none hover:bg-surface-3 hover:filter-none"
+      className="grid w-full grid-cols-[auto_1fr] items-center gap-2.5 rounded-box bg-surface-2 p-[9px] text-left land:grid-cols-[auto_minmax(0,1fr)] land:gap-2 land:p-1.5 font-bold text-text hover:bg-surface-3"
       id="kingToggle"
       onClick={toggleKing}
     >
