@@ -150,7 +150,7 @@ void test('a característica herdada conta para a passiva, em qualquer mão', ()
   const p = G.players[0]; // Vermelho, Rei Quebra-Crânio (Cicatriz)
   G.monster = mon(22); // passiva Monóculo
   G.revealed = true;
-  const blue8 = mk(2, 8); // Fedorento · Pereba, herda Monóculo do Rei Olho-de-Vidro
+  const blue8 = mk(2, 8); // Maluco · Pereba, herda Monóculo do Rei Olho-de-Vidro
   assert.equal(kingActive(p), true); // o Quebra-Crânio não tem Monóculo
   assert.equal(val(p, blue8), 0);
   assert.equal(val(p, mk(0, 8)), 8); // o 8 Vermelho não tem Monóculo

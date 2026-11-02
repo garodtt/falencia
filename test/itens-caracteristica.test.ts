@@ -89,7 +89,7 @@ for (const [k, t, d] of [
 ] as [ItemKey, number, number][]) {
   void test(`${ITEMS[k][0]}: ${d > 0 ? '+' : ''}${d} por goblin, com 1, 2 e 3`, async () => {
     const G = table([[k], [], []]);
-    const p = G.players[0]; // Rei Quebra-Crânio não empresta Monóculo nem Maluco
+    const p = G.players[0]; // nenhum goblin Vermelho herda Monóculo nem Maluco
     for (const n of [1, 2, 3]) {
       play(0, [...gobs(0, t).slice(0, n), ...gobs(0, t, false).slice(0, 3 - n)]);
       assert.deepEqual(

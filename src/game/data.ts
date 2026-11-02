@@ -46,16 +46,16 @@ export const TICO: Record<number, string> = {
 // características impressas: 2 por goblin (sem a herdada do rei ou rainha)
 export const TR = [
   0,
-  CN | MA,
-  OC | MA,
-  CH | OC,
+  CN | VE,
   OC | CN,
-  CH | MA,
+  CH | OC,
+  OC | VE,
+  CH | CN,
   BA | VE,
   CH | BA,
-  CN | VE,
-  BA | CN,
-  CH | VE,
+  MA | VE,
+  BA | MA,
+  CH | MA,
 ];
 for (let v = 11; v <= 20; v++) TR[v] = TR[21 - v];
 export const gv = (g: Gob) => g & 31,
@@ -84,7 +84,7 @@ export const KINGS: King[] = [
   {
     name: 'Rainha Musgo-Podre',
     short: 'Brotar',
-    tr: MA,
+    tr: CN,
     heirs: [11, 15],
     text: 'Brotar: no início da rodada, se você tiver menos cartas que todos os rivais, o jogador à sua direita escolhe 1 carta do seu cemitério e ela volta para a sua mão.',
   },
@@ -98,7 +98,7 @@ export const KINGS: King[] = [
   {
     name: 'Rainha Dente-de-Ouro',
     short: 'Mercadora',
-    tr: VE,
+    tr: MA,
     heirs: [16, 20],
     text: 'Mercadora: sempre que compra um item, compra 2 e fica com o melhor.',
   },

@@ -44,7 +44,7 @@ describe('balões de informação', () => {
   });
 
   it('mostra a característica herdada do rei ou rainha da cor do goblin', async () => {
-    // o 2 tem Monóculo e Maluco impressos; por ser um dos 1 a 5 Vermelhos, herda Cicatriz
+    // o 2 tem Monóculo e Fedorento impressos; por ser um dos 1 a 5 Vermelhos, herda Cicatriz
     render(<GobCard g={mk(0, 2)} owner={G.players[1]} tabIndex={0} />); // vale em qualquer mão
     const tip = await openTip(document.querySelector('[data-card]')!);
     expect(within(tip).getAllByText('herdada de Rei Quebra-Crânio')).toHaveLength(1);

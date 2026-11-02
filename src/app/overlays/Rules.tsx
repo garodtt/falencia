@@ -285,15 +285,14 @@ function RulesText() {
         </L>
         <L i={<Icon name="stink" />} t="Fedorento">
           característica usada pelos itens Fuga Fedorenta e Nariz de Ferro e pela passiva do monstro
-          27.
+          27. Herdada pelos goblins 11 a 15 Verdes (Rainha Musgo-Podre).
         </L>
         <L i={<Icon name="spiral" />} t="Maluco">
           característica usada pela Poção Maluca e pela passiva do monstro 33. Herdada pelos goblins
-          11 a 15 Verdes (Rainha Musgo-Podre).
+          16 a 20 Amarelos (Rainha Dente-de-Ouro).
         </L>
         <L i={<Icon name="sore" />} t="Pereba">
-          característica usada pela Pomada de Pereba e pela passiva do monstro 37. Herdada pelos
-          goblins 16 a 20 Amarelos (Rainha Dente-de-Ouro).
+          característica usada pela Pomada de Pereba e pela passiva do monstro 37.
         </L>
         <Section>Mesa e jogadores</Section>
         <L

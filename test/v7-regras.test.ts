@@ -14,10 +14,13 @@ import {
 } from '../src/game/rules.ts';
 import {
   BA,
+  CH,
+  CN,
   KINGS,
   MA,
   OC,
   TR,
+  TRAITS,
   VE,
   cardTraits,
   crownOf,
@@ -58,17 +61,17 @@ void test('goblins: 2 características impressas, iguais em n e 21 − n', () =>
     assert.equal([1, 2, 4, 8, 16, 32].filter((t) => TR[v] & t).length, 2, `goblin ${v}`);
     assert.equal(TR[v], TR[21 - v]);
   }
-  assert.equal(TR[8], 8 | 32); // Fedorento · Pereba
+  assert.equal(TR[8], MA | VE); // Maluco · Pereba
 });
 
 void test('5 goblins de cada cor herdam a característica do rei ou rainha', () => {
-  // [cor, característica, de, até]: Vermelho Cicatriz 1–5, Verde Maluco 11–15, Azul Monóculo
-  // 6–10, Amarelo Pereba 16–20
+  // [cor, característica, de, até]: Vermelho Cicatriz 1–5, Verde Fedorento 11–15, Azul Monóculo
+  // 6–10, Amarelo Maluco 16–20
   const want = [
     [0, BA, 1, 5],
-    [1, MA, 11, 15],
+    [1, CN, 11, 15],
     [2, OC, 6, 10],
-    [3, VE, 16, 20],
+    [3, MA, 16, 20],
   ];
   for (const [c, t, lo, hi] of want) {
     assert.equal(KINGS[c].tr, t);
@@ -80,7 +83,29 @@ void test('5 goblins de cada cor herdam a característica do rei ou rainha', () 
       assert.equal(cardTraits(g), TR[v] | (heir ? t : 0));
     }
   }
-  assert.equal(cardTraits(mk(2, 8)), 4 | 8 | 32); // o 8 Azul: Fedorento · Pereba e herda Monóculo
+  assert.equal(cardTraits(mk(2, 8)), OC | MA | VE); // o 8 Azul: Maluco · Pereba e herda Monóculo
+});
+
+void test('organização dos goblins: vale nas 4 cores e nos 20 goblins', () => {
+  for (const [c, k] of KINGS.entries()) {
+    const gobs = Array.from({ length: 20 }, (_, i) => mk(c, i + 1));
+    for (const g of gobs) {
+      const v = g & 31,
+        heir = v >= k.heirs[0] && v <= k.heirs[1],
+        total = TRAITS.filter((t) => cardTraits(g) & t).length;
+      assert.equal(TRAITS.filter((t) => TR[v] & t).length, 2, `${c}/${v}: 2 impressas`);
+      if (heir) assert.equal(TR[v] & k.tr, 0, `${c}/${v}: a herdada não vem impressa`);
+      assert.equal(total, heir ? 3 : 2, `${c}/${v}`);
+    }
+    for (const t of TRAITS) {
+      const base = t === CH || t === VE ? 8 : 6;
+      assert.equal(
+        gobs.filter((g) => cardTraits(g) & t).length,
+        t === k.tr ? base + 5 : base,
+        `cor ${c}, característica ${t}`,
+      );
+    }
+  }
 });
 
 void test('Lente de Vidro: margem ±1 sempre, ±2 com monstro Azul', () => {
