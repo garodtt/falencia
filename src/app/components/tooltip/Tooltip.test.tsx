@@ -12,7 +12,7 @@ async function openTip(el: Element) {
   return screen.findByRole('tooltip');
 }
 
-// partida de 2: eu sou o Vermelho, com o Rei Quebra-Crânio (os goblins 1 a 5 Vermelhos herdam Cicatriz)
+// partida de 2: eu sou o Vermelho, com o Rei Quebra Kranio (os goblins 1 a 5 Vermelhos herdam Cicatriz)
 beforeEach(() => {
   setG(newState(2, [{ color: 0 }, { color: 1, bot: true }]));
 });
@@ -47,7 +47,7 @@ describe('balões de informação', () => {
     // o 2 tem Monóculo e Fedorento impressos; por ser um dos 1 a 5 Vermelhos, herda Cicatriz
     render(<GobCard g={mk(0, 2)} owner={G.players[1]} tabIndex={0} />); // vale em qualquer mão
     const tip = await openTip(document.querySelector('[data-card]')!);
-    expect(within(tip).getAllByText('herdada de Rei Quebra-Crânio')).toHaveLength(1);
+    expect(within(tip).getAllByText('herdada de Rei Quebra Kranio')).toHaveLength(1);
   });
 
   it('avisa quando a passiva do monstro zera o goblin', async () => {

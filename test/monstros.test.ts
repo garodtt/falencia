@@ -123,7 +123,7 @@ void test('nas partidas, a Vingança só vem logo depois de um monstro com Vinga
 
 void test('a passiva zera os goblins e desliga o rei, só depois que o monstro acorda', () => {
   const G = table();
-  const p = G.players[0]; // Rei Quebra-Crânio: Cicatriz, herdada pelos goblins 1 a 5 Vermelhos
+  const p = G.players[0]; // Rei Quebra Kranio: Cicatriz, herdada pelos goblins 1 a 5 Vermelhos
   const scar = find0((v) => !!(TR[v] & BA));
   const heir = mk(0, 2); // sem Cicatriz impressa, mas herdada
   const plain = find0((v) => !(cardTraits(mk(0, v)) & BA));
@@ -147,14 +147,14 @@ void test('a passiva zera os goblins e desliga o rei, só depois que o monstro a
 
 void test('a característica herdada conta para a passiva, em qualquer mão', () => {
   const G = table();
-  const p = G.players[0]; // Vermelho, Rei Quebra-Crânio (Cicatriz)
+  const p = G.players[0]; // Vermelho, Rei Quebra Kranio (Cicatriz)
   G.monster = mon(22); // passiva Monóculo
   G.revealed = true;
-  const blue8 = mk(2, 8); // Maluco · Pereba, herda Monóculo do Rei Olho-de-Vidro
-  assert.equal(kingActive(p), true); // o Quebra-Crânio não tem Monóculo
+  const blue8 = mk(2, 8); // Maluco · Pereba, herda Monóculo do Rei Zoio de Vidro
+  assert.equal(kingActive(p), true); // o Quebra Kranio não tem Monóculo
   assert.equal(val(p, blue8), 0);
   assert.equal(val(p, mk(0, 8)), 8); // o 8 Vermelho não tem Monóculo
-  p.king = 2; // com o Rei Olho-de-Vidro, desliga; as características dos goblins não mudam
+  p.king = 2; // com o Rei Zoio de Vidro, desliga; as características dos goblins não mudam
   assert.equal(kingActive(p), false);
   assert.equal(val(p, mk(0, 8)), 8);
 });

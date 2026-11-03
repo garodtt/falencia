@@ -52,7 +52,7 @@ const FIXED: [ItemKey, number, number][] = [
 for (const [k, t, d] of FIXED) {
   void test(`${ITEMS[k][0]}: até ${d > 0 ? '+' : ''}${d} uma vez, basta 1 goblin`, async () => {
     const G = table([[k], [], []]);
-    const p = G.players[1]; // Rainha Musgo-Podre
+    const p = G.players[1]; // Rainha Bruxa Fidida
     p.items = [k];
     play(1, gobs(1, t).slice(0, 1));
     assert.deepEqual(
@@ -128,11 +128,11 @@ void test('a Poção Maluca não tem mais dobro nem metade', () => {
 
 void test('característica herdada vale em qualquer mão (Machucado com o 2 Vermelho)', () => {
   const G = table([[], ['MACHUCADO'], []]);
-  const p = G.players[1]; // Verde, com a Rainha Musgo-Podre
+  const p = G.players[1]; // Verde, com a Rainha Bruxa Fidida
   assert.equal(TR[2] & BA, 0); // o 2 não tem Cicatriz impressa
   play(1, [mk(1, 2)]); // o 2 Verde não herda Cicatriz
   assert.deepEqual(itemOptions(p, 'MACHUCADO'), []);
-  play(1, [mk(0, 2)]); // o 2 Vermelho herda Cicatriz do Rei Quebra-Crânio
+  play(1, [mk(0, 2)]); // o 2 Vermelho herda Cicatriz do Rei Quebra Kranio
   assert.deepEqual(
     itemOptions(p, 'MACHUCADO').map((o) => o.d),
     [-1, -2, -3],

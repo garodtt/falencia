@@ -62,6 +62,8 @@ export const gv = (g: Gob) => g & 31,
   gc = (g: Gob) => g >> 5,
   mk = (c: number, v: number): Gob => (c << 5) | v;
 export const CLAN = ['Vermelho', 'Verde', 'Azul', 'Amarelo'];
+// o nome de cada território, na mesma ordem das cores
+export const TERR = ['Zangadolandia', 'Cemitério Fedorento', 'Terras da Tramoia', 'Porto Inseguro'];
 export const traitNames = (t: number) =>
   TRAITS.filter((x) => t & x)
     .map((x) => TNAME[x])
@@ -75,28 +77,28 @@ export interface King {
 }
 export const KINGS: King[] = [
   {
-    name: 'Rei Quebra-Crânio',
+    name: 'Rei Quebra Kranio',
     short: 'Fúria',
     tr: BA,
     heirs: [1, 5],
     text: 'Fúria: ao vencer por aproximação, elimina 2 cartas em vez de 1; ao cravar, além de roubar, elimina 1 carta.',
   },
   {
-    name: 'Rainha Musgo-Podre',
+    name: 'Rainha Bruxa Fidida',
     short: 'Brotar',
     tr: CN,
     heirs: [11, 15],
     text: 'Brotar: no início da rodada, se você tiver menos cartas que todos os rivais, o jogador à sua direita escolhe 1 carta do seu cemitério e ela volta para a sua mão.',
   },
   {
-    name: 'Rei Olho-de-Vidro',
+    name: 'Rei Zoio de Vidro',
     short: 'Lente de Vidro',
     tr: OC,
     heirs: [6, 10],
     text: 'Lente de Vidro: sua margem é sempre ±1, com qualquer goblin; quando o monstro for do território Azul, é ±2.',
   },
   {
-    name: 'Rainha Dente-de-Ouro',
+    name: "Rainha Den' de Oro",
     short: 'Mercadora',
     tr: MA,
     heirs: [16, 20],

@@ -14,11 +14,13 @@ import {
 } from '../src/game/rules.ts';
 import {
   BA,
+  CLAN,
   CH,
   CN,
   KINGS,
   MA,
   OC,
+  TERR,
   TR,
   TRAITS,
   VE,
@@ -111,7 +113,7 @@ void test('organização dos goblins: vale nas 4 cores e nos 20 goblins', () => 
 void test('Lente de Vidro: margem ±1 sempre, ±2 com monstro Azul', () => {
   const G = table();
   const p = G.players[0];
-  p.king = 2; // Rei Olho-de-Vidro
+  p.king = 2; // Rei Zoio de Vidro
   const red = [mk(0, 5)];
   G.monster = mon(11); // Verde: nenhum goblin jogado é desse território
   assert.equal(margin(p, red), 1);
@@ -198,4 +200,36 @@ void test('nas partidas, a Cravada do Azarão só vale com monstro do efeito e r
   }
   // o efeito é raro (4 monstros, e só quem tinha a menor mão crava): não exige que aconteça
   assert.ok(seen >= 0);
+});
+
+void test('todo goblin tem 2 impressas e os herdeiros nunca têm a herdada impressa', () => {
+  const bits = (t: number) => TRAITS.filter((x) => t & x).length;
+  for (let c = 0; c < 4; c++)
+    for (let v = 1; v <= 20; v++) {
+      const g = mk(c, v),
+        k = KINGS[c];
+      assert.equal(bits(TR[v]), 2, `goblin ${v} ${CLAN[c]} com 2 impressas`);
+      if (v >= k.heirs[0] && v <= k.heirs[1]) {
+        assert.equal(TR[v] & k.tr, 0, `goblin ${v} ${CLAN[c]} não tem a herdada impressa`);
+        assert.equal(bits(cardTraits(g)), 3, `goblin ${v} ${CLAN[c]} fica com 3`);
+      } else assert.equal(cardTraits(g), TR[v]);
+    }
+});
+
+void test('reis, rainhas e territórios da v7', () => {
+  assert.deepEqual(
+    KINGS.map((k) => [k.name, k.tr, k.heirs]),
+    [
+      ['Rei Quebra Kranio', BA, [1, 5]],
+      ['Rainha Bruxa Fidida', CN, [11, 15]],
+      ['Rei Zoio de Vidro', OC, [6, 10]],
+      ["Rainha Den' de Oro", MA, [16, 20]],
+    ],
+  );
+  assert.deepEqual(TERR, [
+    'Zangadolandia',
+    'Cemitério Fedorento',
+    'Terras da Tramoia',
+    'Porto Inseguro',
+  ]);
 });

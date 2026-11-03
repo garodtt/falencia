@@ -16,6 +16,7 @@ import {
   CLAN,
   CN,
   ITEMS,
+  KINGS,
   MFX,
   PRIO,
   TNAME,
@@ -871,7 +872,7 @@ export async function chaosStart() {
           .map((x) => ({ label: gobTxt(x), value: x }));
         const r = await prompt(q.id, 'ask', {
           title: 'Brotar',
-          text: `${nm(p)} ativou o Brotar da Rainha Musgo-Podre. Você está à direita: escolha qual carta do cemitério volta para a mão dele.`,
+          text: `${nm(p)} ativou o Brotar da ${KINGS[1].name}. Você está à direita: escolha qual carta do cemitério volta para a mão dele.`,
           options: opts,
           botValue: opts[0].value,
         });

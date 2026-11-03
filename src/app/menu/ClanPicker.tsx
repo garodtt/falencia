@@ -1,5 +1,5 @@
 import { ToggleGroup } from 'radix-ui';
-import { CLAN, KINGS, heirsTxt } from '../../game/data.ts';
+import { CLAN, KINGS, TERR, heirsTxt } from '../../game/data.ts';
 import { MENU } from '../../game/state.ts';
 import { CLAN_FG } from '../components/cards/cardBase.ts';
 import { ColorDot } from '../components/ColorDot.tsx';
@@ -39,6 +39,9 @@ function ClanCard({ clan }: { clan: number }) {
       <span className="flex items-center gap-2 font-display text-base font-semibold">
         <ColorDot color={clan} />
         {CLAN[clan]}
+      </span>
+      <span className="text-small font-semibold text-muted" data-terr>
+        {TERR[clan]}
       </span>
       <span className="flex items-center gap-1.5 font-bold text-text">
         <span className={CLAN_FG[clan]}>

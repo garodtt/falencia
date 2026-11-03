@@ -118,7 +118,7 @@ void test('a Cicatriz herdada conta (1 a 5 Vermelhos, em qualquer mão); o Disfa
   assert.deepEqual(p.items, ['CICATRIZ']);
   await execUse(p, 'CICATRIZ', { g: mk(0, 2), g2: mk(2, 2), target: 2 });
   assert.deepEqual(p.items, ['CICATRIZ']); // o 2 Azul não serve
-  // o 4 Vermelho herda Cicatriz do Rei Quebra-Crânio
+  // o 4 Vermelho herda Cicatriz do Rei Quebra Kranio
   await execUse(p, 'CICATRIZ', { g: mk(0, 4), g2: mk(2, 9), target: 2 });
   assert.ok(!p.hand.includes(mk(0, 4)) && p.hand.includes(mk(2, 9)));
   // na mão do Verde, o 4 Vermelho continua com Cicatriz

@@ -2,7 +2,7 @@
 import { Tabs } from 'radix-ui';
 import { Fragment } from 'react';
 import type { ReactNode } from 'react';
-import { CHAOS, CLAN, ITEMS, KINGS, heirsTxt, traitNames } from '../../game/data.ts';
+import { CHAOS, CLAN, ITEMS, KINGS, TERR, heirsTxt, traitNames } from '../../game/data.ts';
 import type { ItemKey } from '../../game/data.ts';
 import { Icon } from '../components/Icon.tsx';
 import { KIND, itemKind } from '../components/itemKind.ts';
@@ -277,19 +277,19 @@ function RulesText() {
         </L>
         <L i={<Icon name="scar" />} t="Cicatriz">
           característica usada pelos itens Machucado e Cicatrizes Compartilhadas e pela passiva do
-          monstro 16. Herdada pelos goblins 1 a 5 Vermelhos (Rei Quebra-Crânio).
+          monstro 16. Herdada pelos goblins 1 a 5 Vermelhos (Rei Quebra Kranio).
         </L>
         <L i={<Icon name="monocle" />} t="Monóculo">
           característica usada pelo item Monóculo Polido e pela passiva do monstro 22. Herdada pelos
-          goblins 6 a 10 Azuis (Rei Olho-de-Vidro).
+          goblins 6 a 10 Azuis (Rei Zoio de Vidro).
         </L>
         <L i={<Icon name="stink" />} t="Fedorento">
           característica usada pelos itens Fuga Fedorenta e Nariz de Ferro e pela passiva do monstro
-          27. Herdada pelos goblins 11 a 15 Verdes (Rainha Musgo-Podre).
+          27. Herdada pelos goblins 11 a 15 Verdes (Rainha Bruxa Fidida).
         </L>
         <L i={<Icon name="spiral" />} t="Maluco">
           característica usada pela Poção Maluca e pela passiva do monstro 33. Herdada pelos goblins
-          16 a 20 Amarelos (Rainha Dente-de-Ouro).
+          16 a 20 Amarelos (Rainha Den' de Oro).
         </L>
         <L i={<Icon name="sore" />} t="Pereba">
           característica usada pela Pomada de Pereba e pela passiva do monstro 37.
@@ -417,7 +417,7 @@ function RulesText() {
         {KINGS.map((k, i) => (
           <Fragment key={i}>
             <br />
-            {`${CLAN[i]} — ${k.name} (${traitNames(k.tr)}, herdada pelos ${heirsTxt(i)}): ${k.text}`}
+            {`${CLAN[i]} (${TERR[i]}) — ${k.name} (${traitNames(k.tr)}, herdada pelos ${heirsTxt(i)}): ${k.text}`}
           </Fragment>
         ))}
         <br />A passiva do monstro desliga o rei ou rainha que tiver a característica.
