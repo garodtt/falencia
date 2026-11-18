@@ -1024,7 +1024,7 @@ export async function chooseDuel() {
 }
 export async function playRound() {
   G.round++;
-  G.pressa = [];
+  G.calma = [];
   G.last = null;
   G.act = null;
   G.ready = {};
@@ -1063,10 +1063,6 @@ export async function playRound() {
   if (G.over) return;
   const A0 = alivePl(),
     mx = Math.max(...A0.map((p) => p.hand.length));
-  {
-    const mn = Math.min(...A0.map((p) => p.hand.length));
-    G.underdog = mn < mx ? A0.filter((p) => p.hand.length === mn).map((p) => p.id) : [];
-  }
   G.leaders = A0.every((p) => p.hand.length === mx)
     ? []
     : A0.filter((p) => p.hand.length === mx).map((p) => p.id);
@@ -1280,7 +1276,7 @@ export async function playRound() {
   for (const p of ord()) {
     const rd = G.rd[p.id];
     if (!rd.gs.length || winners.has(p)) continue;
-    if (rd.gs.filter((g) => g !== rd.borrow).length >= 3) (G.pressa ||= []).push(p.id);
+    if (rd.gs.filter((g) => g !== rd.borrow).length >= 3) (G.calma ||= []).push(p.id);
     if (G.lastStand) {
       log(`${nm(p)} perdeu, mas é a última carta: não descarta.`);
       void fx(
@@ -1407,23 +1403,7 @@ export async function playRound() {
     for (const p of ord()) {
       if (!winners.has(p) || !p.alive) continue;
       const exact = R.kind === 'exact';
-      // Cravada do Azarão (efeito do monstro): vence até a regra dos Monstros Opostos
-      const azarao = exact && monFx().includes('AZARAO') && (G.underdog || []).includes(p.id);
-      if (azarao) {
-        log(`Cravada do Azarão: ${nm(p)} tinha a menor mão da mesa e rouba 4 cartas.`, 'it');
-        void fx({ type: 'toast', text: `Cravada do Azarão: ${nm(p)} rouba 4 cartas!` }, false);
-      }
-      const n = exact
-        ? azarao
-          ? 4
-          : chaosIs('OPOSTOS')
-            ? 1
-            : 2
-        : G.lastStand
-          ? 0
-          : hasKing(p, 0)
-            ? 2
-            : 1;
+      const n = exact ? (chaosIs('OPOSTOS') ? 1 : 2) : G.lastStand ? 0 : hasKing(p, 0) ? 2 : 1;
       const mode = exact ? 'steal' : 'elim';
       if (!exact && n === 0) log(`${nm(p)} venceu na última carta: só compra o item.`);
       for (let i = 0; i < n; i++) {
@@ -1447,16 +1427,16 @@ export async function playRound() {
     await rewardItems(ord().filter((p) => winners.has(p) && p.alive));
   }
   {
-    const Q = (G.pressa || []).map(P).filter((q) => q.alive && q.hand.length);
+    const Q = (G.calma || []).map(P).filter((q) => q.alive && q.hand.length);
     if (Q.length) {
       log(
-        `Pressa não Compensa: ${Q.map(nm).join(', ')} ${Q.length > 1 ? 'perderam' : 'perdeu'} com 3 goblins ou mais e ${Q.length > 1 ? 'compram' : 'compra'} 1 item.`,
+        `Calma não Compensa: ${Q.map(nm).join(', ')} ${Q.length > 1 ? 'perderam' : 'perdeu'} com 3 goblins ou mais e ${Q.length > 1 ? 'compram' : 'compra'} 1 item.`,
         'it',
       );
       void fx(
         {
           type: 'toast',
-          text: `Pressa não Compensa: ${Q.map(nm).join(', ')} ${Q.length > 1 ? 'compram' : 'compra'} 1 item.`,
+          text: `Calma não Compensa: ${Q.map(nm).join(', ')} ${Q.length > 1 ? 'compram' : 'compra'} 1 item.`,
         },
         false,
       );

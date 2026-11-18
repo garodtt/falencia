@@ -17,6 +17,13 @@ describe('tela de regras', () => {
     );
   });
 
+  it('tem Calma não Compensa e não tem mais a Cravada do Azarão', () => {
+    render(<Rules />);
+    const text = document.body.textContent!;
+    expect(text).toContain('Calma não Compensa');
+    expect(text).not.toMatch(/azar|pressa n/i);
+  });
+
   it('tem abas com a tabela de itens e a de Caos', async () => {
     render(<Rules />);
     expect(screen.getByRole('tab', { name: 'Regras' }).getAttribute('aria-selected')).toBe('true');

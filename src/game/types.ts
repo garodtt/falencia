@@ -182,8 +182,7 @@ export interface GameState {
   win?: boolean;
   lastWinSum?: number | null;
   banq?: number;
-  pressa?: number[]; // perderam jogando 3+ goblins (Pressa não Compensa)
-  underdog?: number[]; // menor mão no início da rodada (Cravada do Azarão)
+  calma?: number[]; // perderam jogando 3+ goblins (Calma não Compensa)
   necro?: Record<number, Gob[]> | null; // Necromante: a mão guardada de quem joga com o cemitério
   // mesa online
   code?: string;

@@ -1,5 +1,4 @@
-// Regras da v7: características herdadas, Lente de Vidro, Monstros Opostos, Monstro Mutante e
-// Cravada do Azarão como efeito de monstro.
+// Regras da v7: características herdadas, Lente de Vidro, Monstros Opostos e Monstro Mutante.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import * as S from '../src/game/state.ts';
@@ -19,6 +18,7 @@ import {
   CN,
   KINGS,
   MA,
+  MFX,
   OC,
   TERR,
   TR,
@@ -175,31 +175,14 @@ void test('Monstro Mutante: vira a carta do topo sem tirar do monte', () => {
   assert.equal(G.monsters.length, 2);
 });
 
-void test('nas partidas, a Cravada do Azarão só vale com monstro do efeito e rouba 4', async () => {
-  let seen = 0;
+void test('cravada rouba sempre 2 cartas (1 com Monstros Opostos), sem exceção pela mão menor', async () => {
   for (let i = 0; i < 40; i++) {
     table();
     S.G.players.forEach((p) => (p.strat = 'noitems'));
     await gameLoop();
-    const L = S.G.log.map((l) => l.msg);
-    // o histórico guarda só as últimas linhas: a rodada cortada no começo não entra
-    let fxOn = false,
-      whole = false;
-    for (const msg of L) {
-      if (msg.startsWith('Rodada ')) {
-        fxOn = false;
-        whole = true;
-      }
-      if (/^Efeito do monstro (13|18|21|32): Cravada do Azarão/.test(msg)) fxOn = true;
-      if (whole && msg.startsWith('Cravada do Azarão:')) {
-        seen++;
-        assert.ok(fxOn, 'Azarão sem o monstro do efeito');
-        assert.match(msg, /rouba 4 cartas/);
-      }
-    }
+    for (const { msg } of S.G.log) assert.doesNotMatch(msg, /rouba 4 cartas/);
   }
-  // o efeito é raro (4 monstros, e só quem tinha a menor mão crava): não exige que aconteça
-  assert.ok(seen >= 0);
+  assert.deepEqual(Object.keys(MFX).sort(), ['FRACOS', 'VINGANCA']);
 });
 
 void test('todo goblin tem 2 impressas e os herdeiros nunca têm a herdada impressa', () => {

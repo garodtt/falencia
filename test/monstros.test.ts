@@ -57,7 +57,7 @@ const find0 = (ok: (v: number) => boolean) =>
 void test('monstros com efeito e com passiva', () => {
   const fx = (k: string) => MON.filter((m) => m.fx === k).map((m) => m.v);
   assert.deepEqual(fx('VINGANCA'), [17, 26, 31, 38]);
-  assert.deepEqual(fx('AZARAO'), [13, 18, 21, 32]);
+  for (const v of [13, 18, 21, 32]) assert.equal(mon(v).fx, null, `${v} sem efeito`);
   assert.deepEqual(fx('FRACOS'), [10, 15, 20, 25, 30, 35, 40]);
   assert.deepEqual(
     MON.filter((m) => m.curse).map((m) => [m.v, m.curse]),

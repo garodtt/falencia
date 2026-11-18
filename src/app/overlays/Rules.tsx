@@ -392,8 +392,8 @@ function RulesText() {
         Machucado até −3 (Cicatriz).
       </p>
       <p>
-        <b className="text-text">Viradas:</b> <b className="text-text">Pressa não Compensa</b> —
-        quem perde tendo jogado 3 goblins ou mais compra 1 item.
+        <b className="text-text">Viradas:</b> <b className="text-text">Calma não Compensa</b> — quem
+        perde tendo jogado 3 goblins ou mais compra 1 item.
       </p>
       <p>
         <b className="text-text">Monstros com efeito:</b> alguns monstros têm um efeito, revelado
@@ -401,9 +401,7 @@ function RulesText() {
         quando alguém vence a rodada, quem compra o item é o jogador com menos itens na mão (empate:
         todos os empatados). <b className="text-text">Vingança do Cemitério</b> (17, 26, 31 e 38):
         quando o monstro acorda, quem tem o maior cemitério compra 1 item (empate: todos os
-        empatados). <b className="text-text">Cravada do Azarão</b> (13, 18, 21 e 32): quem crava
-        tendo a menor mão da mesa (no início da rodada) rouba 4 cartas em vez de 2; não vale se
-        todos tinham o mesmo número de cartas. Com Monstros Opostos, o azarão também rouba 4.
+        empatados).
       </p>
       <p>
         <b className="text-text">Monstros com passiva:</b> 11 Chapéu, 16 Cicatriz, 22 Monóculo, 27

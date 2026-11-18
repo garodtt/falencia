@@ -357,20 +357,12 @@ export const MFX = {
     'Vingança do Cemitério',
     'Quando acorda, quem tem o maior cemitério compra 1 item (empate: todos os empatados compram).',
   ],
-  AZARAO: [
-    'Cravada do Azarão',
-    'Quem cravar tendo a menor mão da mesa (no início da rodada) rouba 4 cartas em vez de 2. Não vale se todos tinham o mesmo número de cartas.',
-  ],
 } satisfies Record<string, [name: string, text: string]>;
 export type MonsterFx = keyof typeof MFX;
 // o Necromante tem ícone próprio; o resto do Caos usa o raio
 export const chaosIc = (k: string) => (k === 'NECRO' ? 'skull' : 'bolt');
 // efeito e passiva impressos em cada monstro (o Amigo dos Fracos é dos múltiplos de 5)
 export const MON_FX: Partial<Record<number, MonsterFx>> = {
-  13: 'AZARAO',
-  18: 'AZARAO',
-  21: 'AZARAO',
-  32: 'AZARAO',
   17: 'VINGANCA',
   26: 'VINGANCA',
   31: 'VINGANCA',
