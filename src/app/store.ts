@@ -65,6 +65,7 @@ interface UiStore {
   tip: number; // sobe a cada tipPlace(): a dica se reposiciona
   screen: Screen; // menu, sala de espera online ou mesa
   logOpen: boolean; // gaveta do histórico aberta
+  manualOpen: boolean; // janela com o manual em PDF aberta
   shake: boolean; // a mesa treme (você perdeu a rodada)
   flights: Flight[];
   pops: Pop[];
@@ -85,6 +86,7 @@ export const useUi = create<UiStore>()((set) => ({
   tip: 0,
   screen: 'menu',
   logOpen: false,
+  manualOpen: false,
   shake: false,
   flights: [],
   pops: [],

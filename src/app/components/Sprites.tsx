@@ -86,6 +86,12 @@ export const ICONS: Record<string, ReactNode> = {
       <path d="M4 19V5" />
     </>
   ),
+  file: (
+    <>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+      <path d="M14 3v5h5M9 13h6M9 17h6" />
+    </>
+  ),
   list: (
     <>
       <path d="M8 6h12M8 12h12M8 18h12M4 6h0M4 12h0M4 18h0" />

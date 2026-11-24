@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { mk } from '../../game/data.ts';
 import { GobCard } from '../components/cards/GobCard.tsx';
+import { LOGO_URL } from '../components/logo.ts';
 
 // o leque de cartas decorativo do topo
 const FAN = [mk(0, 7), mk(3, 13), mk(1, 4), mk(2, 18), mk(0, 20)];
@@ -10,8 +11,12 @@ export function Hero() {
   return (
     <div className="grid grid-cols-[1fr_auto] items-center gap-6 max-[700px]:grid-cols-1">
       <div>
-        <h1 className="m-0 font-display text-[clamp(40px,7vw,72px)] leading-[0.95] font-extrabold tracking-[-1.5px] [text-wrap:balance]">
-          Falência: <span className="text-accent">Goblins</span>
+        <h1 className="m-0">
+          <img
+            src={LOGO_URL}
+            alt="Falência: Goblins"
+            className="block h-auto w-[clamp(260px,48vw,560px)] max-w-full"
+          />
         </h1>
         <p className="mt-2.5 mb-0 max-w-[52ch] text-md text-muted">
           Chegue o mais perto do monstro, para cima ou para baixo. Crave o valor para roubar cartas.

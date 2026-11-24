@@ -1,5 +1,6 @@
 import { Banner } from './Banner.tsx';
 import { FxLayer } from './FxLayer.tsx';
+import { ManualDialog } from './ManualDialog.tsx';
 import { Modal } from './Modal.tsx';
 import { RotateHint } from './RotateHint.tsx';
 import { Tips } from './Tips.tsx';
@@ -13,6 +14,7 @@ export function Overlays() {
         <Banner />
       </div>
       <Modal />
+      <ManualDialog />
       <div className="fixed top-16 left-1/2 z-toast max-w-[calc(100vw-32px)] -translate-x-1/2">
         <Toast />
       </div>

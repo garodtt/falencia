@@ -1,5 +1,6 @@
 import { G, MODE, SPEED, nameOf, setSPEED } from '../game/state.ts';
 import { Icon } from './components/Icon.tsx';
+import { LOGO_URL } from './components/logo.ts';
 import { GHOST } from './components/variants.ts';
 import { askLocal } from './overlays/modal.ts';
 import { Rules } from './overlays/Rules.tsx';
@@ -47,11 +48,12 @@ export function Header() {
       className="flex min-h-13 items-center gap-[18px] border-b border-line py-2 px-safe max-sm:gap-2 land:min-h-10 land:py-1"
     >
       {/* no celular, durante a partida, a rodada e o chefe tomam o lugar do título */}
-      <div
-        id="brand"
-        className={`font-display text-xl font-extrabold tracking-[-0.3px] whitespace-nowrap max-sm:text-lg ${inGame ? 'max-sm:hidden' : ''}`}
-      >
-        Falência: <span className="text-accent">Goblins</span>
+      <div id="brand" className={`flex-none ${inGame ? 'max-sm:hidden' : ''}`}>
+        <img
+          src={LOGO_URL}
+          alt="Falência: Goblins"
+          className="block h-9 w-auto max-sm:h-8 land:h-7"
+        />
       </div>
       {inGame && (
         <div
@@ -77,6 +79,7 @@ export function Header() {
         label="Regras"
         onClick={() => void askLocal('Regras', '', [{ label: 'Fechar', value: 1 }], <Rules />)}
       />
+      <BarButton icon="file" label="Manual" onClick={() => useUi.setState({ manualOpen: true })} />
       <BarButton
         icon="list"
         label="Histórico"
